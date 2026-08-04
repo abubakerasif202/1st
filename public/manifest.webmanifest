@@ -1,0 +1,10 @@
+{
+  "name": "1st Class Express",
+  "short_name": "1st Class Express",
+  "description": "Local, linehaul and interstate freight services across Australia.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070708",
+  "theme_color": "#070708",
+  "icons": [{ "src": "/brand/logo-mark.jpg", "sizes": "300x300", "type": "image/jpeg" }]
+}
