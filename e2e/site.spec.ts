@@ -4,10 +4,10 @@ test.beforeEach(async ({ page }) => { await page.addInitScript(() => sessionStor
 
 test('primary journey and quote validation', async ({ page, isMobile }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /Moving Your Freight/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Transport Business Made Easier/i })).toBeVisible()
   if (isMobile) { await page.getByRole('button', { name: 'Open menu' }).click(); await page.getByRole('dialog').getByRole('link', { name: 'Our Services' }).click() } else { await page.getByRole('link', { name: 'Our Services' }).first().click() }
   await expect(page).toHaveURL(/our-services/)
-  await expect(page.getByRole('heading', { level: 1, name: /Freight services shaped/i })).toBeFocused()
+  await expect(page.getByRole('heading', { level: 1, name: /Freight, drivers and fleet support/i })).toBeFocused()
   if (isMobile) { await page.getByRole('button', { name: 'Open menu' }).click(); await page.getByRole('dialog').getByRole('link', { name: 'Our Fleet' }).click() } else { await page.getByRole('link', { name: 'Our Fleet' }).first().click() }
   await expect(page).toHaveURL(/our-fleet/)
   if (isMobile) { await page.getByRole('button', { name: 'Open menu' }).click(); await page.getByRole('dialog').getByRole('link', { name: /Book Now/i }).click() } else { await page.getByRole('link', { name: /Book Now/i }).first().click() }
