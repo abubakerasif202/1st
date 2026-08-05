@@ -34,7 +34,7 @@ export const fleet = [
     bestFor: 'Freight where side loading, unloading or site access may be required.',
     serviceType: 'Commercial transport and assessed freight movements',
     availability: 'Specialist requirements assessed before booking.',
-    image: '/images/generated/hero-interstate-truck-branded.jpg',
+    image: '/images/generated/hero-kenworth-linehaul.jpg',
     icon: PanelsTopLeft,
   },
   {
@@ -52,7 +52,7 @@ export const fleet = [
     bestFor: 'Assessed high-capacity or B-double movements.',
     serviceType: 'Linehaul routes and configured interstate work',
     availability: 'Configuration confirmed before booking.',
-    image: '/images/generated/kenworth-k220-linehaul-branded.jpg',
+    image: '/images/generated/hero-kenworth-linehaul.jpg',
     icon: Truck,
   },
   {
@@ -61,7 +61,7 @@ export const fleet = [
     bestFor: 'Freight moving between Sydney, regional areas and interstate corridors.',
     serviceType: 'Local, linehaul and interstate transport support',
     availability: 'Route, timing and vehicle requirements assessed before booking.',
-    image: '/images/generated/hero-interstate-truck-branded.jpg',
+    image: '/images/generated/operations-collage-branded.jpg',
     icon: Truck,
   },
   {
@@ -70,7 +70,7 @@ export const fleet = [
     bestFor: 'Regular customer routes, branded presentation and ongoing operational support.',
     serviceType: 'Dedicated and managed fleet arrangements',
     availability: 'Structured by agreement and availability.',
-    image: '/images/generated/fleet-lineup-branded.jpg',
+    image: '/images/generated/team-operations-branded.jpg',
     icon: Truck,
   },
 ] as const

@@ -22,7 +22,7 @@ export default function FleetPage() {
   return <>
     <SeoHead {...routeSeo.fleet} />
     <section className="visual-page-hero visual-page-hero--fleet">
-      <img src="/images/generated/hero-interstate-truck-branded.jpg" alt="Branded 1st Class Express interstate prime mover travelling on an Australian highway" width="1920" height="1080" loading="eager" decoding="async" />
+      <img src="/images/generated/hero-kenworth-linehaul.jpg" alt="Black branded 1st Class Express prime mover travelling on an Australian highway at sunset" width="1536" height="1024" loading="eager" decoding="async" />
       <div className="visual-page-hero__shade" aria-hidden="true" />
       <div className="container-page visual-page-hero__content">
         <nav aria-label="Breadcrumb" className="breadcrumb"><Link to="/">Home</Link><ChevronRight size={14} /><span>Our Fleet</span></nav>
@@ -74,7 +74,7 @@ export default function FleetPage() {
         <SectionHeading eyebrow="Featured linehaul" title="Two premium model options for assessed interstate work" intro="Mercedes-Benz Actros and Kenworth K220 imagery is retained and now carries 1st Class Express branding in the image artwork." />
         <div className="linehaul-model-grid">
           <article>
-            <img src="/images/generated/mercedes-actros-linehaul-branded.jpg" alt="Branded Mercedes-Benz Actros prime mover with enclosed semi-trailer on an Australian regional highway" width="1920" height="1080" loading="lazy" decoding="async" />
+            <img src="/images/generated/mercedes-actros-linehaul-branded.jpg" alt="White branded Mercedes-Benz Actros prime mover with enclosed semi-trailer on a regional highway" width="1536" height="1024" loading="lazy" decoding="async" />
             <div>
               <p className="eyebrow">Mercedes-Benz Actros</p>
               <h2>Modern prime-mover support</h2>
@@ -83,7 +83,7 @@ export default function FleetPage() {
             </div>
           </article>
           <article>
-            <img src="/images/generated/kenworth-k220-linehaul-branded.jpg" alt="Branded Kenworth K220 cab-over linehaul truck with B-double trailers on an Australian highway" width="1920" height="1080" loading="lazy" decoding="async" />
+            <img src="/images/generated/hero-kenworth-linehaul.jpg" alt="Black branded cab-over linehaul truck with B-double trailers on an Australian highway" width="1536" height="1024" loading="lazy" decoding="async" />
             <div>
               <p className="eyebrow">Kenworth K220</p>
               <h2>Australian cab-over linehaul option</h2>
@@ -106,7 +106,7 @@ export default function FleetPage() {
     </section>
 
     <section className="final-image-cta">
-      <img src="/images/generated/fleet-lineup-branded.jpg" alt="Branded 1st Class Express fleet lineup at an Australian transport depot" width="1920" height="1080" loading="lazy" decoding="async" />
+      <img src="/images/generated/fleet-lineup-branded.jpg" alt="Branded 1st Class Express van, rigid truck and prime mover fleet lineup" width="2048" height="682" loading="lazy" decoding="async" />
       <div className="container-page final-image-cta__content">
         <p className="eyebrow">Final step</p>
         <h2>Ready to Move Your Goods?</h2>

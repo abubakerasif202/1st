@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 const base = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, '') || 'https://www.1stclassexpress.com.au'
-const socialImage = `${base}/images/generated/hero-interstate-truck-branded.jpg`
+const socialImage = `${base}/images/generated/hero-kenworth-linehaul.jpg`
 export function SeoHead({ title, description, path = '/', noIndex = false }: { title: string; description: string; path?: string; noIndex?: boolean }) {
   useEffect(() => {
     document.title = title

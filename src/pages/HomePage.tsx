@@ -33,7 +33,7 @@ export default function HomePage() {
     <SeoHead {...routeSeo.home}/>
 
     <section className="home-hero conversion-hero" aria-labelledby="home-hero-title">
-      <div className="hero-media" aria-hidden="true"><img src="/images/generated/mercedes-actros-linehaul-branded.jpg" alt="" width="1920" height="1080" loading="eager" decoding="async"/></div>
+      <div className="hero-media" aria-hidden="true"><img src="/images/generated/hero-kenworth-linehaul.jpg" alt="" width="1536" height="1024" loading="eager" decoding="async"/></div>
       <div className="hero-media-overlay" aria-hidden="true"/>
       <div className="hero-grid" aria-hidden="true"/>
       <div className="container-page hero-layout conversion-hero__layout">
@@ -74,7 +74,7 @@ export default function HomePage() {
       <div className="fleet-proof-heading"><SectionHeading eyebrow="Fleet capability" title="The right vehicle makes the difference" intro="From agile metropolitan work to assessed interstate linehaul, our fleet is matched to the freight, access requirements and delivery window."/><ButtonLink to="/our-fleet" variant="secondary">View Every Vehicle</ButtonLink></div>
       <div className="fleet-proof-grid">
         <figure className="fleet-proof-primary">
-          <img src="/images/generated/fleet-lineup-branded.jpg" alt="Branded 1st Class Express vans, rigid trucks and prime movers at a transport depot" width="1920" height="1080" loading="lazy" decoding="async"/>
+          <img src="/images/generated/operations-collage-branded.jpg" alt="1st Class Express branded trucks, vans, warehouse and logistics operations" width="1536" height="1024" loading="lazy" decoding="async"/>
           <figcaption><span>Complete fleet range</span><strong>Built around the job—not a one-size-fits-all service.</strong></figcaption>
         </figure>
         <div className="fleet-proof-models">
