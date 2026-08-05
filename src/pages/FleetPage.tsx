@@ -12,7 +12,7 @@ export default function FleetPage() {
     <SeoHead {...routeSeo.fleet}/>
     <PageHero eyebrow="Our Fleet" title="Vehicle and fleet options built around your operation" intro="From vans and light trucks to rigid, curtain-side and interstate linehaul vehicles, fleet support is assessed against the freight, route and required service."/>
     <section className="fleet-stage"><div className="container-page"><div className="fleet-image-wrap premium-fleet-image">
-      <img src="/images/generated/mercedes-actros-linehaul.jpg" alt="Mercedes-Benz Actros prime mover towing a refrigerated semi-trailer on an Australian interstate highway" width="1920" height="1080" fetchPriority="high" decoding="async"/>
+      <img src="/images/generated/mercedes-actros-linehaul.jpg" alt="Mercedes-Benz Actros prime mover towing a refrigerated semi-trailer on an Australian interstate highway" width="1920" height="1080" loading="eager" decoding="async"/>
       <span>Featured fleet</span><div className="fleet-image-caption"><small>Mercedes-Benz Actros</small><strong>Premium linehaul presence</strong></div>
     </div></div></section>
     <section className="fleet-journeys"><div className="container-page fleet-journey-grid">
