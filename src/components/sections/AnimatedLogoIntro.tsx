@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useCallback, useEffect, useState } from 'react'
+import { company } from '../../data/company'
 
 export function AnimatedLogoIntro() {
   const reduce = useReducedMotion()
@@ -49,6 +50,6 @@ export function AnimatedLogoIntro() {
         <motion.i initial={{scaleX: 0}} animate={{scaleX: 1}} transition={{duration: .85, delay: .6}}/>
       </div>
     </div>
-    <motion.p initial={reduce ? false : {opacity: 0, y: 8}} animate={{opacity: 1, y: 0}} transition={{delay: .95}}>Committed to Deliver a Quality Service</motion.p>
+    <motion.p initial={reduce ? false : {opacity: 0, y: 8}} animate={{opacity: 1, y: 0}} transition={{delay: .95}}>{company.tagline}</motion.p>
   </motion.div>}</AnimatePresence>
 }
