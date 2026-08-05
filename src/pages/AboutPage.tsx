@@ -1,25 +1,21 @@
-import { BadgeCheck, MessageSquareText, ShieldCheck, Truck, UsersRound } from 'lucide-react'
+import { MessageSquareText, Route, ShieldCheck, Truck, UsersRound } from 'lucide-react'
 import { CallToAction } from '../components/common/CallToAction'
 import { PageHero } from '../components/common/PageHero'
-import { SectionHeading } from '../components/common/SectionHeading'
 import { SeoHead } from '../components/common/SeoHead'
 import routeSeo from '../data/routeSeo.json'
-import { companyProfile } from '../data/companyProfile'
-import { RouteMap } from '../components/sections/RouteMap'
 
-const operatingPrinciples = [
-  { icon: ShieldCheck, title: 'Safety and care', text: 'Freight handling and operating decisions are planned with safety, goods care and applicable procedures in mind.' },
-  { icon: MessageSquareText, title: 'Professional communication', text: 'Clear communication helps customers plan for collection, transit and final delivery.' },
-  { icon: Truck, title: 'Practical transport planning', text: 'The service, vehicle and route are assessed against the freight and operational requirements.' },
-  { icon: UsersRound, title: 'Customer representation', text: 'Dedicated drivers and client-approved uniforms can be arranged by agreement and availability.' },
+const values = [
+  ['Safety First', 'Freight handling and operating decisions are planned with safety and care in mind.', ShieldCheck],
+  ['Clear Communication', 'Customers are kept informed through collection, transit and final delivery.', MessageSquareText],
+  ['Practical Planning', 'The service, vehicle and route are assessed against each freight movement.', Route],
+  ['Professional People', 'Experienced drivers who represent our customers and our business well.', UsersRound],
 ] as const
 
 export default function AboutPage() { return <>
   <SeoHead {...routeSeo.about}/>
-  <PageHero eyebrow="About Us" title={companyProfile.about.title} intro={companyProfile.about.paragraphs[0]}/>
-  <section className="section"><div className="container-page story-grid"><div><SectionHeading eyebrow="Our company" title="Established transport support for growing operations"/>{companyProfile.about.paragraphs.slice(1, 4).map(paragraph=><p key={paragraph}>{paragraph}</p>)}</div><div className="statement-card"><img src="/brand/first-class-express-logo.png" loading="lazy" decoding="async" alt="1st Class Express" width="220" height="235"/><strong>{companyProfile.established}</strong><p>Australian-owned freight delivery, professional drivers and fleet-management support across Sydney and interstate routes.</p></div></div></section>
-  <section className="section principles"><div className="container-page"><SectionHeading eyebrow="Our commitment" title="Carefully managed transport from collection to final delivery" intro={companyProfile.commitment.intro}/><ul className="content-list-grid content-list-grid--light">{companyProfile.commitment.points.map(item=><li key={item}><BadgeCheck aria-hidden="true"/>{item}</li>)}</ul></div></section>
-  <section className="section"><div className="container-page"><SectionHeading eyebrow="Operating approach" title="Professional principles at every handover"/><div className="principle-grid">{operatingPrinciples.map(({icon: Icon,title,text})=><article key={title}><Icon aria-hidden="true"/><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
-  <section className="section map-section"><div className="container-page"><SectionHeading eyebrow="Coverage" title="Sydney, regional and interstate support" intro={companyProfile.about.paragraphs[4]}/><RouteMap/></div></section>
-  <CallToAction title="Discuss your transport requirements" text="Tell us what you are moving, where it is going and the support your operation needs."/>
+  <PageHero eyebrow="About Us" title="Australian Owned. Freight Focused." intro="We combine practical transport planning, experienced people and responsive communication to move freight properly." image="/images/lovable/transport-team.jpg"/>
+  <section className="lovable-section lovable-section--soft"><div className="container-page lovable-split"><div><div className="lovable-heading"><p className="lovable-kicker">Who We Are</p><h2>A Transport Partner, Not Just A Truck</h2><p>1st Class Express is an Australian privately owned transport company supporting metropolitan, regional and interstate freight. We coordinate the vehicle, driver, timing and route around the actual job.</p><p>Our customers work directly with a responsive operations team that understands how important reliable collection, communication and delivery are to their business.</p></div></div><div className="lovable-split__image"><img src="/images/lovable/driver-checks.jpg" alt="Transport team checking freight in a warehouse" loading="lazy"/></div></div></section>
+  <section className="lovable-section lovable-section--dark"><div className="container-page"><div className="lovable-heading"><p className="lovable-kicker">Our Standards</p><h2>What We Hold Ourselves To</h2></div><div className="lovable-feature-grid">{values.map(([title,text,Icon])=><article className="lovable-feature" key={title}><Icon/><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
+  <section className="lovable-section"><div className="container-page lovable-split"><div className="lovable-split__image"><img src="/images/lovable/hero-b-double.webp" alt="B-double prime mover on an Australian highway" loading="lazy"/></div><div><div className="lovable-heading"><p className="lovable-kicker">Why Customers Stay</p><h2>Reliable By Design</h2><p>Professional drivers, flexible scheduling, useful communication and transport solutions shaped around the job—not a one-size-fits-all template.</p></div><div className="lovable-proof"><Truck/><strong>Metropolitan to interstate</strong><span>Vans through to B-double configurations</span></div></div></div></section>
+  <CallToAction title="Move your next load with confidence" text="Tell us what needs to move, where it is going and when it needs to arrive."/>
 </> }
