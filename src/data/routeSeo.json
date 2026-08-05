@@ -12,12 +12,12 @@
   "services": {
     "path": "/our-services",
     "title": "Freight, Driver & Fleet Services | 1st Class Express",
-    "description": "Explore freight delivery, professional driver, interstate linehaul and managed fleet solutions from 1st Class Express."
+    "description": "Explore metropolitan delivery, interstate linehaul, dedicated driver, dangerous-goods assessment and managed fleet services from 1st Class Express."
   },
   "fleet": {
     "path": "/our-fleet",
-    "title": "Fleet Options | Vans, Trucks & Linehaul Support",
-    "description": "Explore vehicle, dedicated driver and managed fleet options from 1st Class Express, from Sydney metropolitan deliveries to interstate linehaul."
+    "title": "Our Fleet | Trucks, Drivers & Managed Fleet Solutions",
+    "description": "Explore vans, trucks, Mercedes-Benz Actros, Kenworth K220 and managed fleet support from 1st Class Express across Sydney and interstate routes."
   },
   "book": {
     "path": "/book-now",

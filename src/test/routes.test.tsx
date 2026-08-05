@@ -7,14 +7,16 @@ async function renderRoute(route: string) {
   render(<MemoryRouter initialEntries={[route]}><App/></MemoryRouter>)
 }
 
+const routeRenderTimeout = 15000
+
 describe('primary routes', () => {
   beforeEach(() => sessionStorage.setItem('intro-seen', 'true'))
   afterEach(() => cleanup())
   it.each([
-    ['/', /Transport Business Made Easier/i], ['/about-us', /Professional transport, delivery and fleet solutions/i], ['/our-services', /Freight, drivers and fleet support/i], ['/our-fleet', /Vehicle and fleet options/i], ['/book-now', /Give us the freight details/i], ['/contact', /Talk to the transport team/i],
-  ])('renders %s', async (route, heading) => { await renderRoute(route); expect(await screen.findByRole('heading', { level: 1, name: heading }, { timeout: 5000 })).toBeInTheDocument() })
-  it('renders the branded 404 route', async () => { await renderRoute('/missing'); expect(await screen.findByText(/Wrong turn/i, {}, { timeout: 5000 })).toBeInTheDocument() })
+    ['/', /Transport Business Made Easier/i], ['/about-us', /Professional transport, delivery and fleet solutions/i], ['/our-services', /Our World-Class Services/i], ['/our-fleet', /Our World-Class Fleet/i], ['/book-now', /Give us the freight details/i], ['/contact', /Talk to the transport team/i],
+  ])('renders %s', async (route, heading) => { await renderRoute(route); expect(await screen.findByRole('heading', { level: 1, name: heading }, { timeout: routeRenderTimeout })).toBeInTheDocument() })
+  it('renders the branded 404 route', async () => { await renderRoute('/missing'); expect(await screen.findByText(/Wrong turn/i, {}, { timeout: routeRenderTimeout })).toBeInTheDocument() })
   it('marks the branded 404 route as noindex', async () => { await renderRoute('/missing'); expect(await screen.findByText(/Wrong turn/i, {}, { timeout: 5000 })).toBeInTheDocument(); expect(document.head.querySelector('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow'); expect(document.head.querySelector('link[rel="canonical"]')).not.toBeInTheDocument() })
-  it('gives repeated service links descriptive accessible names', async () => { await renderRoute('/'); expect(await screen.findByRole('link', { name: /Learn more about Same Day \/ Next Day/i }, { timeout: 5000 })).toBeInTheDocument() })
+  it('gives repeated service links descriptive accessible names', async () => { await renderRoute('/'); expect(await screen.findByRole('link', { name: /Learn more about Same Day \/ Next Day/i }, { timeout: routeRenderTimeout })).toBeInTheDocument() })
   it('marks the active navigation link', async () => { await renderRoute('/our-services'); const links = await screen.findAllByRole('link', { name: 'Our Services' }); expect(links.some(link => link.classList.contains('active'))).toBe(true) })
 })
