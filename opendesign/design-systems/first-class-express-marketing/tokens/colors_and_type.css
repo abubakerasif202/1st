@@ -1,0 +1,75 @@
+:root {
+  /* Raw color */
+  --bg-1: #070708;
+  --bg-2: #101318;
+  --bg-3: #14181d;
+  --bg-4: #1b2027;
+  --surface-blue: #1c3042;
+  --surface-light: #f4f1e9;
+  --fg-1: #f7f4ec;
+  --fg-2: #bbb7ad;
+  --fg-dark: #151515;
+  --fg-dark-muted: #55524d;
+  --accent-1: #d6bd63;
+  --accent-1-light: #f1df8d;
+  --accent-2: #ef3155;
+  --accent-2-accessible: #b71939;
+  --danger: #ff8097;
+
+  /* Raw type */
+  --font-display: Georgia, Cambria, "Times New Roman", serif;
+  --font-body: "Segoe UI Variable", "Segoe UI", sans-serif;
+  --weight-regular: 400;
+  --weight-bold: 700;
+  --weight-heavy: 800;
+  --step--1: 0.75rem;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: 1.5rem;
+  --step-3: 2.25rem;
+  --step-4: 3.5rem;
+  --step-5: 6.5rem;
+
+  /* Semantic color */
+  --page-background: var(--bg-1);
+  --surface-primary: var(--bg-2);
+  --surface-raised: var(--bg-4);
+  --surface-inverse: var(--surface-light);
+  --text-primary: var(--fg-1);
+  --text-muted: var(--fg-2);
+  --text-on-light: var(--fg-dark);
+  --text-on-light-muted: var(--fg-dark-muted);
+  --brand-structure: var(--accent-1);
+  --brand-highlight: var(--accent-1-light);
+  --action-primary: var(--accent-2-accessible);
+  --action-primary-hover: #d12449;
+  --border-subtle: color-mix(in srgb, var(--accent-1) 25%, transparent);
+  --focus-inner: #ffffff;
+  --focus-outer: #111111;
+
+  /* Semantic type */
+  --h1: clamp(3rem, 7vw, var(--step-5));
+  --h2: clamp(2.25rem, 4.8vw, 4.6rem);
+  --h3: var(--step-2);
+  --body: var(--step-0);
+  --body-lead: clamp(var(--step-1), 2.4vw, 1.55rem);
+  --caption: var(--step--1);
+  --eyebrow: var(--step--1);
+
+  /* Geometry and motion */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --radius-panel: 0;
+  --radius-image: 0.25rem;
+  --shadow-raised: 0 25px 70px rgb(0 0 0 / 0.28);
+  --motion-fast: 180ms;
+  --motion-standard: 260ms;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

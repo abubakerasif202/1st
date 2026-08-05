@@ -1,0 +1,37 @@
+{
+  "home": {
+    "path": "/",
+    "title": "1st Class Express | Interstate Freight & Logistics Australia",
+    "description": "Local, linehaul and interstate freight services across Australia, including same-day, next-day, bulk, logistics and white-label driver support."
+  },
+  "about": {
+    "path": "/about-us",
+    "title": "About 1st Class Express | Australian Freight Team",
+    "description": "Meet the Australian privately owned team providing local, linehaul and interstate freight support across Australia."
+  },
+  "services": {
+    "path": "/our-services",
+    "title": "Freight & Logistics Services | 1st Class Express",
+    "description": "Same-day, next-day, bulk freight, logistics, interstate and white-label driver services across Australia."
+  },
+  "fleet": {
+    "path": "/our-fleet",
+    "title": "Our Fleet | Vans, Trucks & Interstate Freight",
+    "description": "Explore the 1st Class Express fleet, from 1-tonne vans and pallet trucks to rigid trucks, prime movers and semi-trailers."
+  },
+  "book": {
+    "path": "/book-now",
+    "title": "Request a Freight Quote | 1st Class Express",
+    "description": "Request a freight quote from 1st Class Express for local, linehaul and interstate transport across Australia."
+  },
+  "contact": {
+    "path": "/contact",
+    "title": "Contact 1st Class Express | Freight Enquiries",
+    "description": "Contact 1st Class Express for local, regional and interstate freight enquiries across Australia."
+  },
+  "notFound": {
+    "path": "/404",
+    "title": "Page Not Found | 1st Class Express",
+    "description": "The requested page could not be found."
+  }
+}

@@ -5,6 +5,7 @@ import { ButtonLink } from '../components/common/ButtonLink'
 import { CallToAction } from '../components/common/CallToAction'
 import { SectionHeading } from '../components/common/SectionHeading'
 import { SeoHead } from '../components/common/SeoHead'
+import routeSeo from '../data/routeSeo.json'
 import { ContactForm } from '../components/forms/ContactForm'
 import { AnimatedLogoIntro } from '../components/sections/AnimatedLogoIntro'
 import { RouteMap } from '../components/sections/RouteMap'
@@ -25,7 +26,7 @@ const trust = [
 export default function HomePage() {
   const reduce = useReducedMotion()
   return <>
-    <SeoHead title="1st Class Express | Interstate Freight & Logistics Australia" description="Local, linehaul and interstate freight services across Australia, including same-day, next-day, bulk, logistics and white-label driver support."/>
+    <SeoHead {...routeSeo.home}/>
     <AnimatedLogoIntro/>
     <section className="home-hero"><div className="hero-media" aria-hidden="true"><img src="/images/generated/mercedes-actros-linehaul.jpg" alt="" fetchPriority="high" decoding="async" /></div><div className="hero-media-overlay" aria-hidden="true"/><div className="hero-grid" aria-hidden="true"/><div className="hero-glow" aria-hidden="true"/><div className="container-page hero-layout">
       <motion.div className="hero-copy" initial={reduce ? false : {opacity:0, y:26}} animate={{opacity:1,y:0}} transition={{duration:.7}}>

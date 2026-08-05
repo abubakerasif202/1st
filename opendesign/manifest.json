@@ -1,0 +1,34 @@
+{
+  "generated": "2026-08-05T09:58:13.0097837Z",
+  "sections": [
+    {
+      "id": "mockups",
+      "label": "Mockups",
+      "groups": []
+    },
+    {
+      "id": "design-systems",
+      "label": "Design Systems",
+      "groups": [
+        {
+          "slug": "first-class-express-marketing",
+          "files": [
+            { "label": "README", "path": "design-systems/first-class-express-marketing/README.md" },
+            { "label": "Portable skill", "path": "design-systems/first-class-express-marketing/SKILL.md" },
+            { "label": "Colors and type tokens", "path": "design-systems/first-class-express-marketing/tokens/colors_and_type.css" },
+            { "label": "Voice and tone", "path": "design-systems/first-class-express-marketing/brand/voice-and-tone.md" },
+            { "label": "Style notes", "path": "design-systems/first-class-express-marketing/brand/style-notes.md" },
+            { "label": "Marketing UI kit", "path": "design-systems/first-class-express-marketing/ui-kit-marketing/index.html" },
+            { "label": "ButtonLink component", "path": "design-systems/first-class-express-marketing/ui-kit-marketing/components/ButtonLink.jsx" },
+            { "label": "FormField component", "path": "design-systems/first-class-express-marketing/ui-kit-marketing/components/FormField.jsx" },
+            { "label": "SectionHeading component", "path": "design-systems/first-class-express-marketing/ui-kit-marketing/components/SectionHeading.jsx" },
+            { "label": "ServiceCard component", "path": "design-systems/first-class-express-marketing/ui-kit-marketing/components/ServiceCard.jsx" },
+            { "label": "First Class Express logo", "path": "design-systems/first-class-express-marketing/assets/logos/first-class-express-logo.png" },
+            { "label": "Mercedes Actros image", "path": "design-systems/first-class-express-marketing/assets/imagery/mercedes-actros-linehaul.jpg" },
+            { "label": "Kenworth K220 image", "path": "design-systems/first-class-express-marketing/assets/imagery/kenworth-k220-linehaul.jpg" }
+          ]
+        }
+      ]
+    }
+  ]
+}

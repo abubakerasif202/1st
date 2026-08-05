@@ -1,4 +1,11 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/about-us", "destination": "/about-us/index.html" },
+    { "source": "/our-services", "destination": "/our-services/index.html" },
+    { "source": "/our-fleet", "destination": "/our-fleet/index.html" },
+    { "source": "/book-now", "destination": "/book-now/index.html" },
+    { "source": "/contact", "destination": "/contact/index.html" }
+  ],
   "headers": [{ "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }]
 }
