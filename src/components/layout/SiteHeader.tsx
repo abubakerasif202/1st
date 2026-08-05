@@ -1,9 +1,10 @@
-import { Menu, X } from 'lucide-react'
+import { Menu, Phone, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { company, phoneHref } from '../../data/company'
 
 const links = [
-  ['Home', '/'], ['About Us', '/about-us'], ['Our Services', '/our-services'], ['Our Fleet', '/our-fleet'], ['Contact', '/contact'],
+  ['Home', '/'], ['About Us', '/about-us'], ['Services', '/our-services'], ['Our Fleet', '/our-fleet'], ['Service Areas', '/service-areas'], ['Contact', '/contact'],
 ] as const
 
 export function SiteHeader() {
@@ -30,13 +31,14 @@ export function SiteHeader() {
   return <header className="site-header"><div className="container-page header-inner">
     <NavLink className="brand" to="/" aria-label="1st Class Express home"><img src="/brand/first-class-express-logo.png" alt="1st Class Express" width="138" height="150" /></NavLink>
     <nav className="desktop-nav" aria-label="Primary">{links.map(([label, to]) => <NavLink key={to} to={to} className={({isActive}) => isActive ? 'active' : ''}>{label}</NavLink>)}</nav>
-    <NavLink to="/book-now" className="header-cta">Book Now</NavLink>
+    <a className="header-phone" href={phoneHref(company.phonePrimary)} aria-label={`Call ${company.phonePrimary}`}><Phone size={17}/></a>
+    <NavLink to="/book-now" className="header-cta">Request a Quote</NavLink>
     <button ref={openerRef} className="menu-button" onClick={() => setOpen(true)} aria-expanded={open} aria-controls="mobile-menu" aria-label="Open menu"><Menu /></button>
   </div>
   {open && <div className="mobile-overlay" role="dialog" aria-modal="true" aria-label="Mobile navigation"><div className="mobile-panel" id="mobile-menu">
     <button ref={closeRef} className="menu-close" onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
     <img src="/brand/first-class-express-logo.png" alt="" width="150" height="163" />
-    <nav aria-label="Mobile primary">{links.map(([label, to]) => <NavLink key={to} to={to} onClick={() => setOpen(false)}>{label}</NavLink>)}<NavLink to="/book-now" onClick={() => setOpen(false)}>Book Now</NavLink></nav>
+    <nav aria-label="Mobile primary">{links.map(([label, to]) => <NavLink key={to} to={to} onClick={() => setOpen(false)}>{label}</NavLink>)}<NavLink to="/book-now" onClick={() => setOpen(false)}>Request a Quote</NavLink><a href={phoneHref(company.phonePrimary)}>Call {company.phonePrimary}</a></nav>
   </div></div>}
   </header>
 }
