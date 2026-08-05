@@ -1,58 +1,119 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowDown, ArrowUpRight, BadgeCheck, Building2, CheckCircle2, Clock3, MapPinned, ShieldCheck, Truck, UsersRound } from 'lucide-react'
+import { ArrowUpRight, BadgeCheck, Building2, CheckCircle2, ClipboardList, Headphones, MapPinned, Phone, Route, ShieldCheck, Truck, UserRoundCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ButtonLink } from '../components/common/ButtonLink'
-import { CallToAction } from '../components/common/CallToAction'
 import { SectionHeading } from '../components/common/SectionHeading'
 import { SeoHead } from '../components/common/SeoHead'
-import routeSeo from '../data/routeSeo.json'
-import { ContactForm } from '../components/forms/ContactForm'
-import { AnimatedLogoIntro } from '../components/sections/AnimatedLogoIntro'
-import { RouteMap } from '../components/sections/RouteMap'
+import { QuickQuoteForm } from '../components/forms/QuickQuoteForm'
 import { ServiceCard } from '../components/sections/ServiceCard'
 import { company, phoneHref } from '../data/company'
 import { companyProfile } from '../data/companyProfile'
 import { fleet } from '../data/fleet'
+import routeSeo from '../data/routeSeo.json'
 import { services } from '../data/services'
 
-const trustIcons = [BadgeCheck, ShieldCheck, Building2, Clock3, CheckCircle2, MapPinned] as const
+const processSteps = [
+  { number: '01', title: 'Share the job', text: 'Tell us the pickup, destination, timing and what you need moved.', icon: ClipboardList },
+  { number: '02', title: 'We plan the movement', text: 'Our team assesses the freight, route and right vehicle for the run.', icon: Route },
+  { number: '03', title: 'Your freight is delivered', text: 'A professional driver completes the job with clear communication throughout.', icon: Truck },
+] as const
+
+const credibilityPoints = [
+  ['Professional drivers', 'Experienced, checked and prepared to represent your business well.', UserRoundCheck],
+  ['Safety-led operations', 'Freight handling and transport planning aligned with operational requirements.', ShieldCheck],
+  ['Dependable communication', 'Clear coordination from the first enquiry through to final delivery.', Headphones],
+] as const
+
+const featuredFleet = [fleet[4], fleet[5]] as const
 
 export default function HomePage() {
   const reduce = useReducedMotion()
+
   return <>
     <SeoHead {...routeSeo.home}/>
-    <AnimatedLogoIntro/>
-    <section className="home-hero"><div className="hero-media" aria-hidden="true"><img
-          src="/images/generated/mercedes-actros-linehaul-branded.jpg"
-          alt=""
-          width="1920"
-          height="1080"
-          loading="eager"
-          decoding="async"
-        /></div><div className="hero-media-overlay" aria-hidden="true"/><div className="hero-grid" aria-hidden="true"/><div className="hero-glow" aria-hidden="true"/><div className="container-page hero-layout">
-      <motion.div className="hero-copy" initial={reduce ? false : {opacity:0, y:26}} animate={{opacity:1,y:0}} transition={{duration:.7}}>
-        <p className="eyebrow hero-kicker"><span aria-hidden="true"/>Professional transport / Australia</p><h1 id="home-hero-title" tabIndex={-1}>{companyProfile.homepage.title}</h1><p className="hero-lead">{companyProfile.homepage.intro}</p><p className="hero-detail">{companyProfile.homepage.detail}</p>
-        <div className="hero-actions"><ButtonLink to="/book-now">Request a quote <ArrowUpRight size={17}/></ButtonLink><ButtonLink to="/our-fleet" variant="secondary">View our fleet</ButtonLink></div>
-        <p className="hero-supporting-line">{companyProfile.homepage.supportingLine}</p><div className="hero-trust hero-data"><span><Building2/><b>Australian owned</b><small>Privately operated</small></span><span><MapPinned/><b>Interstate capable</b><small>Local to linehaul</small></span><span><UsersRound/><b>Experienced team</b><small>Clear coordination</small></span></div>
-      </motion.div>
-      <motion.aside className="hero-art hero-dispatch-panel" initial={reduce ? false : {opacity:0, x:35, rotateY:-8}} animate={{opacity:1,x:0,rotateY:0}} transition={{duration:.8,delay:.15}} aria-label="Freight service overview"><div className="hero-route-card"><img src="/brand/first-class-express-logo.png" alt="1st Class Express" width="118" height="128"/><div><span>Service desk</span><strong>Plan the movement</strong><small>Tell us the freight, route and timing.</small></div></div><div className="freight-line"><Truck/><span/></div><p>Sydney <i/> Brisbane <i/> Melbourne <i/> Adelaide</p><Link to="/contact" className="dispatch-link">Talk to the team <ArrowUpRight size={16}/></Link></motion.aside>
-    </div><a className="scroll-cue" href="#introduction"><ArrowDown/><span>Discover</span></a></section>
 
-    <section id="introduction" className="section intro-section"><div className="container-page intro-grid"><div className="logo-panel"><p className="eyebrow">01 / Our business</p><img src="/brand/first-class-express-logo.png" loading="lazy" decoding="async" alt="1st Class Express" width="420" height="456"/></div><div><SectionHeading eyebrow="About 1st Class Express" title={companyProfile.about.title} intro={companyProfile.about.paragraphs[0]}/><p>{companyProfile.about.paragraphs[1]}</p><div className="intro-proof"><strong>{companyProfile.established}</strong><span>Freight delivery, dedicated drivers and managed fleet support planned around your operation.</span></div><ButtonLink to="/about-us" variant="secondary">Learn about our approach</ButtonLink></div></div></section>
+    <section className="home-hero conversion-hero" aria-labelledby="home-hero-title">
+      <div className="hero-media" aria-hidden="true"><img src="/images/generated/mercedes-actros-linehaul-branded.jpg" alt="" width="1920" height="1080" loading="eager" decoding="async"/></div>
+      <div className="hero-media-overlay" aria-hidden="true"/>
+      <div className="hero-grid" aria-hidden="true"/>
+      <div className="container-page hero-layout conversion-hero__layout">
+        <motion.div className="hero-copy conversion-hero__content" initial={reduce ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65 }}>
+          <p className="eyebrow hero-kicker"><span aria-hidden="true"/>Sydney freight / Interstate transport</p>
+          <h1 id="home-hero-title" tabIndex={-1}>{companyProfile.homepage.title}</h1>
+          <p className="hero-lead">{companyProfile.homepage.intro}</p>
+          <p className="hero-detail">{companyProfile.homepage.detail}</p>
+          <div className="hero-actions conversion-hero__actions">
+            <a className="btn-primary" href="#quick-quote">Get a Free Quote <ArrowUpRight size={17} aria-hidden="true"/></a>
+            <ButtonLink to="/our-fleet" variant="secondary">Explore Our Fleet</ButtonLink>
+          </div>
+          <p className="hero-supporting-line">{companyProfile.homepage.supportingLine}</p>
+        </motion.div>
 
-    <section className="section services-section"><div className="container-page"><div className="section-heading-row"><SectionHeading eyebrow="02 / Freight capability" title="Flexible transport, one dependable team" intro="From time-sensitive deliveries to ongoing logistics support, every job begins with the right questions."/><Link to="/our-services" className="text-link">All services <ArrowUpRight size={16}/></Link></div><div className="service-grid">{services.slice(0,7).map((service,index)=><ServiceCard key={service.title} title={service.title} text={service.short} icon={service.icon} index={index}/>)}</div></div></section>
+        <motion.aside className="conversion-hero__panel" initial={reduce ? false : { opacity: 0, x: 32 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .7, delay: .12 }} aria-label="Quote support">
+          <img src="/brand/first-class-express-logo.png" alt="1st Class Express" width="112" height="122"/>
+          <p className="eyebrow">Ready to move freight?</p>
+          <h2>One enquiry. The right transport plan.</h2>
+          <ul>
+            <li><CheckCircle2 aria-hidden="true"/>Local and interstate capability</li>
+            <li><CheckCircle2 aria-hidden="true"/>Vans through to prime movers</li>
+            <li><CheckCircle2 aria-hidden="true"/>Flexible business delivery support</li>
+          </ul>
+          <a href={phoneHref(company.phonePrimary)}><Phone size={17} aria-hidden="true"/>Call {company.phonePrimary}</a>
+        </motion.aside>
+      </div>
+    </section>
 
-    <section className="uniform-band"><div className="container-page uniform-inner"><div className="uniform-icon"><UsersRound/></div><div><p className="eyebrow">03 / Professional driver solutions</p><h2>{companyProfile.driverSolutions.title}</h2><p>{companyProfile.driverSolutions.paragraphs[0]} Drivers can be allocated to dedicated delivery runs and presented as an extension of your organisation, by agreement and availability.</p></div><ButtonLink to="/our-services" variant="secondary">Explore driver solutions</ButtonLink></div></section>
+    <section className="home-trust-bar" aria-label="Why businesses choose 1st Class Express"><div className="container-page home-trust-grid">
+      <span><BadgeCheck aria-hidden="true"/><b>Established 2013</b><small>More than a decade in transport</small></span>
+      <span><Building2 aria-hidden="true"/><b>Australian owned</b><small>Privately operated</small></span>
+      <span><MapPinned aria-hidden="true"/><b>Sydney based</b><small>Local and regional support</small></span>
+      <span><Truck aria-hidden="true"/><b>Interstate capable</b><small>Major Australian freight corridors</small></span>
+    </div></section>
 
-    <section className="section fleet-showcase"><div className="container-page"><div className="fleet-heading"><SectionHeading eyebrow="The right vehicle" title="A fleet that scales with the freight" intro="Fleet support can range from vans and light trucks through to rigid vehicles, prime movers and assessed interstate linehaul configurations."/><ButtonLink to="/our-fleet" variant="secondary">View the Fleet</ButtonLink></div><figure className="fleet-feature-image"><img src="/images/generated/fleet-lineup-branded.jpg" loading="lazy" decoding="async" width="1920" height="1080" alt="Branded 1st Class Express fleet lineup at an Australian transport depot"/><figcaption><span>Fleet range</span><strong>Matched to the movement</strong></figcaption></figure><div className="fleet-strip">{fleet.slice(0,5).map(({title,use,icon:Icon},i)=><article key={title}><span>0{i+1}</span><Icon/><h3>{title}</h3><p>{use}</p></article>)}</div></div></section>
+    <section className="section fleet-proof-section"><div className="container-page">
+      <div className="fleet-proof-heading"><SectionHeading eyebrow="Fleet capability" title="The right vehicle makes the difference" intro="From agile metropolitan work to assessed interstate linehaul, our fleet is matched to the freight, access requirements and delivery window."/><ButtonLink to="/our-fleet" variant="secondary">View Every Vehicle</ButtonLink></div>
+      <div className="fleet-proof-grid">
+        <figure className="fleet-proof-primary">
+          <img src="/images/generated/fleet-lineup-branded.jpg" alt="Branded 1st Class Express vans, rigid trucks and prime movers at a transport depot" width="1920" height="1080" loading="lazy" decoding="async"/>
+          <figcaption><span>Complete fleet range</span><strong>Built around the job—not a one-size-fits-all service.</strong></figcaption>
+        </figure>
+        <div className="fleet-proof-models">
+          {featuredFleet.map(vehicle => <article key={vehicle.title}>
+            <img src={vehicle.image} alt={`Branded 1st Class Express ${vehicle.title} linehaul truck`} width="1920" height="1080" loading="lazy" decoding="async"/>
+            <div><vehicle.icon aria-hidden="true"/><span>{vehicle.serviceType}</span><h3>{vehicle.title}</h3><p>{vehicle.use}</p></div>
+          </article>)}
+        </div>
+      </div>
+    </div></section>
 
-    <section className="section people-section"><div className="container-page people-grid"><article><UsersRound/><p className="eyebrow">Our drivers</p><h2>Professional representation on every run</h2><p>{companyProfile.driverSolutions.paragraphs[1]}</p><Link to="/our-services">Explore driver solutions →</Link></article><article><Building2/><p className="eyebrow">Your operation</p><h2>Support that fits your operation</h2><p>From a single delivery to recurring transport, dedicated drivers and managed fleet support, services are structured around the schedule, freight and customer experience required.</p><Link to="/our-services">Explore operational support →</Link></article></div></section>
+    <section className="section services-section"><div className="container-page">
+      <div className="section-heading-row"><SectionHeading eyebrow="Freight services" title="Six ways we keep business moving" intro="Practical delivery solutions shaped around timing, freight type and operational needs."/><Link to="/our-services" className="text-link">Explore all services <ArrowUpRight size={16} aria-hidden="true"/></Link></div>
+      <div className="service-grid">{services.slice(0, 6).map((service, index) => <ServiceCard key={service.title} title={service.title} text={service.short} icon={service.icon} index={index}/>)}</div>
+    </div></section>
 
-    <section className="section map-section"><div className="container-page"><SectionHeading eyebrow="Service area" title="Routes that connect business across Australia" intro="Local and regional coverage anchored by interstate capability across Australia’s major freight corridors."/><RouteMap/></div></section>
+    <section className="section process-section"><div className="container-page">
+      <SectionHeading eyebrow="Simple from the start" title="From quote request to delivered freight" intro="A clear three-step process keeps the job moving and gives you one accountable transport team." align="center"/>
+      <div className="process-grid">{processSteps.map(({ number, title, text, icon: Icon }) => <article key={number}><span>{number}</span><Icon aria-hidden="true"/><h3>{title}</h3><p>{text}</p></article>)}</div>
+    </div></section>
 
-    <section className="section why-section"><div className="container-page"><SectionHeading eyebrow="Why 1st Class Express" title="Dependable support, clearly delivered" align="center"/><div className="trust-grid">{companyProfile.trust.map(({title,text}, index)=>{const Icon = trustIcons[index]!; return <article key={title}><Icon/><h3>{title}</h3><p>{text}</p></article>})}</div></div></section>
-    <section className="section benefits-section"><div className="container-page"><SectionHeading eyebrow="Business benefits" title="One partner across delivery, drivers and fleet support" intro="Practical capability for businesses that need flexible transport planning without unnecessary complexity."/><ul className="content-list-grid">{companyProfile.benefits.slice(0,9).map(item=><li key={item}><CheckCircle2 aria-hidden="true"/>{item}</li>)}</ul><ButtonLink to="/book-now">Discuss your requirements</ButtonLink></div></section>
-    <CallToAction/>
-    <section className="section contact-preview"><div className="container-page contact-grid"><div><SectionHeading eyebrow="Start a conversation" title="Tell us where it needs to go" intro="Share the delivery details and our team will help assess the right transport approach."/><div className="contact-person"><span>D / D</span><div><strong>{company.contactName}</strong><small>{company.contactRole}</small></div></div><a href={phoneHref(company.phonePrimary)}>{company.phonePrimary}</a><p>Fleet Operations and Customer Support</p><a href={`mailto:${company.email}`}>{company.email}</a></div><ContactForm compact/></div></section>
+    <section className="section credibility-section"><div className="container-page credibility-grid">
+      <div>
+        <SectionHeading eyebrow="Confidence on every run" title="Professional delivery is more than the truck" intro="The driver, planning and communication behind each movement matter just as much as the vehicle."/>
+        <p>{companyProfile.commitment.intro}</p>
+        <ButtonLink to="/about-us" variant="secondary">Why Businesses Choose Us</ButtonLink>
+      </div>
+      <div className="credibility-list">{credibilityPoints.map(([title, text, Icon]) => <article key={title}><Icon aria-hidden="true"/><div><h3>{title}</h3><p>{text}</p></div></article>)}</div>
+    </div></section>
+
+    <section id="quick-quote" className="section quick-quote-section" aria-labelledby="quick-quote-title"><div className="container-page quick-quote-grid">
+      <div className="quick-quote-copy">
+        <p className="eyebrow">Get a free freight quote</p>
+        <h2 id="quick-quote-title">Tell us what needs to move.</h2>
+        <p>Share the essential details and our team will assess the route, freight and suitable vehicle. For urgent work, call us directly.</p>
+        <a className="quick-quote-phone" href={phoneHref(company.phonePrimary)}><Phone aria-hidden="true"/><span><small>Talk to the transport team</small><strong>{company.phonePrimary}</strong></span></a>
+        <ul><li><CheckCircle2 aria-hidden="true"/>No-obligation enquiry</li><li><CheckCircle2 aria-hidden="true"/>Local and interstate assessment</li><li><CheckCircle2 aria-hidden="true"/>Direct response from our team</li></ul>
+      </div>
+      <div className="quick-quote-card"><QuickQuoteForm/></div>
+    </div></section>
   </>
 }

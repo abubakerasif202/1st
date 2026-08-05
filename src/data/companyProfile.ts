@@ -1,10 +1,10 @@
 export const companyProfile = {
   established: 'Established in 2013',
   homepage: {
-    title: 'Transport Business Made Easier',
-    intro: '1st Class Express provides professional freight delivery, dedicated driver and managed fleet solutions for businesses across Sydney and interstate Australia.',
-    detail: 'From same-day metropolitan deliveries to ongoing fleet support, our experienced team delivers safe, reliable and flexible services tailored to each customer’s operations.',
-    supportingLine: 'Committed service. Professional drivers. Reliable delivery.',
+    title: 'Reliable Freight. Professional Drivers. Australia-Wide.',
+    intro: 'From urgent Sydney deliveries to scheduled interstate freight, 1st Class Express keeps your business moving with the right vehicle, experienced drivers and clear communication.',
+    detail: 'Tell us what is moving, where it needs to go and when it needs to arrive. We will assess the freight and respond with the right transport plan.',
+    supportingLine: 'Fast quote response • Flexible fleet • Professional delivery',
   },
   about: {
     title: 'Professional transport, delivery and fleet solutions built around your business.',

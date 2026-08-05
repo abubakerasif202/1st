@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => { await page.addInitScript(() => sessionStor
 
 test('primary journey and quote validation', async ({ page, isMobile }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /Transport Business Made Easier/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Reliable Freight\. Professional Drivers\. Australia-Wide\./i })).toBeVisible()
   if (isMobile) { await page.getByRole('button', { name: 'Open menu' }).click(); await page.getByRole('dialog').getByRole('link', { name: 'Our Services' }).click() } else { await page.getByRole('link', { name: 'Our Services' }).first().click() }
   await expect(page).toHaveURL(/our-services/)
   await expect(page.getByRole('heading', { level: 1, name: /Our World-Class Services/i })).toBeFocused()
