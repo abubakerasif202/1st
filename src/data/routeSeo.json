@@ -5,22 +5,27 @@
     "description": "Professional freight delivery, dedicated driver and managed fleet solutions across Sydney and interstate Australia."
   },
   "about": {
-    "path": "/about-us",
+    "path": "/about",
     "title": "About 1st Class Express | Australian Transport Company",
     "description": "Learn about 1st Class Express, an Australian-owned transport company providing professional freight delivery, dedicated drivers and fleet solutions across Sydney and interstate routes."
   },
   "services": {
-    "path": "/our-services",
+    "path": "/services",
     "title": "Freight, Driver & Fleet Services | 1st Class Express",
     "description": "Explore metropolitan delivery, interstate linehaul, dedicated driver, dangerous-goods assessment and managed fleet services from 1st Class Express."
   },
   "fleet": {
-    "path": "/our-fleet",
+    "path": "/fleet",
     "title": "Our Fleet | Trucks, Drivers & Managed Fleet Solutions",
     "description": "Explore vans, trucks, Mercedes-Benz Actros, Kenworth K220 and managed fleet support from 1st Class Express across Sydney and interstate routes."
   },
+  "serviceAreas": {
+    "path": "/service-areas",
+    "title": "Freight Service Areas | 1st Class Express",
+    "description": "Freight transport across Sydney, regional NSW, Canberra and interstate routes between major Australian destinations."
+  },
   "book": {
-    "path": "/book-now",
+    "path": "/quote",
     "title": "Request a Freight Quote | 1st Class Express",
     "description": "Request a freight quote from 1st Class Express for local, linehaul and interstate transport across Australia."
   },
