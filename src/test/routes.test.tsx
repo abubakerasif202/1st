@@ -21,6 +21,7 @@ describe('Lovable-aligned primary routes', () => {
     ['/service-areas', /Metropolitan, Regional And Interstate/i],
     ['/quote', /Tell Us What Needs Moving/i],
     ['/contact', /Let's Get Your Freight Moving/i],
+    ['/careers', /Drive Your Career Forward/i],
   ])('renders %s with the reference heading', async (route, heading) => {
     renderRoute(route)
     expect(await screen.findByRole('heading', { level: 1, name: heading }, { timeout: routeRenderTimeout })).toBeInTheDocument()
@@ -52,10 +53,9 @@ describe('Lovable-aligned primary routes', () => {
     expect(screen.getByRole('heading', { name: 'Dangerous Goods Transport' })).toBeInTheDocument()
   })
 
-  it('publishes both supplied contact numbers', async () => {
+  it('publishes the supplied contact number', async () => {
     renderRoute('/contact')
     expect((await screen.findAllByRole('link', { name: '0431 604 240' }))[0]).toHaveAttribute('href', 'tel:0431604240')
-    expect(screen.getAllByRole('link', { name: '0440 674 455' })[0]).toHaveAttribute('href', 'tel:0440674455')
   })
 
   it('renders the branded 404 route as noindex', async () => {

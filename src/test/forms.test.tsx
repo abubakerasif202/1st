@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
+import { ApplicationForm } from '../components/forms/ApplicationForm'
 import { ContactForm } from '../components/forms/ContactForm'
 import { QuickQuoteForm } from '../components/forms/QuickQuoteForm'
 import { QuoteForm } from '../components/forms/QuoteForm'
@@ -16,4 +17,6 @@ describe('forms', () => {
     expect(within(form).getByText('Enter pickup suburb or postcode')).toBeInTheDocument()
     expect(within(form).getByText('Consent is required to submit')).toBeInTheDocument()
   })
+  it('shows careers application validation errors', async () => { render(<MemoryRouter><ApplicationForm/></MemoryRouter>); fireEvent.click(screen.getByRole('button', { name: /submit application/i })); expect(await screen.findByText('Enter your first name')).toBeInTheDocument(); expect(screen.getByText('Attach your résumé (PDF, DOC or DOCX)')).toBeInTheDocument(); expect(screen.getByText('Privacy acknowledgement is required')).toBeInTheDocument() })
+  it('preselects the role from the URL query string', async () => { render(<MemoryRouter initialEntries={['/careers?role=HC%20Driver']}><ApplicationForm/></MemoryRouter>); expect(await screen.findByDisplayValue('HC Driver')).toBeInTheDocument() })
 })

@@ -3,7 +3,6 @@ export const company = {
   tagline: 'Committed to Deliver a Quality Service',
   email: 'enquiry@1stclassexpress.com.au',
   phonePrimary: '0431 604 240',
-  phoneSecondary: '0440 674 455',
   contactName: 'Dino / Divine',
   contactRole: 'Operations Manager',
   ownership: 'Australian privately owned',

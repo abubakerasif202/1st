@@ -17,7 +17,7 @@
   "fleet": {
     "path": "/fleet",
     "title": "Our Fleet | Trucks, Drivers & Managed Fleet Solutions",
-    "description": "Explore vans, trucks, Mercedes-Benz Actros, Kenworth K220 and managed fleet support from 1st Class Express across Sydney and interstate routes."
+    "description": "Explore vans, pallet trucks, rigid trucks, prime movers, semi-trailers and B-double configurations from 1st Class Express across Sydney and interstate routes."
   },
   "serviceAreas": {
     "path": "/service-areas",
@@ -33,6 +33,11 @@
     "path": "/contact",
     "title": "Contact 1st Class Express | Freight Enquiries",
     "description": "Contact 1st Class Express for local, regional and interstate freight enquiries across Australia."
+  },
+  "careers": {
+    "path": "/careers",
+    "title": "Driver Careers | 1st Class Express",
+    "description": "View available driving roles and apply for local or interstate driving opportunities with 1st Class Express, an Australian transport company."
   },
   "notFound": {
     "path": "/404",

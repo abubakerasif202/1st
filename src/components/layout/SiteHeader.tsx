@@ -10,6 +10,7 @@ const links = [
   ['Services', '/services'],
   ['Our Fleet', '/fleet'],
   ['Service Areas', '/service-areas'],
+  ['Careers', '/careers'],
   ['Contact', '/contact'],
 ] as const
 
