@@ -64,6 +64,22 @@
 .route-explorer__panel h3{margin:0 0 .6rem;font-size:2rem;color:#fff}
 .route-explorer__panel p{margin:0 0 1.5rem;color:#b5c0c7;line-height:1.6;max-width:640px}
 
+/* Fleet explorer (Fleet page) */
+.fleet-explorer__filters{margin-bottom:2.5rem}
+.fleet-explorer__list{display:grid;gap:4.5rem}
+.fleet-explorer__row.lovable-split{align-items:start}
+.fleet-explorer__row--reverse .fleet-explorer__image{order:2}
+.fleet-explorer__image img{border-radius:var(--radius)}
+.fleet-explorer__body{display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.fleet-explorer__body .fleet-detail-card__heading{display:flex;align-items:center;gap:.6rem;margin-bottom:.9rem}
+.fleet-explorer__body .fleet-detail-card__heading svg{color:var(--gold)}
+.fleet-explorer__body .fleet-detail-card__heading h3{margin:0;font-size:1.6rem;color:#fff}
+.fleet-explorer__body>p{color:#bcc5cb;line-height:1.65;margin:0 0 1.4rem}
+.fleet-explorer__body dl{display:grid;gap:.7rem;margin:0 0 1.6rem;width:100%}
+.fleet-explorer__body dl dt{color:#8b969d;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.fleet-explorer__body dl dd{margin:.2rem 0 0;color:#e4e8ea}
+@media(max-width:820px){.fleet-explorer__row--reverse .fleet-explorer__image{order:0}}
+
 /* Freight journey (Home) */
 .freight-journey{display:grid;grid-template-columns:repeat(6,1fr);gap:1.25rem;list-style:none;margin:0;padding:2.5rem 0 0;position:relative}
 .freight-journey:before{content:"";position:absolute;top:1.4rem;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--red));z-index:0}
@@ -73,3 +89,24 @@
 .freight-journey__stage p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.55}
 @media(max-width:1080px){.freight-journey{grid-template-columns:repeat(3,1fr);gap:2rem 1.25rem}.freight-journey:before{display:none}}
 @media(max-width:600px){.freight-journey{grid-template-columns:1fr;gap:0;padding-top:0}.freight-journey:before{top:0;bottom:0;left:1.4rem;right:auto;width:2px;height:auto;background:linear-gradient(180deg,var(--gold),var(--red))}.freight-journey__stage{padding:0 0 2rem 4.2rem;min-height:1px}.freight-journey__marker{position:absolute;left:0;top:0;margin-bottom:0}}
+
+/* Quote wizard stepper (Book Now) — reuses the freight-journey gold-to-red route line */
+.quote-stepper{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;list-style:none;margin:0 0 2rem;padding:1.7rem 0 0;position:relative}
+.quote-stepper:before{content:"";position:absolute;top:1.05rem;left:6%;right:6%;height:2px;background:linear-gradient(90deg,var(--gold),var(--red));z-index:0}
+.quote-stepper__step{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.45rem;text-align:center}
+.quote-stepper__marker{display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:50%;background:#fff;border:2px solid var(--line);color:var(--muted);font:800 .78rem 'Archivo',sans-serif;transition:background .2s,border-color .2s,color .2s}
+.quote-stepper__step.is-complete .quote-stepper__marker,.quote-stepper__step.is-current .quote-stepper__marker{background:var(--gold);border-color:var(--gold);color:#151305}
+.quote-stepper__step.is-current .quote-stepper__marker{box-shadow:0 0 0 4px rgba(209,179,90,.25)}
+.quote-stepper__label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.quote-stepper__step.is-current .quote-stepper__label{color:var(--ink)}
+.quote-form h3{grid-column:1/-1;margin:0 0 .2rem;font-size:1.5rem;outline:none}
+.quote-summary{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem 1.5rem;margin:0 0 .5rem;padding:1.25rem;border:1px solid var(--line);background:var(--cream)}
+.quote-summary__item--full{grid-column:1/-1}
+.quote-summary dt{margin:0;color:var(--muted);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.quote-summary dd{margin:.25rem 0 0;color:var(--ink-2);font-weight:600;word-break:break-word}
+.quote-form-nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:.5rem}
+.quote-form-nav .btn-outline{border:1px solid #aeb6bc;background:transparent;color:var(--ink)}
+.quote-form-nav .btn-outline:hover{background:#f2f0ea}
+.quote-form--done{display:flex;align-items:center;justify-content:center;min-height:220px;text-align:center}
+.quote-form--done .form-status{margin:0;font-size:1.1rem;font-weight:700;color:var(--ink)}
+@media(max-width:600px){.quote-stepper{gap:.3rem;padding-top:1.3rem}.quote-stepper__marker{width:1.6rem;height:1.6rem;font-size:.68rem}.quote-stepper__label{font-size:.56rem;letter-spacing:.02em}.quote-summary{grid-template-columns:1fr;padding:1rem}}
