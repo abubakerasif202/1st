@@ -37,7 +37,7 @@ export function AnimatedLogoIntro() {
     <button className="intro-skip" type="button" onClick={closeIntro} autoFocus>Skip intro</button>
     <div className="intro-ambient" />
     <motion.div className="intro-truck-plane" initial={reduce ? false : {opacity: 0, x: '20%', rotateY: -14}} animate={{opacity: .38, x: 0, rotateY: -8}} transition={{duration: 1.1, ease: 'easeOut'}}>
-      <img src="/images/lovable/hero-b-double.webp" alt="" />
+      <img src="/images/replacement/prime-mover-hero-branded.png" alt="" />
     </motion.div>
     <div className="intro-perspective">
       <motion.div className="intro-logo-depth" initial={reduce ? false : {opacity: 0, rotateX: 56, rotateY: -34, z: -180, scale: .72}} animate={{opacity: 1, rotateX: 0, rotateY: 0, z: 0, scale: 1}} transition={{duration: 1.05, ease: [0.16, 1, 0.3, 1]}}>

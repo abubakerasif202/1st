@@ -9,7 +9,7 @@ const routeConfigPath = path.join(projectRoot, 'src', 'data', 'routeSeo.json')
 const sitemapPath = path.join(projectRoot, 'public', 'sitemap.xml')
 const vercelConfigPath = path.join(projectRoot, 'vercel.json')
 const siteUrl = (process.env.VITE_SITE_URL || 'https://www.1stclassexpress.com.au').replace(/\/$/, '')
-const socialImage = `${siteUrl}/images/lovable/hero-b-double.webp`
+const socialImage = `${siteUrl}/images/replacement/prime-mover-hero-branded.png`
 const markerPattern = /<!-- route-meta:start -->[\s\S]*?<!-- route-meta:end -->/
 
 const escapeHtml = (value) => value
