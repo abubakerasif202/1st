@@ -44,6 +44,13 @@ export function QuoteForm() {
   const [step, setStep] = useState(1)
   const [status, setStatus] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  // react-hook-form validates the whole schema in the background the moment a
+  // new field (e.g. the review step's consent checkbox) first mounts, which
+  // would otherwise flash a "Consent is required" error before the user has
+  // even seen the checkbox. Only surface step 5's validation errors once the
+  // user has actually attempted to submit, matching the original form's
+  // errors-appear-on-submit behaviour.
+  const [submitAttempted, setSubmitAttempted] = useState(false)
   const isFirstRender = useRef(true)
   const { register, handleSubmit, trigger, getValues, formState: { errors, isSubmitting } } = useForm<Values>({ resolver: zodResolver(schema), defaultValues: { firstName:'', lastName:'', companyName:'', email:'', phone:'', pickup:'', delivery:'', pickupDate:'', serviceType:'', freight:'', items:'', urgency:'', message:'', website:'' } })
 
@@ -122,7 +129,7 @@ export function QuoteForm() {
         <div className="quote-summary__item"><dt>Phone</dt><dd>{values.phone}</dd></div>
       </dl>
       <label className="form-field full"><span>Message / special instructions <em>(optional)</em></span><textarea rows={4} {...register('message')}/></label>
-      <label className="check-field full"><input type="checkbox" {...register('consent')}/><span>I consent to 1st Class Express using these details to respond to my quote request.</span></label>{errors.consent && <small className="full form-error" role="alert">{errors.consent.message}</small>}
+      <label className="check-field full"><input type="checkbox" {...register('consent')}/><span>I consent to 1st Class Express using these details to respond to my quote request.</span></label>{submitAttempted && errors.consent && <small className="full form-error" role="alert">{errors.consent.message}</small>}
       <label className="honeypot" aria-hidden="true">Website<input tabIndex={-1} autoComplete="off" {...register('website')}/></label>
     </>}
 
@@ -130,7 +137,7 @@ export function QuoteForm() {
       {step > 1 ? <button type="button" className="btn-outline" onClick={goBack}>Back</button> : <span/>}
       {step < 5
         ? <button type="button" className="btn-primary" onClick={goNext}>Next</button>
-        : <button className="btn-primary" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Sending…' : 'Request My Quote'}</button>}
+        : <button className="btn-primary" type="submit" disabled={isSubmitting} onClick={() => setSubmitAttempted(true)}>{isSubmitting ? 'Sending…' : 'Request My Quote'}</button>}
     </div>
     {status && !submitted && <p className="form-status full" role="status">{status}</p>}
   </form>
