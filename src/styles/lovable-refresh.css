@@ -35,3 +35,20 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.lovable-hero__image{animation:none}.lovable-fleet-card,.lovable-fleet-card img,.lovable-service-card,.lovable-btn,.btn-primary,.btn-secondary{transition:none}.lovable-fleet-card:hover,.lovable-service-card:hover,.lovable-btn:hover,.btn-primary:hover,.btn-secondary:hover{transform:none}}
 
 .service-detail-card h3{font-size:2rem}.fleet-detail-card__heading h3{font-size:1.45rem}
+
+/* Keep fleet imagery visually prominent instead of placing every image in a narrow card. */
+@media(min-width:821px){
+  .lovable-split{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
+  .lovable-fleet-grid,.lovable-fleet-details{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .service-detail-card,.service-detail-card:nth-child(even){grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .fleet-gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none}
+  .fleet-gallery img{height:clamp(300px,32vw,520px);object-fit:cover;object-position:center}
+  .fleet-gallery img:first-child,.fleet-gallery img:last-child{grid-row:auto;grid-column:auto}
+}
+
+.lovable-split__image img,.service-detail-card__image img,.fleet-detail-card__image img{object-position:center}
+
+@media(max-width:600px){
+  .fleet-gallery{grid-template-columns:1fr;grid-template-rows:none}
+  .fleet-gallery img{height:auto;min-height:0;aspect-ratio:3/2;object-fit:cover}
+}
