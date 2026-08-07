@@ -1,7 +1,8 @@
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, describe, expect, it } from 'vitest'
 import App from '../app/App'
+import { company } from '../data/company'
 
 function renderRoute(route: string) {
   window.sessionStorage.setItem('intro-seen', 'true')
@@ -22,6 +23,7 @@ describe('Lovable-aligned primary routes', () => {
     ['/quote', /Tell Us What Needs Moving/i],
     ['/contact', /Let's Get Your Freight Moving/i],
     ['/careers', /Drive Your Career Forward/i],
+    ['/driver-handbook', /Driving with 1st Class Express/i],
   ])('renders %s with the reference heading', async (route, heading) => {
     renderRoute(route)
     expect(await screen.findByRole('heading', { level: 1, name: heading }, { timeout: routeRenderTimeout })).toBeInTheDocument()
@@ -57,6 +59,22 @@ describe('Lovable-aligned primary routes', () => {
     renderRoute('/contact')
     expect((await screen.findAllByRole('link', { name: '0431 604 240' }))[0]).toHaveAttribute('href', 'tel:0431604240')
   })
+
+  it('builds the driver handbook from the same data as the public pages', async () => {
+    renderRoute('/driver-handbook')
+    expect(await screen.findByRole('heading', { level: 1, name: /Driving with 1st Class Express/i }, { timeout: routeRenderTimeout })).toBeInTheDocument()
+    // Every driver role, fleet vehicle and service is reproduced in the document.
+    expect(screen.getByRole('heading', { level: 3, name: 'Interstate Heavy Vehicle Driver' })).toBeInTheDocument()
+    expect(screen.getByRole('rowheader', { name: 'B-Double Configurations' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 3, name: 'Dangerous Goods Transport' })).toBeInTheDocument()
+    const doc = within(screen.getByRole('article', { name: 'Driver Handbook document' }))
+    expect(doc.getByRole('link', { name: company.phonePrimary })).toHaveAttribute('href', 'tel:0431604240')
+  }, routeRenderTimeout + 5_000)
+
+  it('offers the handbook from the careers page', async () => {
+    renderRoute('/careers')
+    expect(await screen.findByRole('link', { name: /Read the Driver Handbook/i }, { timeout: routeRenderTimeout })).toHaveAttribute('href', '/driver-handbook')
+  }, routeRenderTimeout + 5_000)
 
   it('renders the branded 404 route as noindex', async () => {
     renderRoute('/missing')

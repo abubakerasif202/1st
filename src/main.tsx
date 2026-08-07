@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './app/App'
 import './styles/index.css'
 import './styles/lovable-refresh.css'
+import './styles/driver-handbook.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>,

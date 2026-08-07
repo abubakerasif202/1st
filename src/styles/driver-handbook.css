@@ -1,0 +1,475 @@
+/* Driver Handbook — a paged, print-first document rendered as a web page.
+   Screen shows an A4-proportioned sheet; print emits the same document at A4
+   with a running footer. Typography and palette are deliberately separate from
+   the marketing site: this is a document, not a landing page. */
+
+.hb-stage {
+  --hb-ink: #0c0f0f;
+  --hb-body: #2a2823;
+  --hb-soft: #55524b;
+  --hb-faint: #6f6a5f;
+  --hb-gold: #d4af37;
+  --hb-gold-bright: #f2ca50;
+  --hb-gold-dark: #8a6d1b;
+  --hb-red: #b71939;
+  --hb-cream: #f4f1e9;
+  --hb-rule: #d8d2c2;
+  --hb-hairline: #e6e1d5;
+  --hb-sans: 'Hanken Grotesk', 'Segoe UI', sans-serif;
+  --hb-serif: 'Playfair Display', Georgia, serif;
+  --hb-mono: 'JetBrains Mono', ui-monospace, monospace;
+  padding: 3rem 0 5rem;
+  background: #1b1d1d;
+}
+
+.hb-toolbar {
+  width: min(210mm, calc(100% - 32px));
+  margin: 0 auto 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.hb-toolbar p {
+  margin: 0;
+  color: #cfcabb;
+  font-family: var(--hb-mono);
+  font-size: .7rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.hb-print {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: .5rem;
+  padding: 0 1.1rem;
+  border: 1px solid var(--hb-gold);
+  background: transparent;
+  color: var(--hb-gold-bright);
+  font-family: var(--hb-sans);
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.hb-print:hover { background: var(--hb-gold); color: #191400; }
+
+.hb-doc {
+  width: min(210mm, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 0.7in;
+  background: #fff;
+  color: var(--hb-body);
+  font-family: var(--hb-sans);
+  font-size: 13.5px;
+  line-height: 1.62;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .45);
+}
+.hb-doc p { margin: 0 0 12px; }
+.hb-doc a { color: var(--hb-gold-dark); }
+.hb-doc a:hover { color: var(--hb-red); }
+
+/* Blocks that must not be split across a printed page. */
+.hb-keep { break-inside: avoid; orphans: 3; widows: 3; }
+
+/* Cover ------------------------------------------------------------------ */
+.hb-cover {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 28px;
+  align-items: start;
+  padding: 34px 34px 30px;
+  border-top: 5px solid var(--hb-gold);
+  background: var(--hb-ink);
+  color: #e2e2e2;
+}
+.hb-cover__eyebrow {
+  margin: 0;
+  color: var(--hb-gold-bright);
+  font-family: var(--hb-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.hb-cover h1 {
+  margin: 10px 0 0;
+  color: #fff;
+  font-family: var(--hb-serif);
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.01em;
+}
+.hb-cover__intro { margin: 14px 0 0 !important; max-width: 30em; color: #d0c5af; font-size: 14px; line-height: 1.5; }
+.hb-cover__badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.hb-cover__badges span {
+  padding: 6px 10px;
+  border: 1px solid rgba(212, 175, 55, .5);
+  color: var(--hb-gold-bright);
+  font-family: var(--hb-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.hb-cover img { width: 108px; height: auto; object-fit: contain; }
+
+/* Contents --------------------------------------------------------------- */
+.hb-contents { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; margin: 26px 0 4px; }
+.hb-contents__label {
+  margin: 0 0 10px;
+  color: var(--hb-gold-dark);
+  font-family: var(--hb-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.hb-contents ol { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 2; }
+.hb-contents a { color: var(--hb-body); }
+.hb-contents a:hover { color: var(--hb-red); }
+.hb-rule { border: 0; border-top: 2px solid var(--hb-ink); margin: 22px 0 26px; }
+
+/* Section furniture ------------------------------------------------------ */
+.hb-section { scroll-margin-top: 120px; }
+.hb-section h2 {
+  margin: 0;
+  color: #121414;
+  font-family: var(--hb-serif);
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+.hb-section h2 span {
+  margin-right: 12px;
+  color: var(--hb-red);
+  font-family: var(--hb-mono);
+  font-size: 12px;
+  font-weight: 700;
+}
+.hb-section h2::after {
+  content: '';
+  display: block;
+  width: 54px;
+  height: 3px;
+  margin: 12px 0 16px;
+  background: var(--hb-gold);
+}
+.hb-note {
+  margin: 0 0 30px !important;
+  color: var(--hb-faint);
+  font-family: var(--hb-mono);
+  font-size: 9.5px;
+  line-height: 1.6;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.hb-block-end { margin-bottom: 30px; }
+
+/* Pull quote ------------------------------------------------------------- */
+.hb-quote {
+  margin: 0 0 30px;
+  padding: 16px 20px;
+  border-left: 4px solid var(--hb-red);
+  background: var(--hb-cream);
+}
+.hb-quote strong {
+  display: block;
+  color: #121414;
+  font-family: var(--hb-serif);
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.hb-quote p { margin: 8px 0 0 !important; color: var(--hb-soft); font-size: 12.5px; line-height: 1.55; }
+
+/* Hairline cell grids ---------------------------------------------------- */
+.hb-cells {
+  display: grid;
+  gap: 1px;
+  margin: 0 0 30px;
+  padding: 0;
+  list-style: none;
+  background: var(--hb-rule);
+  border: 1px solid var(--hb-rule);
+}
+.hb-cells--2 { grid-template-columns: 1fr 1fr; }
+.hb-cells--3 { grid-template-columns: repeat(3, 1fr); }
+.hb-cells li {
+  padding: 11px 14px;
+  background: #fff;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.hb-cells--cream li { padding: 12px 14px; background: var(--hb-cream); font-size: 12px; }
+.hb-cells--bullets li { display: flex; align-items: flex-start; gap: 10px; }
+.hb-cells--bullets li::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  margin-top: 6px;
+  background: var(--hb-gold);
+}
+.hb-cells .hb-cells__wide { grid-column: 1 / -1; }
+
+/* Numbered standards ----------------------------------------------------- */
+.hb-standards { display: grid; grid-template-columns: 1fr 1fr; gap: 0 36px; margin: 0 0 30px; }
+.hb-standards ol { margin: 0; padding: 0; list-style: none; counter-reset: none; }
+.hb-standards li {
+  display: flex;
+  gap: 11px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hb-hairline);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.hb-standards li span { flex: 0 0 auto; color: var(--hb-gold-dark); font-family: var(--hb-mono); font-size: 10px; }
+
+/* Role cards ------------------------------------------------------------- */
+.hb-role { border: 1px solid var(--hb-rule); margin: 0 0 12px; }
+.hb-role:last-of-type { margin-bottom: 30px; }
+.hb-role__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--hb-ink);
+  color: #fff;
+}
+.hb-role__head h3 { margin: 0; font-family: var(--hb-serif); font-size: 17px; font-weight: 700; }
+.hb-role__code {
+  color: var(--hb-gold-bright);
+  font-family: var(--hb-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.hb-role__body { display: grid; grid-template-columns: 1fr 1.15fr; gap: 24px; padding: 14px 16px; }
+.hb-role__body dl { margin: 0; }
+.hb-role__body dt,
+.hb-role__label {
+  margin: 0 0 3px;
+  color: var(--hb-gold-dark);
+  font-family: var(--hb-mono);
+  font-size: 8.5px;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.hb-role__body dd { margin: 0 0 10px; font-size: 12px; line-height: 1.5; }
+.hb-role__body dd:last-child { margin-bottom: 0; }
+.hb-role__body ul { margin: 0; padding-left: 16px; font-size: 12px; line-height: 1.55; }
+
+/* Fleet table ------------------------------------------------------------ */
+.hb-table { width: 100%; border-collapse: collapse; margin: 0 0 30px; }
+.hb-table thead tr { background: var(--hb-ink); color: #fff; }
+.hb-table th {
+  padding: 10px 12px;
+  text-align: left;
+  font-family: var(--hb-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.hb-table th:first-child { width: 23%; }
+.hb-table th:nth-child(3) { width: 26%; }
+.hb-table th:last-child { width: 14%; }
+.hb-table td { padding: 10px 12px; border-bottom: 1px solid var(--hb-hairline); font-size: 12px; line-height: 1.45; }
+.hb-table td:first-child { color: #121414; font-weight: 700; }
+.hb-table td:nth-child(3) { color: var(--hb-soft); }
+.hb-table td:last-child {
+  color: var(--hb-gold-dark);
+  font-family: var(--hb-mono);
+  font-size: 9px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* Service cells ---------------------------------------------------------- */
+.hb-services {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 0 0 12px;
+  background: var(--hb-rule);
+  border: 1px solid var(--hb-rule);
+}
+.hb-services article { padding: 14px 16px; background: #fff; }
+.hb-services article.is-flagged { border-left: 3px solid var(--hb-red); }
+.hb-services h3 { margin: 0 0 5px; color: #121414; font-family: var(--hb-serif); font-size: 15px; font-weight: 700; }
+.hb-services p { margin: 0 !important; font-size: 12px; line-height: 1.5; }
+
+/* Coverage chips --------------------------------------------------------- */
+.hb-chips-label {
+  margin: 0 0 6px !important;
+  color: var(--hb-gold-dark);
+  font-family: var(--hb-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.hb-chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 18px; padding: 0; list-style: none; }
+.hb-chips li { padding: 6px 11px; background: var(--hb-ink); color: #fff; font-size: 11.5px; font-weight: 600; }
+.hb-chips--outline { gap: 6px; margin-bottom: 30px; }
+.hb-chips--outline li { padding: 5px 10px; border: 1px solid var(--hb-rule); background: transparent; color: var(--hb-body); font-weight: 400; }
+
+/* Work-we-support list --------------------------------------------------- */
+.hb-support { display: grid; grid-template-columns: 1fr 1fr; gap: 0 36px; margin: 0 0 30px; padding: 0; list-style: none; }
+.hb-support li {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hb-hairline);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.hb-support li::before { content: ''; flex: 0 0 auto; width: 6px; height: 6px; margin-top: 6px; background: var(--hb-red); }
+
+/* Callout ---------------------------------------------------------------- */
+.hb-callout { margin: 0 0 30px; padding: 16px 20px; border: 1px solid var(--hb-rule); border-top: 4px solid var(--hb-gold); }
+.hb-callout p:first-child {
+  margin: 0 0 6px !important;
+  color: var(--hb-gold-dark);
+  font-family: var(--hb-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.hb-callout p:last-child { margin: 0 !important; font-size: 12.5px; line-height: 1.55; }
+
+/* Contact ---------------------------------------------------------------- */
+.hb-contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 0 0 30px;
+  background: var(--hb-rule);
+  border: 1px solid var(--hb-rule);
+}
+.hb-contact > div { padding: 18px 20px; background: #fff; }
+.hb-contact > div:first-child { background: var(--hb-ink); }
+.hb-contact dt {
+  margin: 0 0 4px;
+  color: var(--hb-gold-dark);
+  font-family: var(--hb-mono);
+  font-size: 8.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.hb-contact > div:first-child dt { color: var(--hb-gold-bright); }
+.hb-contact dd { margin: 0 0 12px; }
+.hb-contact dd:last-child { margin-bottom: 0; }
+.hb-contact__name { color: #fff; font-family: var(--hb-serif); font-size: 20px; font-weight: 700; }
+.hb-contact__phone { color: #e2e2e2; font-size: 15px; font-weight: 700; }
+.hb-contact__phone a { color: inherit; }
+.hb-contact__email { color: #121414; font-size: 13px; font-weight: 700; word-break: break-word; }
+.hb-contact__email a { color: inherit; }
+.hb-contact__about { font-size: 12.5px; line-height: 1.5; }
+
+/* Acknowledgement -------------------------------------------------------- */
+.hb-ack { break-before: page; }
+.hb-ack__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 40px; margin: 0 0 24px; }
+.hb-ack__field i { display: block; height: 34px; border-bottom: 1px solid #121414; }
+.hb-ack__field span {
+  display: block;
+  margin-top: 6px;
+  color: var(--hb-faint);
+  font-family: var(--hb-mono);
+  font-size: 8.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.hb-ack__note { margin: 0 !important; color: var(--hb-soft); font-size: 11.5px; line-height: 1.55; }
+
+/* Document footer -------------------------------------------------------- */
+.hb-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 30px;
+  padding-top: 7px;
+  border-top: 1px solid var(--hb-rule);
+  color: #8b867c;
+  font-family: var(--hb-mono);
+  font-size: 8.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* Narrow screens: the sheet stops pretending to be A4 -------------------- */
+@media (max-width: 700px) {
+  .hb-stage { padding: 1.5rem 0 3rem; }
+  .hb-doc { width: calc(100% - 20px); padding: 20px; font-size: 13px; }
+  .hb-cover { grid-template-columns: 1fr; padding: 22px; }
+  .hb-cover h1 { font-size: 32px; }
+  .hb-cover img { width: 84px; }
+  .hb-contents,
+  .hb-standards,
+  .hb-support,
+  .hb-ack__fields,
+  .hb-cells--2,
+  .hb-cells--3,
+  .hb-services,
+  .hb-contact,
+  .hb-role__body { grid-template-columns: 1fr; }
+  .hb-contents__label--spacer { display: none; }
+  .hb-footer { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+
+/* Print ------------------------------------------------------------------ */
+@page { size: A4; margin: 0.7in; }
+
+@media print {
+  .handbook-printing .announcement,
+  .handbook-printing .site-header,
+  .handbook-printing .site-footer,
+  .handbook-printing .mobile-actions,
+  .handbook-printing .skip-link,
+  .handbook-printing .hb-toolbar { display: none !important; }
+
+  .handbook-printing,
+  .handbook-printing .hb-stage { padding: 0; background: #fff; }
+
+  .handbook-printing .hb-doc {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  /* Repeat the document footer on every printed sheet. */
+  .handbook-printing .hb-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    background: #fff;
+  }
+
+  .hb-cover,
+  .hb-role__head,
+  .hb-table thead tr,
+  .hb-contact > div:first-child,
+  .hb-cells--cream li,
+  .hb-quote,
+  .hb-chips li { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .hb-section h2 { break-after: avoid; }
+  .hb-table { break-inside: auto; }
+  .hb-table tr { break-inside: avoid; }
+}

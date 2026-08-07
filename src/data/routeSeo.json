@@ -39,6 +39,11 @@
     "title": "Driver Careers | 1st Class Express",
     "description": "View available driving roles and apply for local or interstate driving opportunities with 1st Class Express, an Australian transport company."
   },
+  "driverHandbook": {
+    "path": "/driver-handbook",
+    "title": "Driver Handbook | 1st Class Express",
+    "description": "The 1st Class Express Driver Handbook: driver standards, role requirements, licence classes, fleet, service areas and safety expectations for drivers on delivery, linehaul and fleet assignments."
+  },
   "notFound": {
     "path": "/404",
     "title": "Page Not Found | 1st Class Express",

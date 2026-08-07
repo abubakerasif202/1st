@@ -6,6 +6,8 @@ export type DriverRole = {
   employmentType: string
   location: string
   licenceClass: string
+  /** Short code shown in the printed Driver Handbook role cards. */
+  licenceCode: string
   experience: string
   responsibilities: readonly string[]
   status: RoleStatus
@@ -21,6 +23,7 @@ export const driverRoles: readonly DriverRole[] = [
     employmentType: 'Full-time / Casual',
     location: 'Sydney-based, interstate linehaul routes',
     licenceClass: 'HC or MC',
+    licenceCode: 'HC or MC',
     experience: 'Recent interstate or linehaul driving experience preferred',
     responsibilities: ['Interstate linehaul freight movements', 'Pre-trip and post-trip vehicle checks', 'Accurate freight and trip documentation', 'Compliance with fatigue-management requirements'],
     status: 'eoi',
@@ -31,6 +34,7 @@ export const driverRoles: readonly DriverRole[] = [
     employmentType: 'Full-time / Part-time',
     location: 'Sydney metropolitan area',
     licenceClass: 'Car licence or LR, depending on vehicle',
+    licenceCode: 'Car or LR',
     experience: 'Local delivery or courier driving experience preferred',
     responsibilities: ['Metropolitan pickup and delivery runs', 'Customer-facing delivery service', 'Proof-of-delivery and freight documentation', 'Safe loading and unloading of freight'],
     status: 'eoi',
@@ -41,6 +45,7 @@ export const driverRoles: readonly DriverRole[] = [
     employmentType: 'Full-time / Casual',
     location: 'Sydney and regional NSW routes',
     licenceClass: 'HC',
+    licenceCode: 'HC',
     experience: 'Demonstrated HC driving experience',
     responsibilities: ['Rigid and semi-trailer freight movements', 'Route and scheduling adherence', 'Vehicle safety checks', 'Safe handling of palletised and bulk freight'],
     status: 'eoi',
@@ -51,6 +56,7 @@ export const driverRoles: readonly DriverRole[] = [
     employmentType: 'Full-time / Casual',
     location: 'Interstate linehaul corridors',
     licenceClass: 'MC',
+    licenceCode: 'MC',
     experience: 'B-double or road-train experience highly regarded',
     responsibilities: ['B-double and combination-vehicle freight movements', 'Interstate route and fatigue-management compliance', 'Load-restraint and safety checks', 'Accurate trip and freight documentation'],
     status: 'eoi',
@@ -61,6 +67,7 @@ export const driverRoles: readonly DriverRole[] = [
     employmentType: 'Full-time / Part-time / Casual',
     location: 'Sydney metropolitan and regional NSW',
     licenceClass: 'HR',
+    licenceCode: 'HR',
     experience: 'Rigid-truck driving experience preferred',
     responsibilities: ['Rigid-vehicle freight and delivery runs', 'Warehouse loading and dispatch support', 'Customer-facing delivery service', 'Vehicle safety and maintenance checks'],
     status: 'eoi',
@@ -71,6 +78,7 @@ export const driverRoles: readonly DriverRole[] = [
     employmentType: 'Casual',
     location: 'Sydney metropolitan, with regional and interstate work as required',
     licenceClass: 'Car licence through to MC, depending on assignment',
+    licenceCode: 'Car — MC',
     experience: 'Reliable availability and the relevant licence class for the assigned vehicle',
     responsibilities: ['Backup coverage for leave and peak-demand periods', 'Assignment to local, regional or interstate runs as required', 'Compliance with the same safety and documentation standards as permanent drivers'],
     status: 'eoi',
