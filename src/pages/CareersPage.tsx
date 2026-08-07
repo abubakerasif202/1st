@@ -51,7 +51,7 @@ export default function CareersPage() {
   return <>
     <SeoHead {...routeSeo.careers} />
     <JobPostingSchema />
-    <PageHero eyebrow="Careers" title="Drive Your Career Forward" intro="Join a professional Australian transport team, with local and interstate driving opportunities for experienced, reliable drivers." image="/images/replacement/prime-mover-hero-branded.png" />
+    <PageHero eyebrow="Careers" title="Drive Your Career Forward" intro="Join a professional Australian transport team, with local and interstate driving opportunities for experienced, reliable drivers." image="/images/replacement/prime-mover-hero-branded.webp" />
 
     <section className="lovable-section lovable-section--soft">
       <div className="container-page">
@@ -79,7 +79,7 @@ export default function CareersPage() {
         <div>
           <p className="lovable-kicker">Driver Application</p>
           <h2>Apply Or Register Your Interest</h2>
-          <p>Complete the form with your details, driving experience and a current résumé. Fields marked with an asterisk are required.</p>
+          <p>Start with your contact details, licence class, availability, driving experience and current résumé. Detailed checks are completed later for shortlisted applicants. Fields marked with an asterisk are required.</p>
           <p className="privacy-notice"><strong>Privacy notice.</strong> Information submitted through this form is used to assess your application for driving roles with 1st Class Express. Shortlisted applicants may be contacted using the details provided. Applicant information is not published, and is not retained for longer than necessary for recruitment purposes.</p>
         </div>
         <ApplicationForm />

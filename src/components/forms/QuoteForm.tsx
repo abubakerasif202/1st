@@ -81,7 +81,7 @@ export function QuoteForm() {
 
   const values = getValues()
 
-  return <form className="form-grid quote-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+  return <form className="form-grid quote-form" aria-label="Detailed freight quote" onSubmit={handleSubmit(onSubmit)} noValidate>
     <QuoteStepper step={step}/>
 
     {step === 1 && <>
@@ -97,9 +97,9 @@ export function QuoteForm() {
 
     {step === 3 && <>
       <h3 id="quote-step-heading" className="full" tabIndex={-1}>{STEPS[2].heading}</h3>
-      <label className="form-field"><span>Service type</span><select {...register('serviceType')} aria-invalid={!!errors.serviceType} aria-describedby={errors.serviceType ? 'serviceType-error' : undefined}><option value="">Select a service</option>{services.map(s => <option key={s.title}>{s.title}</option>)}</select>{errors.serviceType && <small id="serviceType-error" role="alert">{errors.serviceType.message}</small>}</label>
-      <label className="form-field"><span>Urgency</span><select {...register('urgency')} aria-invalid={!!errors.urgency} aria-describedby={errors.urgency ? 'urgency-error' : undefined}><option value="">Select urgency</option><option>Same day</option><option>Next day</option><option>Scheduled</option><option>Flexible</option></select>{errors.urgency && <small id="urgency-error" role="alert">{errors.urgency.message}</small>}</label>
-      <label className="form-field full"><span>Freight description</span><textarea rows={4} {...register('freight')} aria-invalid={!!errors.freight} aria-describedby={errors.freight ? 'freight-error' : undefined}/>{errors.freight && <small id="freight-error" role="alert">{errors.freight.message}</small>}</label>
+      <label className="form-field"><span>Service type<em className="required-mark" aria-hidden="true"> *</em></span><select required aria-required="true" {...register('serviceType')} aria-invalid={!!errors.serviceType} aria-describedby={errors.serviceType ? 'serviceType-error' : undefined}><option value="">Select a service</option>{services.map(s => <option key={s.title}>{s.title}</option>)}</select>{errors.serviceType && <small id="serviceType-error" role="alert">{errors.serviceType.message}</small>}</label>
+      <label className="form-field"><span>Urgency<em className="required-mark" aria-hidden="true"> *</em></span><select required aria-required="true" {...register('urgency')} aria-invalid={!!errors.urgency} aria-describedby={errors.urgency ? 'urgency-error' : undefined}><option value="">Select urgency</option><option>Same day</option><option>Next day</option><option>Scheduled</option><option>Flexible</option></select>{errors.urgency && <small id="urgency-error" role="alert">{errors.urgency.message}</small>}</label>
+      <label className="form-field full"><span>Freight description<em className="required-mark" aria-hidden="true"> *</em></span><textarea rows={4} required aria-required="true" {...register('freight')} aria-invalid={!!errors.freight} aria-describedby={errors.freight ? 'freight-error' : undefined}/>{errors.freight && <small id="freight-error" role="alert">{errors.freight.message}</small>}</label>
       <FormField className="full" label="Approximate number of items / pallets" registration={register('items')} error={errors.items}/>
     </>}
 
@@ -129,7 +129,7 @@ export function QuoteForm() {
         <div className="quote-summary__item"><dt>Phone</dt><dd>{values.phone}</dd></div>
       </dl>
       <label className="form-field full"><span>Message / special instructions <em>(optional)</em></span><textarea rows={4} {...register('message')}/></label>
-      <label className="check-field full"><input type="checkbox" {...register('consent')}/><span>I consent to 1st Class Express using these details to respond to my quote request.</span></label>{submitAttempted && errors.consent && <small className="full form-error" role="alert">{errors.consent.message}</small>}
+      <label className="check-field full"><input type="checkbox" required aria-required="true" aria-invalid={submitAttempted && !!errors.consent} {...register('consent')}/><span>I consent to 1st Class Express using these details to respond to my quote request.<em className="required-mark" aria-hidden="true"> *</em></span></label>{submitAttempted && errors.consent && <small className="full form-error" role="alert">{errors.consent.message}</small>}
       <label className="honeypot" aria-hidden="true">Website<input tabIndex={-1} autoComplete="off" {...register('website')}/></label>
     </>}
 

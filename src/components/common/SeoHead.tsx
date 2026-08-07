@@ -1,7 +1,29 @@
 import { useEffect } from 'react'
+import { company } from '../../data/company'
 
 const base = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, '') || 'https://www.1stclassexpress.com.au'
-const socialImage = `${base}/images/replacement/prime-mover-hero-branded.png`
+const socialImage = `${base}/images/replacement/prime-mover-hero-branded.webp`
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${base}/#organization`,
+  name: company.name,
+  url: base,
+  logo: `${base}/brand/first-class-express-logo.png`,
+  image: socialImage,
+  description: 'Australian-owned freight delivery, professional driver and fleet-management services across metropolitan, regional and interstate routes.',
+  foundingDate: '2013',
+  telephone: company.phonePrimary,
+  email: company.email,
+  areaServed: ['Australia', ...company.serviceAreas].map(name => ({ '@type': 'AdministrativeArea', name })),
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: company.phonePrimary,
+    contactType: 'customer service',
+    areaServed: 'AU',
+    availableLanguage: 'English',
+  },
+}
 export function SeoHead({ title, description, path = '/', noIndex = false }: { title: string; description: string; path?: string; noIndex?: boolean }) {
   useEffect(() => {
     document.title = title
@@ -24,5 +46,5 @@ export function SeoHead({ title, description, path = '/', noIndex = false }: { t
       canonical.href = `${base}${path}`
     }
   }, [title, description, path, noIndex])
-  return null
+  return <script data-business-schema type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }}/>
 }

@@ -14,7 +14,7 @@ describe('Lovable-aligned primary routes', () => {
   afterEach(() => cleanup())
 
   it.each([
-    ['/', /Freight Moved First Class/i],
+    ['/', /Reliable Freight\. Professional Drivers\. Australia-Wide\./i],
     ['/about', /Australian Owned\. Freight Focused\./i],
     ['/services', /Transport Built Around Your Freight/i],
     ['/fleet', /The Right Vehicle For The Freight/i],
@@ -39,10 +39,28 @@ describe('Lovable-aligned primary routes', () => {
 
   it('uses the Lovable navigation and quote destination', async () => {
     renderRoute('/')
-    expect(await screen.findByRole('heading', { level: 1, name: /Freight Moved First Class/i })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: /Reliable Freight\. Professional Drivers\. Australia-Wide\./i })).toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: 'Services' })[0]).toHaveAttribute('href', '/services')
     expect(screen.getAllByRole('link', { name: 'Our Fleet' })[0]).toHaveAttribute('href', '/fleet')
     expect(screen.getAllByRole('link', { name: 'Request a Quote' })[0]).toHaveAttribute('href', '/quote')
+  })
+
+  it('gives visitors a direct premium quote journey backed by verified facts', async () => {
+    renderRoute('/')
+
+    expect(await screen.findByRole('link', { name: /Get a Free Quote/i })).toHaveAttribute('href', '#quick-quote')
+    expect(screen.getByRole('link', { name: /Explore Our Fleet/i })).toHaveAttribute('href', '/fleet')
+    expect(screen.getByRole('form', { name: /Quick freight quote/i })).toBeInTheDocument()
+    expect(screen.getByText(/Established in 2013/i)).toBeInTheDocument()
+  })
+
+  it('delivers a dimensioned WebP hero asset', async () => {
+    renderRoute('/')
+    const hero = await screen.findByRole('img', { name: /branded prime mover.*interstate freight routes/i })
+
+    expect(hero).toHaveAttribute('src', '/images/replacement/prime-mover-network-hero.webp')
+    expect(hero).toHaveAttribute('width', '1672')
+    expect(hero).toHaveAttribute('height', '941')
   })
 
   it('shows all eight reference transport services on the homepage', async () => {
@@ -51,6 +69,35 @@ describe('Lovable-aligned primary routes', () => {
     expect(screen.getByRole('heading', { name: 'After-Hours and Weekend Transport' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Interstate Linehaul' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Dangerous Goods Transport' })).toBeInTheDocument()
+  })
+
+  it('explains the verified operating model on the About page', async () => {
+    renderRoute('/about')
+    expect(await screen.findByRole('heading', { name: /Built Around Freight, Drivers And Operations/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Professional Drivers Who Represent The Customer Well/i })).toBeInTheDocument()
+    expect(screen.getByText(/Monthly KPI reporting/i)).toBeInTheDocument()
+  })
+
+  it('organises service capability around delivery, people and operations', async () => {
+    renderRoute('/services')
+    expect(await screen.findByRole('heading', { name: /Freight Delivery/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Driver Support/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Fleet And Operations/i })).toBeInTheDocument()
+  })
+
+  it.each(['/about', '/services', '/fleet', '/service-areas', '/contact', '/careers'])('serves optimized branded imagery on %s', async route => {
+    renderRoute(route)
+    await screen.findByRole('heading', { level: 1 })
+    const brandedImages = Array.from(document.querySelectorAll<HTMLImageElement>('main img[src*="/images/replacement/"]'))
+    expect(brandedImages.length).toBeGreaterThan(0)
+    brandedImages.forEach(image => expect(image.getAttribute('src')).toMatch(/\.webp$/))
+  })
+
+  it('uses a unique branded image for every fleet gallery tile', async () => {
+    renderRoute('/fleet')
+    await screen.findByRole('heading', { name: /On The Road And In The Yard/i })
+    const sources = Array.from(document.querySelectorAll<HTMLImageElement>('.fleet-gallery img')).map(image => image.getAttribute('src'))
+    expect(new Set(sources).size).toBe(sources.length)
   })
 
   it('publishes the supplied contact number', async () => {

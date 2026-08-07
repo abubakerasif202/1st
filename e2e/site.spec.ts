@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => { await page.addInitScript(() => sessionStor
 
 test('primary journey and quote validation', async ({ page, isMobile }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /Freight Moved First Class/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Reliable Freight\. Professional Drivers\. Australia-Wide\./i })).toBeVisible()
   if (isMobile) { await page.getByRole('button', { name: 'Open menu' }).click(); await page.getByRole('dialog').getByRole('link', { name: 'Services' }).click() } else { await page.getByRole('link', { name: 'Services' }).first().click() }
   await expect(page).toHaveURL(/services/)
   await expect(page.getByRole('heading', { level: 1, name: /Transport Built Around Your Freight/i })).toBeFocused()
@@ -12,7 +12,9 @@ test('primary journey and quote validation', async ({ page, isMobile }) => {
   await expect(page).toHaveURL(/fleet/)
   if (isMobile) { await page.getByRole('button', { name: 'Open menu' }).click(); await page.getByRole('dialog').getByRole('link', { name: /Request a Quote/i }).click() } else { await page.getByRole('link', { name: /Request a Quote/i }).first().click() }
   await expect(page).toHaveURL(/quote/)
-  await page.getByRole('button', { name: /Request My Quote/i }).click(); await expect(page.getByText('Enter your first name')).toBeVisible()
+  await page.getByRole('button', { name: /Next/i }).click()
+  await expect(page.getByText('Enter pickup suburb or postcode')).toBeVisible()
+  await expect(page.getByText('Select a preferred date')).toBeVisible()
 })
 
 test('phone and email actions are valid', async ({ page }) => { await page.goto('/contact'); await expect(page.locator('a[href="tel:0431604240"]').first()).toBeVisible(); await expect(page.locator('a[href="mailto:enquiry@1stclassexpress.com.au"]').first()).toBeVisible() })
