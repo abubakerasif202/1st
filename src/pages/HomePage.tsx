@@ -35,7 +35,7 @@ export default function HomePage() {
           <img src="/brand/first-class-express-logo.webp" alt="" width="72" height="78"/>
           <p className="lovable-kicker">Urgent freight support</p><h2>Need It Moved Today?</h2>
           <ul><li><CheckCircle2/>Same day and next day options</li><li><CheckCircle2/>After-hours and weekend movements</li><li><CheckCircle2/>Vans through to B-double configurations</li></ul>
-          <Link to="/quote">Start Your Enquiry <ArrowRight size={17}/></Link>
+          <Link to="/quote">Request a Quote <ArrowRight size={17}/></Link>
         </aside>
       </div>
     </section>
