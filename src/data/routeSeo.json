@@ -2,12 +2,12 @@
   "home": {
     "path": "/",
     "title": "1st Class Express | Freight, Drivers & Fleet Solutions",
-    "description": "Professional freight delivery, dedicated driver and managed fleet solutions across Sydney and interstate Australia."
+    "description": "Professional freight delivery, dedicated drivers and managed fleet solutions across Sydney and interstate Australia. Same-day, linehaul and bulk transport."
   },
   "about": {
     "path": "/about",
     "title": "About 1st Class Express | Australian Transport Company",
-    "description": "Learn about 1st Class Express, an Australian-owned transport company providing professional freight delivery, dedicated drivers and fleet solutions across Sydney and interstate routes."
+    "description": "1st Class Express is an Australian-owned transport company delivering freight, dedicated drivers and fleet solutions across Sydney and interstate routes."
   },
   "services": {
     "path": "/services",
@@ -21,28 +21,28 @@
   },
   "serviceAreas": {
     "path": "/service-areas",
-    "title": "Freight Service Areas | 1st Class Express",
-    "description": "Freight transport across Sydney, regional NSW, Canberra and interstate routes between major Australian destinations."
+    "title": "Freight Service Areas | Sydney, Regional NSW & Interstate",
+    "description": "Freight transport across Sydney, regional NSW and Canberra, with interstate linehaul to Brisbane, Melbourne, Adelaide and Perth. Check your route with us."
   },
   "book": {
     "path": "/quote",
-    "title": "Request a Freight Quote | 1st Class Express",
-    "description": "Request a freight quote from 1st Class Express for local, linehaul and interstate transport across Australia."
+    "title": "Request a Freight Quote Online | 1st Class Express",
+    "description": "Request a freight quote for local, linehaul and interstate transport across Australia. Tell us what is moving, where and when, and we will plan the job."
   },
   "contact": {
     "path": "/contact",
-    "title": "Contact 1st Class Express | Freight Enquiries",
-    "description": "Contact 1st Class Express for local, regional and interstate freight enquiries across Australia."
+    "title": "Contact 1st Class Express | Freight & Transport Enquiries",
+    "description": "Contact 1st Class Express for local, regional and interstate freight enquiries. Speak to our operations team about deliveries, drivers and fleet support."
   },
   "careers": {
     "path": "/careers",
-    "title": "Driver Careers | 1st Class Express",
+    "title": "Driver Jobs & Careers | 1st Class Express Australia",
     "description": "View available driving roles and apply for local or interstate driving opportunities with 1st Class Express, an Australian transport company."
   },
   "driverHandbook": {
     "path": "/driver-handbook",
-    "title": "Driver Handbook | 1st Class Express",
-    "description": "The 1st Class Express Driver Handbook: driver standards, role requirements, licence classes, fleet, service areas and safety expectations for drivers on delivery, linehaul and fleet assignments."
+    "title": "Driver Handbook | Standards & Roles | 1st Class Express",
+    "description": "Driver standards, role requirements, licence classes, fleet, service areas and safety expectations for drivers working with 1st Class Express."
   },
   "notFound": {
     "path": "/404",

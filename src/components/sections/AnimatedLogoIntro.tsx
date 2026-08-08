@@ -4,13 +4,16 @@ import { company } from '../../data/company'
 
 export function AnimatedLogoIntro() {
   const reduce = useReducedMotion()
-  const [show, setShow] = useState(() => {
+  // Starts hidden so the prerendered HTML and the first client render agree;
+  // the overlay is opted into after mount, where sessionStorage is readable.
+  const [show, setShow] = useState(false)
+  useEffect(() => {
     try {
-      return !window.sessionStorage.getItem('intro-seen')
+      if (!window.sessionStorage.getItem('intro-seen')) setShow(true)
     } catch {
-      return false
+      // Restricted storage should never prevent the site from loading.
     }
-  })
+  }, [])
   const closeIntro = useCallback(() => {
     setShow(false)
     window.requestAnimationFrame(() => document.getElementById('home-hero-title')?.focus())
@@ -37,7 +40,7 @@ export function AnimatedLogoIntro() {
     <button className="intro-skip" type="button" onClick={closeIntro} autoFocus>Skip intro</button>
     <div className="intro-ambient" />
     <motion.div className="intro-truck-plane" initial={reduce ? false : {opacity: 0, x: '20%', rotateY: -14}} animate={{opacity: .38, x: 0, rotateY: -8}} transition={{duration: 1.1, ease: 'easeOut'}}>
-      <img src="/images/replacement/prime-mover-hero-branded.png" alt="" />
+      <img src="/images/replacement/prime-mover-hero-branded.webp" alt="" />
     </motion.div>
     <div className="intro-perspective">
       <motion.div className="intro-logo-depth" initial={reduce ? false : {opacity: 0, rotateX: 56, rotateY: -34, z: -180, scale: .72}} animate={{opacity: 1, rotateX: 0, rotateY: 0, z: 0, scale: 1}} transition={{duration: 1.05, ease: [0.16, 1, 0.3, 1]}}>

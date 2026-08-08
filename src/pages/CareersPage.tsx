@@ -40,7 +40,7 @@ export default function CareersPage() {
   return <>
     <SeoHead {...routeSeo.careers} />
     <JobPostingSchema />
-    <PageHero eyebrow="Careers" title="Drive Your Career Forward" intro="Join a professional Australian transport team, with local and interstate driving opportunities for experienced, reliable drivers." image="/images/replacement/prime-mover-hero-branded.png" />
+    <PageHero eyebrow="Careers" title="Drive Your Career Forward" intro="Join a professional Australian transport team, with local and interstate driving opportunities for experienced, reliable drivers." image="/images/replacement/prime-mover-hero-branded.webp" />
 
     <section className="lovable-section lovable-section--soft">
       <div className="container-page">

@@ -1,0 +1,27 @@
+import { renderToString } from 'react-dom/server'
+import { StaticRouter } from 'react-router'
+import type { PageMap } from './app/routes'
+import { pageLoaders, SiteRoutes } from './app/routes'
+
+let pages: PageMap | undefined
+
+// Every page is imported up front so the tree renders eagerly — React.lazy would
+// only put the Suspense fallback into the static HTML.
+async function resolvePages(): Promise<PageMap> {
+  if (pages) return pages
+  const [home, about, services, fleet, serviceAreas, book, contact, careers, driverHandbook, notFound] = await Promise.all([
+    pageLoaders.home(), pageLoaders.about(), pageLoaders.services(), pageLoaders.fleet(), pageLoaders.serviceAreas(),
+    pageLoaders.book(), pageLoaders.contact(), pageLoaders.careers(), pageLoaders.driverHandbook(), pageLoaders.notFound(),
+  ])
+  pages = {
+    home: home.default, about: about.default, services: services.default, fleet: fleet.default,
+    serviceAreas: serviceAreas.default, book: book.default, contact: contact.default,
+    careers: careers.default, driverHandbook: driverHandbook.default, notFound: notFound.default,
+  }
+  return pages
+}
+
+export async function render(url: string): Promise<string> {
+  const resolved = await resolvePages()
+  return renderToString(<StaticRouter location={url}><SiteRoutes pages={resolved} /></StaticRouter>)
+}

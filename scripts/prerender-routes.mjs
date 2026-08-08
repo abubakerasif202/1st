@@ -1,6 +1,7 @@
+import { execFileSync } from 'node:child_process'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const outputRoot = path.join(projectRoot, 'dist')
@@ -9,8 +10,22 @@ const routeConfigPath = path.join(projectRoot, 'src', 'data', 'routeSeo.json')
 const sitemapPath = path.join(projectRoot, 'public', 'sitemap.xml')
 const vercelConfigPath = path.join(projectRoot, 'vercel.json')
 const siteUrl = (process.env.VITE_SITE_URL || 'https://www.1stclassexpress.com.au').replace(/\/$/, '')
-const socialImage = `${siteUrl}/images/replacement/prime-mover-hero-branded.png`
+// Social scrapers are inconsistent about WebP, so the card is a 1200x630 JPEG.
+const socialImage = `${siteUrl}/images/replacement/social-card.jpg`
 const markerPattern = /<!-- route-meta:start -->[\s\S]*?<!-- route-meta:end -->/
+const rootPattern = /<div id="root"><\/div>/
+// pathToFileURL matters on Windows: a bare absolute path is not a valid ESM specifier.
+const { render } = await import(pathToFileURL(path.join(projectRoot, 'dist-ssr', 'entry-server.js')).href)
+
+// Crawlers that do not execute JavaScript — most notably the AI answer-engine
+// bots — only ever see what lands inside #root here, so every route ships fully
+// rendered markup and the browser hydrates it.
+async function applyMarkup(template, route) {
+  if (!rootPattern.test(template)) throw new Error('The #root mount point is missing from dist/index.html')
+  const markup = await render(route.path)
+  if (markup.length < 1000) throw new Error(`Prerendered markup for ${route.path} is suspiciously small (${markup.length} chars)`)
+  return template.replace(rootPattern, `<div id="root">${markup}</div>`)
+}
 
 const escapeHtml = (value) => value
   .replaceAll('&', '&amp;')
@@ -85,7 +100,7 @@ if (vercelConfig.rewrites.some(({ source }) => source.includes('*') || source.in
 }
 
 for (const [, route] of publicRoutes) {
-  const html = applyMetadata(template, route)
+  const html = await applyMarkup(applyMetadata(template, route), route)
   const outputPath = route.path === '/'
     ? templatePath
     : path.join(outputRoot, route.path.slice(1), 'index.html')
@@ -95,7 +110,10 @@ for (const [, route] of publicRoutes) {
 
 await writeFile(
   path.join(outputRoot, '404.html'),
-  applyMetadata(template, routeConfig.notFound, { indexable: false, canonical: false }),
+  await applyMarkup(
+    applyMetadata(template, routeConfig.notFound, { indexable: false, canonical: false }),
+    routeConfig.notFound,
+  ),
 )
 
 for (const [, route] of publicRoutes) {
@@ -110,7 +128,36 @@ for (const [, route] of publicRoutes) {
     `<link rel="canonical" href="${escapeHtml(`${siteUrl}${route.path}`)}" />`,
   ]
   if (!expected.every((value) => html.includes(value))) throw new Error(`Generated metadata validation failed for ${route.path}`)
+  if (!/<h1[\s>]/.test(html)) throw new Error(`Prerendered ${route.path} has no <h1> — the route did not render server-side`)
 }
+
+// Stamp per-URL <lastmod> from each page's last commit date. The checked-in
+// sitemap stays the source of truth for which URLs exist (asserted above); only
+// the dates are generated, because a hand-maintained date is always wrong.
+const pageSources = {
+  '/': 'HomePage', '/about': 'AboutPage', '/services': 'ServicesPage', '/fleet': 'FleetPage',
+  '/service-areas': 'ServiceAreasPage', '/quote': 'BookNowPage', '/contact': 'ContactPage',
+  '/careers': 'CareersPage', '/driver-handbook': 'DriverHandbookPage',
+}
+
+const lastModified = (routePath) => {
+  const source = pageSources[routePath]
+  if (!source) throw new Error(`No page source mapped for ${routePath} — add it to pageSources`)
+  try {
+    const stdout = execFileSync('git', ['log', '-1', '--format=%cs', '--', `src/pages/${source}.tsx`], { cwd: projectRoot, encoding: 'utf8' }).trim()
+    return stdout || undefined
+  } catch {
+    return undefined // Shallow clone or no git history available: omit lastmod rather than invent one.
+  }
+}
+
+await writeFile(
+  path.join(outputRoot, 'sitemap.xml'),
+  sitemap.replace(/<url><loc>(.*?)<\/loc><\/url>/g, (match, loc) => {
+    const stamp = lastModified(new URL(loc).pathname)
+    return stamp ? `<url><loc>${loc}</loc><lastmod>${stamp}</lastmod></url>` : match
+  }),
+)
 
 const notFoundHtml = await readFile(path.join(outputRoot, '404.html'), 'utf8')
 if (!notFoundHtml.includes('noindex, nofollow') || notFoundHtml.includes('rel="canonical"')) {
