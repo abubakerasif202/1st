@@ -6,5 +6,9 @@
   "display": "standalone",
   "background_color": "#070708",
   "theme_color": "#070708",
-  "icons": [{ "src": "/brand/logo-mark.jpg", "sizes": "300x300", "type": "image/jpeg" }]
+  "icons": [
+    { "src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
 }

@@ -1,10 +1,15 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './app/App'
 import './styles/index.css'
 import './styles/lovable-refresh.css'
+import './styles/driver-handbook.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>,
-)
+const container = document.getElementById('root')!
+const tree = <React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>
+
+// The build prerenders every route into #root, so a normal page load hydrates.
+// `npm run dev` serves an empty shell and falls back to a client render.
+if (container.hasChildNodes()) hydrateRoot(container, tree)
+else createRoot(container).render(tree)

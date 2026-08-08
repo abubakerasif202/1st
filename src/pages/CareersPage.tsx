@@ -4,6 +4,7 @@ import { PageHero } from '../components/common/PageHero'
 import { SeoHead } from '../components/common/SeoHead'
 import { ApplicationForm } from '../components/forms/ApplicationForm'
 import { RoleCard } from '../components/sections/RoleCard'
+import { driverRequirements } from '../data/handbook'
 import { driverRoles } from '../data/roles'
 import routeSeo from '../data/routeSeo.json'
 
@@ -14,18 +15,6 @@ const whyWorkWithUs = [
   ['Reliable operations', 'Established scheduling and dispatch support helps drivers plan their work.', CheckCircle2],
   ['Supportive transport team', 'An experienced team that values clear communication and professional conduct.', UsersRound],
   ['Long-term opportunities', 'Ongoing and dedicated placements are available by agreement and availability.', HeartHandshake],
-] as const
-
-const driverRequirements = [
-  'Valid Australian driver licence',
-  'The correct licence class for the role applied for',
-  'Relevant heavy-vehicle driving experience, where required by the role',
-  'A safe driving history',
-  'Strong verbal and written communication skills',
-  'Reliability and punctuality',
-  'Ability to complete required transport and freight documentation',
-  'Legal right to work in Australia',
-  'Willingness to follow fatigue-management, safety and company procedures',
 ] as const
 
 // JobPosting structured data is only emitted for roles genuinely marked "open" in
@@ -71,6 +60,7 @@ export default function CareersPage() {
       <div className="container-page">
         <div className="lovable-heading"><p className="lovable-kicker">Driver Requirements</p><h2>What We Generally Look For</h2><p>Requirements vary by role. The items below are common expectations rather than a guarantee that every item applies to every position.</p></div>
         <ul className="content-list-grid">{driverRequirements.map(item => <li key={item}><CheckCircle2 aria-hidden="true" />{item}</li>)}</ul>
+        <div className="lovable-actions"><Link className="lovable-btn lovable-btn--ink" to="/driver-handbook">Read the Driver Handbook</Link></div>
       </div>
     </section>
 

@@ -13,7 +13,8 @@
     { "source": "/service-areas", "destination": "/service-areas/index.html" },
     { "source": "/quote", "destination": "/quote/index.html" },
     { "source": "/contact", "destination": "/contact/index.html" },
-    { "source": "/careers", "destination": "/careers/index.html" }
+    { "source": "/careers", "destination": "/careers/index.html" },
+    { "source": "/driver-handbook", "destination": "/driver-handbook/index.html" }
   ],
   "headers": [{ "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }]
 }

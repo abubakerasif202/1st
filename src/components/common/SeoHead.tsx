@@ -3,12 +3,18 @@ import { company } from '../../data/company'
 
 const base = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, '') || 'https://www.1stclassexpress.com.au'
 const socialImage = `${base}/images/replacement/prime-mover-hero-branded.webp`
+// Typed as Organization rather than LocalBusiness: LocalBusiness requires a
+// verified postal address, and publishing a guessed one is worse than omitting
+// the type. Add "address" (PostalAddress) plus openingHoursSpecification and
+// re-add "LocalBusiness" to @type once the trading address is confirmed.
 const businessSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   '@id': `${base}/#organization`,
   name: company.name,
+  legalName: '1st Class Express Pty Ltd',
   url: base,
+  knowsAbout: ['Freight transport', 'Interstate linehaul', 'Dedicated drivers', 'Fleet management'],
   logo: `${base}/brand/first-class-express-logo.png`,
   image: socialImage,
   description: 'Australian-owned freight delivery, professional driver and fleet-management services across metropolitan, regional and interstate routes.',

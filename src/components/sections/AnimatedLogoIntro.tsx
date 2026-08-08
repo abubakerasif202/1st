@@ -1,18 +1,32 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useSyncExternalStore } from 'react'
 import { company } from '../../data/company'
+
+// Read once and cached, so getSnapshot stays referentially stable and writing
+// 'intro-seen' below cannot retrigger a render mid-animation.
+let introAlreadySeen: boolean | undefined
+const subscribeToIntroSeen = () => () => {}
+const getIntroSeen = () => {
+  if (introAlreadySeen === undefined) {
+    try {
+      introAlreadySeen = Boolean(window.sessionStorage.getItem('intro-seen'))
+    } catch {
+      introAlreadySeen = true // Restricted storage should never block the site.
+    }
+  }
+  return introAlreadySeen
+}
+// The prerendered HTML must not contain the overlay, so the server snapshot
+// always reports "seen"; the real value is read after hydration.
+const getIntroSeenOnServer = () => true
 
 export function AnimatedLogoIntro() {
   const reduce = useReducedMotion()
-  const [show, setShow] = useState(() => {
-    try {
-      return !window.sessionStorage.getItem('intro-seen')
-    } catch {
-      return false
-    }
-  })
+  const seen = useSyncExternalStore(subscribeToIntroSeen, getIntroSeen, getIntroSeenOnServer)
+  const [dismissed, setDismissed] = useState(false)
+  const show = !seen && !dismissed
   const closeIntro = useCallback(() => {
-    setShow(false)
+    setDismissed(true)
     window.requestAnimationFrame(() => document.getElementById('home-hero-title')?.focus())
   }, [])
   useEffect(() => {
