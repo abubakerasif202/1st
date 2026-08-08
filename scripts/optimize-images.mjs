@@ -1,9 +1,10 @@
 // Converts the source PNG photography into web-weight WebP, and generates the
 // social-card JPEG and PWA icons. Run with `npm run optimize:images` after
-// adding or replacing anything in public/images/replacement.
+// adding or replacing anything in assets/source-images/replacement-masters.
 //
-// The originals are multi-megabyte PNG exports; nothing on the site should ever
-// reference them directly.
+// Reads from assets/ and writes into public/: the masters are multi-megabyte PNG
+// exports that must never ship, so they are deliberately kept outside public/
+// where Vite would copy them into dist/.
 
 import { readdir, stat } from 'node:fs/promises'
 import path from 'node:path'
@@ -11,6 +12,7 @@ import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const masterDir = path.join(projectRoot, 'assets', 'source-images', 'replacement-masters')
 const photoDir = path.join(projectRoot, 'public', 'images', 'replacement')
 const brandDir = path.join(projectRoot, 'public', 'brand')
 
@@ -24,7 +26,7 @@ async function sizeOf(file) {
 }
 
 async function toWebp(sourcePath) {
-  const target = sourcePath.replace(/\.png$/, '.webp')
+  const target = path.join(photoDir, path.basename(sourcePath).replace(/\.png$/, '.webp'))
   await sharp(sourcePath)
     .resize({ width: MAX_WIDTH, withoutEnlargement: true })
     .webp({ quality: WEBP_QUALITY })
@@ -38,7 +40,7 @@ async function toWebp(sourcePath) {
 // 1.91:1 ratio Open Graph expects.
 async function buildSocialCard() {
   const target = path.join(photoDir, 'social-card.jpg')
-  await sharp(path.join(photoDir, OG_SOURCE))
+  await sharp(path.join(masterDir, OG_SOURCE))
     .resize({ width: 1200, height: 630, fit: 'cover', position: 'attention' })
     .jpeg({ quality: 82, mozjpeg: true })
     .toFile(target)
@@ -61,9 +63,10 @@ async function buildIcons() {
   console.log('icon-maskable-512.png')
 }
 
-const files = (await readdir(photoDir)).filter((name) => name.endsWith('.png'))
+const files = (await readdir(masterDir)).filter((name) => name.endsWith('.png'))
+if (!files.length) throw new Error(`No PNG masters found in ${masterDir}`)
 let saved = 0
-for (const name of files) saved += await toWebp(path.join(photoDir, name))
+for (const name of files) saved += await toWebp(path.join(masterDir, name))
 await buildSocialCard()
 await buildIcons()
 console.log(`\nConverted ${files.length} images, saved ${kb(saved)}`)

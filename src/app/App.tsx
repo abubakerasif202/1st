@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
-import type { PageMap } from './routes'
-import { pageLoaders, SiteRoutes } from './routes'
+import type { PageMap } from './pageLoaders'
+import { pageLoaders } from './pageLoaders'
+import { SiteRoutes } from './routes'
 
 // Listed key by key rather than mapped: PageMap requires every PageKey, so
 // adding a loader without wiring it up here is a compile error.

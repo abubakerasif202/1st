@@ -10,8 +10,7 @@ const routeConfigPath = path.join(projectRoot, 'src', 'data', 'routeSeo.json')
 const sitemapPath = path.join(projectRoot, 'public', 'sitemap.xml')
 const vercelConfigPath = path.join(projectRoot, 'vercel.json')
 const siteUrl = (process.env.VITE_SITE_URL || 'https://www.1stclassexpress.com.au').replace(/\/$/, '')
-// Social scrapers are inconsistent about WebP, so the card is a 1200x630 JPEG.
-const socialImage = `${siteUrl}/images/replacement/social-card.jpg`
+const socialImage = `${siteUrl}/images/replacement/prime-mover-hero-branded.webp`
 const markerPattern = /<!-- route-meta:start -->[\s\S]*?<!-- route-meta:end -->/
 const rootPattern = /<div id="root"><\/div>/
 // pathToFileURL matters on Windows: a bare absolute path is not a valid ESM specifier.

@@ -69,4 +69,23 @@ describe('post-merge review regressions', () => {
     expect(indexHtml).toContain('<link rel="preload" as="image" href="/brand/first-class-express-logo.webp" />')
     expect(indexHtml).not.toContain('rel="preload" as="image" href="/brand/first-class-express-logo.png"')
   })
+
+  it('publishes verified business structured data without inventing an address', async () => {
+    window.sessionStorage.setItem('intro-seen', 'true')
+    render(<MemoryRouter initialEntries={['/']}><App/></MemoryRouter>)
+    await screen.findByRole('heading', { level: 1 })
+
+    const script = document.querySelector<HTMLScriptElement>('script[data-business-schema]')
+    expect(script).not.toBeNull()
+    const schema = JSON.parse(script?.textContent ?? '{}')
+    expect(schema).toMatchObject({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: '1st Class Express',
+      foundingDate: '2013',
+      telephone: '0431 604 240',
+      email: 'enquiry@1stclassexpress.com.au',
+    })
+    expect(schema).not.toHaveProperty('address')
+  })
 })

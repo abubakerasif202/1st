@@ -8,7 +8,7 @@ export function PageHero({ eyebrow, title, intro, image }: { eyebrow: string; ti
   const { pathname } = useLocation()
   return <section className="page-hero">
     <BreadcrumbSchema label={eyebrow} path={pathname} />
-    {image && <img className="page-hero__image" src={image} alt="" aria-hidden="true"/>}
+    {image && <img className="page-hero__image" src={image} alt="" aria-hidden="true" width="1672" height="941" loading="eager" decoding="async"/>}
     <div className="page-hero__shade" aria-hidden="true" />
     <motion.div className="container-page relative z-10" initial={reduce ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
       <nav aria-label="Breadcrumb" className="breadcrumb"><Link to="/">Home</Link><ChevronRight size={14} aria-hidden="true"/><span aria-current="page">{eyebrow}</span></nav>

@@ -13,10 +13,20 @@ import { QuoteForm } from '../components/forms/QuoteForm'
 afterEach(() => cleanup())
 
 describe('forms', () => {
-  it('shows contact validation errors', async () => { render(<MemoryRouter><ContactForm/></MemoryRouter>); fireEvent.click(screen.getByRole('button', { name: /send enquiry/i })); expect(await screen.findByText('Enter your name')).toBeInTheDocument(); expect(screen.getByText('Enter a valid email')).toBeInTheDocument() })
+  it('names the contact form and exposes required fields to assistive technology', async () => {
+    render(<MemoryRouter><ContactForm/></MemoryRouter>)
+    const form = screen.getByRole('form', { name: /Contact enquiry/i })
+    expect(within(form).getByRole('textbox', { name: 'Name' })).toBeRequired()
+    expect(within(form).getByRole('textbox', { name: 'Email' })).toBeRequired()
+    fireEvent.click(within(form).getByRole('button', { name: /send enquiry/i }))
+    expect(await within(form).findByText('Enter your name')).toBeInTheDocument()
+    expect(within(form).getByText('Enter a valid email')).toBeInTheDocument()
+  })
   it('shows quote validation errors on step 1 and blocks advancing', async () => {
     const { container } = render(<MemoryRouter><QuoteForm/></MemoryRouter>)
     const form = within(container)
+    expect(screen.getByRole('form', { name: /Detailed freight quote/i })).toBeInTheDocument()
+    expect(form.getByLabelText(/pickup suburb/i)).toBeRequired()
     expect(form.getByRole('heading', { name: 'Collection Details' })).toBeInTheDocument()
     fireEvent.click(form.getByRole('button', { name: /next/i }))
     expect(await form.findByText('Enter pickup suburb or postcode')).toBeInTheDocument()
@@ -68,11 +78,29 @@ describe('forms', () => {
   it('shows quick quote validation errors', async () => {
     render(<MemoryRouter><QuickQuoteForm/></MemoryRouter>)
     const form = screen.getByRole('form', { name: /Quick freight quote/i })
+    expect(within(form).getByRole('textbox', { name: 'Name' })).toBeRequired()
+    expect(within(form).getByRole('textbox', { name: /Pickup suburb or postcode/i })).toBeRequired()
+    expect(within(form).getByRole('checkbox')).toBeRequired()
     fireEvent.click(within(form).getByRole('button', { name: /Get My Free Quote/i }))
     expect(await within(form).findByText('Enter your name')).toBeInTheDocument()
     expect(within(form).getByText('Enter pickup suburb or postcode')).toBeInTheDocument()
     expect(within(form).getByText('Consent is required to submit')).toBeInTheDocument()
   })
-  it('shows careers application validation errors', async () => { render(<MemoryRouter><ApplicationForm/></MemoryRouter>); fireEvent.click(screen.getByRole('button', { name: /submit application/i })); expect(await screen.findByText('Enter your first name')).toBeInTheDocument(); expect(screen.getByText('Attach your résumé (PDF, DOC or DOCX)')).toBeInTheDocument(); expect(screen.getByText('Privacy acknowledgement is required')).toBeInTheDocument() })
+  it('keeps the first-stage driver application focused on essential screening', async () => {
+    render(<MemoryRouter><ApplicationForm/></MemoryRouter>)
+    const form = screen.getByRole('form', { name: /Driver application/i })
+
+    expect(within(form).getByRole('textbox', { name: 'First name' })).toBeRequired()
+    expect(within(form).getByRole('combobox', { name: /Current licence class/i })).toBeRequired()
+    expect(within(form).getByLabelText(/Résumé/i)).toBeRequired()
+    expect(within(form).queryByLabelText(/Brief employment history/i)).not.toBeInTheDocument()
+    expect(within(form).queryByLabelText(/Dangerous-goods/i)).not.toBeInTheDocument()
+    expect(within(form).queryByLabelText(/Cover letter/i)).not.toBeInTheDocument()
+
+    fireEvent.click(within(form).getByRole('button', { name: /submit application/i }))
+    expect(await within(form).findByText('Enter your first name')).toBeInTheDocument()
+    expect(within(form).getByText('Attach your résumé (PDF, DOC or DOCX)')).toBeInTheDocument()
+    expect(within(form).getByText('Privacy acknowledgement is required')).toBeInTheDocument()
+  })
   it('preselects the role from the URL query string', async () => { render(<MemoryRouter initialEntries={['/careers?role=HC%20Driver']}><ApplicationForm/></MemoryRouter>); expect(await screen.findByDisplayValue('HC Driver')).toBeInTheDocument() })
 })

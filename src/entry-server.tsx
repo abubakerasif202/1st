@@ -1,7 +1,8 @@
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
-import type { PageMap } from './app/routes'
-import { pageLoaders, SiteRoutes } from './app/routes'
+import type { PageMap } from './app/pageLoaders'
+import { pageLoaders } from './app/pageLoaders'
+import { SiteRoutes } from './app/routes'
 
 let pages: PageMap | undefined
 
