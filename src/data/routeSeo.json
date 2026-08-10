@@ -14,15 +14,24 @@
     "title": "Freight, Driver & Fleet Services | 1st Class Express",
     "description": "Explore metropolitan delivery, interstate linehaul, dedicated driver, dangerous-goods assessment and managed fleet services from 1st Class Express."
   },
+  "serviceDetail": {
+    "path": "/services/:serviceId"
+  },
   "fleet": {
     "path": "/fleet",
     "title": "Our Fleet | Trucks, Drivers & Managed Fleet Solutions",
     "description": "Explore vans, pallet trucks, rigid trucks, prime movers, semi-trailers and B-double configurations from 1st Class Express across Sydney and interstate routes."
   },
+  "fleetDetail": {
+    "path": "/fleet/:fleetId"
+  },
   "serviceAreas": {
     "path": "/service-areas",
     "title": "Freight Service Areas | Sydney, Regional NSW & Interstate",
     "description": "Freight transport across Sydney, regional NSW and Canberra, with interstate linehaul to Brisbane, Melbourne, Adelaide and Perth. Check your route with us."
+  },
+  "routeDetail": {
+    "path": "/service-areas/interstate/:routeId"
   },
   "book": {
     "path": "/quote",
