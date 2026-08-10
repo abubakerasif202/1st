@@ -14,24 +14,110 @@
     "title": "Freight, Driver & Fleet Services | 1st Class Express",
     "description": "Explore metropolitan delivery, interstate linehaul, dedicated driver, dangerous-goods assessment and managed fleet services from 1st Class Express."
   },
-  "serviceDetail": {
-    "path": "/services/:serviceId"
+  "servicesSameDay": {
+    "path": "/services/same-day",
+    "title": "Same Day & Next Day Freight | 1st Class Express",
+    "description": "Responsive same day and next day freight delivery services across metropolitan Sydney and regional New South Wales."
+  },
+  "servicesAfterHours": {
+    "path": "/services/after-hours",
+    "title": "After-Hours & Weekend Transport | 1st Class Express",
+    "description": "Flexible after-hours and weekend freight transport arranged around your operational window across Sydney and interstate routes."
+  },
+  "servicesInterstate": {
+    "path": "/services/interstate",
+    "title": "Interstate Linehaul Freight Services | 1st Class Express",
+    "description": "Scheduled interstate linehaul freight transport connecting Sydney, Melbourne, Brisbane, Adelaide, Canberra and Darwin."
+  },
+  "servicesBulkFreight": {
+    "path": "/services/bulk-freight",
+    "title": "Bulk Freight Transport Services | 1st Class Express",
+    "description": "Coordinated bulk transport for high-volume consignments, regular freight runs, and heavy commercial loads across Australia."
+  },
+  "servicesBackupDrivers": {
+    "path": "/services/backup-drivers",
+    "title": "Dedicated & Backup Driver Services | 1st Class Express",
+    "description": "Professional driver placements for leave coverage, peak demand, and ongoing operational continuity across fleet operations."
+  },
+  "servicesHomeDeliveries": {
+    "path": "/services/home-deliveries",
+    "title": "Residential & Home Freight Deliveries | 1st Class Express",
+    "description": "Reliable home and residential freight delivery handled with care and clear communication across metropolitan Sydney."
+  },
+  "servicesLogisticsSupport": {
+    "path": "/services/logistics-support",
+    "title": "Logistics & Fleet Support Services | 1st Class Express",
+    "description": "Practical transport coordination, warehouse dock support, and ongoing fleet dispatch management across New South Wales."
+  },
+  "servicesDangerousGoods": {
+    "path": "/services/dangerous-goods",
+    "title": "Dangerous Goods Transport Services | 1st Class Express",
+    "description": "Compliant dangerous goods freight transport with certified drivers, specialized equipment, and documentation checks."
   },
   "fleet": {
     "path": "/fleet",
     "title": "Our Fleet | Trucks, Drivers & Managed Fleet Solutions",
     "description": "Explore vans, pallet trucks, rigid trucks, prime movers, semi-trailers and B-double configurations from 1st Class Express across Sydney and interstate routes."
   },
-  "fleetDetail": {
-    "path": "/fleet/:fleetId"
+  "fleetVans": {
+    "path": "/fleet/vans",
+    "title": "1-Tonne Delivery Vans | 1st Class Express Fleet",
+    "description": "Agile 1-tonne delivery vans for urgent parcels, cartons, and local metropolitan freight runs across Sydney."
+  },
+  "fleetPalletTrucks": {
+    "path": "/fleet/pallet-trucks",
+    "title": "Pallet Trucks | 1st Class Express Fleet",
+    "description": "Practical pallet trucks designed for efficient loading, palletised freight, and commercial transport."
+  },
+  "fleetRigidTrucks": {
+    "path": "/fleet/rigid-trucks",
+    "title": "Rigid Freight Trucks | 1st Class Express Fleet",
+    "description": "Versatile rigid trucks providing capacity for multi-drop delivery runs and general commercial freight across NSW."
+  },
+  "fleetPrimeMovers": {
+    "path": "/fleet/prime-movers",
+    "title": "Heavy Prime Movers | 1st Class Express Fleet",
+    "description": "Heavy-duty prime movers configured for long-distance linehaul and heavy interstate freight movements across Australia."
+  },
+  "fleetSemiTrailers": {
+    "path": "/fleet/semi-trailers",
+    "title": "Semi-Trailers | 1st Class Express Fleet",
+    "description": "High-capacity semi-trailer configurations for bulk consignments, regional freight, and interstate transport."
+  },
+  "fleetBDoubles": {
+    "path": "/fleet/b-doubles",
+    "title": "B-Double Configurations | 1st Class Express Fleet",
+    "description": "High-volume B-double road combinations operating on approved Australian freight corridors for linehaul operations."
   },
   "serviceAreas": {
     "path": "/service-areas",
     "title": "Freight Service Areas | Sydney, Regional NSW & Interstate",
     "description": "Freight transport across Sydney, regional NSW and Canberra, with interstate linehaul to Brisbane, Melbourne, Adelaide and Perth. Check your route with us."
   },
-  "routeDetail": {
-    "path": "/service-areas/interstate/:routeId"
+  "serviceAreasSydney": {
+    "path": "/service-areas/sydney",
+    "title": "Sydney Metropolitan Freight Services | 1st Class Express",
+    "description": "Comprehensive metropolitan freight delivery and courier services across Sydney CBD, Parramatta, Western Sydney, and South Sydney."
+  },
+  "serviceAreasNsw": {
+    "path": "/service-areas/nsw",
+    "title": "Regional NSW Transport & Freight | 1st Class Express",
+    "description": "Regional transport services connecting Wollongong, Newcastle, Central Coast, Hunter Valley, Wagga Wagga, Dubbo, and regional NSW."
+  },
+  "serviceAreasInterstateSydneyMelbourne": {
+    "path": "/service-areas/interstate/sydney-melbourne",
+    "title": "Sydney to Melbourne Interstate Freight | 1st Class Express",
+    "description": "Regular linehaul freight transport operating on the Sydney to Melbourne interstate corridor with flexible scheduling."
+  },
+  "serviceAreasInterstateSydneyBrisbane": {
+    "path": "/service-areas/interstate/sydney-brisbane",
+    "title": "Sydney to Brisbane Interstate Freight | 1st Class Express",
+    "description": "Express linehaul transport services connecting Sydney and Brisbane with scheduled express freight runs."
+  },
+  "serviceAreasInterstateSydneyCanberra": {
+    "path": "/service-areas/interstate/sydney-canberra",
+    "title": "Sydney to Canberra Freight Services | 1st Class Express",
+    "description": "Direct freight and driver services connecting Sydney and Canberra (ACT) for local and commercial transport."
   },
   "book": {
     "path": "/quote",
