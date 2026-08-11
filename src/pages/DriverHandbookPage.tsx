@@ -47,7 +47,7 @@ export default function DriverHandbookPage() {
           <p className="hb-cover__intro">{handbook.intro}</p>
           <div className="hb-cover__badges">{handbook.badges.map(badge => <span key={badge}>{badge}</span>)}</div>
         </div>
-        <img src="/brand/first-class-express-logo.png" alt="1st Class Express" width={108} height={116} />
+        <img src="/brand/first-class-express-logo.webp" alt="1st Class Express" width={108} height={116} />
       </header>
 
       <nav className="hb-contents hb-keep" aria-label="Handbook contents">
@@ -128,6 +128,9 @@ export default function DriverHandbookPage() {
       <section className="hb-section">
         <SectionHeading index={5} />
         <p>{handbook.fleetLead}</p>
+        {/* Scroll container: the four-column table cannot compress below ~420px.
+            role/tabIndex make the scrollable area reachable by keyboard. */}
+        <div className="hb-table-scroll" role="region" aria-label="Fleet vehicles" tabIndex={0}>
         <table className="hb-table">
           <thead>
             <tr><th scope="col">Vehicle</th><th scope="col">Use</th><th scope="col">Best for</th><th scope="col">Capability</th></tr>
@@ -141,6 +144,7 @@ export default function DriverHandbookPage() {
             </tr>)}
           </tbody>
         </table>
+        </div>
       </section>
 
       <section className="hb-section">

@@ -11,8 +11,12 @@ export const pageLoaders = {
   home: () => import('../pages/HomePage'),
   about: () => import('../pages/AboutPage'),
   services: () => import('../pages/ServicesPage'),
+  serviceDetail: () => import('../pages/ServiceDetailPage'),
   fleet: () => import('../pages/FleetPage'),
+  fleetDetail: () => import('../pages/FleetDetailPage'),
   serviceAreas: () => import('../pages/ServiceAreasPage'),
+  serviceAreaDetail: () => import('../pages/ServiceAreaDetailPage'),
+  routeDetail: () => import('../pages/RouteDetailPage'),
   book: () => import('../pages/BookNowPage'),
   contact: () => import('../pages/ContactPage'),
   careers: () => import('../pages/CareersPage'),
@@ -22,3 +26,37 @@ export const pageLoaders = {
 
 export type PageKey = keyof typeof pageLoaders
 export type PageMap = Record<PageKey, ComponentType>
+
+// Longest-prefix-first. Mirrors routes.tsx; the route test asserts every
+// routeSeo path resolves here to the same page the router picks.
+const pathMatchers: [RegExp, PageKey][] = [
+  [/^\/$/, 'home'],
+  [/^\/(about|about-us)$/, 'about'],
+  [/^\/(services|our-services)$/, 'services'],
+  [/^\/services\/[^/]+$/, 'serviceDetail'],
+  [/^\/(fleet|our-fleet)$/, 'fleet'],
+  [/^\/fleet\/[^/]+$/, 'fleetDetail'],
+  [/^\/service-areas$/, 'serviceAreas'],
+  [/^\/service-areas\/interstate\/[^/]+$/, 'routeDetail'],
+  [/^\/service-areas\/[^/]+$/, 'serviceAreaDetail'],
+  [/^\/(quote|book-now)$/, 'book'],
+  [/^\/contact$/, 'contact'],
+  [/^\/careers$/, 'careers'],
+  [/^\/driver-handbook$/, 'driverHandbook'],
+]
+
+/** The page key a pathname will render, so the chunk can be fetched up front. */
+export function pageKeyForPath(pathname: string): PageKey {
+  const path = pathname.length > 1 ? pathname.replace(/\/$/, '') : pathname
+  return pathMatchers.find(([pattern]) => pattern.test(path))?.[1] ?? 'notFound'
+}
+
+/**
+ * Warms the chunk for the current URL before hydration. Without this, every
+ * prerendered document suspends the moment it hydrates and React swaps the
+ * server-rendered content for the Suspense fallback until the chunk arrives —
+ * a visible flash of "Loading…" over content the browser already had.
+ */
+export function preloadPageForPath(pathname: string): Promise<unknown> {
+  return pageLoaders[pageKeyForPath(pathname)]()
+}

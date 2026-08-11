@@ -45,7 +45,7 @@ export default function CareersPage() {
     <section className="lovable-section lovable-section--soft">
       <div className="container-page">
         <div className="lovable-heading"><p className="lovable-kicker">Why Drive With Us</p><h2>A Professional Team Built Around Safety And Reliability</h2><p>1st Class Express offers driving opportunities across local Sydney delivery and interstate linehaul routes.</p></div>
-        <div className="lovable-feature-grid">{whyWorkWithUs.map(([title, text, Icon]) => <article className="lovable-feature" key={title}><Icon /><h3>{title}</h3><p>{text}</p></article>)}</div>
+        <div className="lovable-feature-grid">{whyWorkWithUs.map(([title, text, Icon]) => <article className="lovable-feature" key={title}><Icon aria-hidden="true" /><h3>{title}</h3><p>{text}</p></article>)}</div>
       </div>
     </section>
 

@@ -15,11 +15,11 @@ export function FleetExplorer() {
       {categories.map(category => <button type="button" key={category} className={`route-explorer__city${activeCategory === category ? ' is-active' : ''}`} aria-pressed={activeCategory === category} onClick={() => setActiveCategory(category)}>{category}</button>)}
     </div>
     <div className="fleet-explorer__list">
-      {visibleFleet.map(({ title, use, bestFor, serviceType, availability, image, icon: Icon, capability }, index) => (
+      {visibleFleet.map(({ slug, title, use, bestFor, serviceType, availability, image, icon: Icon, capability }, index) => (
         <article className={`fleet-explorer__row lovable-split${index % 2 === 1 ? ' fleet-explorer__row--reverse' : ''}`} key={title}>
           <div className="lovable-split__image fleet-explorer__image"><img src={image} alt={`${title} transport option`} loading="lazy"/></div>
           <div className="fleet-explorer__body">
-            <div className="fleet-detail-card__heading"><Icon/><h3>{title}</h3></div>
+            <div className="fleet-detail-card__heading"><Icon aria-hidden="true"/><h3>{title}</h3></div>
             <span className="route-explorer__badge">{capability}</span>
             <p>{use}</p>
             <dl>
@@ -27,7 +27,7 @@ export function FleetExplorer() {
               <div><dt>Service type</dt><dd>{serviceType}</dd></div>
               <div><dt>Availability</dt><dd>{availability}</dd></div>
             </dl>
-            <Link className="lovable-btn lovable-btn--primary" to="/quote">Request a Quote <ArrowRight size={16}/></Link>
+            <div className="lovable-actions"><Link className="lovable-btn lovable-btn--primary" to="/quote">Request a Quote <ArrowRight size={16} aria-hidden="true"/></Link><Link className="lovable-btn lovable-btn--ink" to={`/fleet/${slug}`}>View {title} details</Link></div>
           </div>
         </article>
       ))}

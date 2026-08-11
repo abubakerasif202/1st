@@ -473,3 +473,11 @@
   .hb-table { break-inside: auto; }
   .hb-table tr { break-inside: avoid; }
 }
+
+/* The fleet table has four columns that cannot compress below roughly 420px,
+   so below that it scrolls inside its own container instead of forcing the
+   whole document to scroll sideways. */
+.hb-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 0 30px; }
+.hb-table-scroll .hb-table { margin-bottom: 0; min-width: 420px; }
+.hb-table-scroll:focus-visible { outline: 3px solid var(--hb-ink); outline-offset: 3px; }
+@media print { .hb-table-scroll { overflow-x: visible; } .hb-table-scroll .hb-table { min-width: 0; } }

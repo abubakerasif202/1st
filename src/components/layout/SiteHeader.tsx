@@ -150,7 +150,7 @@ export function SiteHeader() {
             href={phoneHref(company.phonePrimary)}
             aria-label={`Call ${company.phonePrimary}`}
           >
-            <Phone size={17} />
+            <Phone size={17} aria-hidden="true" />
           </a>
 
           <NavLink to="/quote" className="header-cta">

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy } from 'react'
 import type { PageMap } from './pageLoaders'
 import { pageLoaders } from './pageLoaders'
 import { SiteRoutes } from './routes'
@@ -9,8 +9,12 @@ const pages: PageMap = {
   home: lazy(pageLoaders.home),
   about: lazy(pageLoaders.about),
   services: lazy(pageLoaders.services),
+  serviceDetail: lazy(pageLoaders.serviceDetail),
   fleet: lazy(pageLoaders.fleet),
+  fleetDetail: lazy(pageLoaders.fleetDetail),
   serviceAreas: lazy(pageLoaders.serviceAreas),
+  serviceAreaDetail: lazy(pageLoaders.serviceAreaDetail),
+  routeDetail: lazy(pageLoaders.routeDetail),
   book: lazy(pageLoaders.book),
   contact: lazy(pageLoaders.contact),
   careers: lazy(pageLoaders.careers),
@@ -18,8 +22,7 @@ const pages: PageMap = {
   notFound: lazy(pageLoaders.notFound),
 }
 
+// SiteRoutes owns the Suspense boundary so this tree matches the prerenderer's.
 export default function App() {
-  return <Suspense fallback={<div className="page-loader" role="status">Loading 1st Class Express…</div>}>
-    <SiteRoutes pages={pages} />
-  </Suspense>
+  return <SiteRoutes pages={pages} />
 }

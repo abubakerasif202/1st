@@ -13,6 +13,10 @@ const siteUrl = (process.env.VITE_SITE_URL || 'https://www.1stclassexpress.com.a
 const socialImage = `${siteUrl}/images/replacement/prime-mover-hero-branded.webp`
 const markerPattern = /<!-- route-meta:start -->[\s\S]*?<!-- route-meta:end -->/
 const rootPattern = /<div id="root"><\/div>/
+// Text unique to NotFoundPage and to App's Suspense fallback. Both are legitimate
+// at runtime but must never end up baked into an indexable prerendered document.
+const NOT_FOUND_MARKER = '404 — Wrong turn'
+const SUSPENSE_MARKER = 'Loading 1st Class Express'
 // pathToFileURL matters on Windows: a bare absolute path is not a valid ESM specifier.
 const { render } = await import(pathToFileURL(path.join(projectRoot, 'dist-ssr', 'entry-server.js')).href)
 
@@ -128,6 +132,14 @@ for (const [, route] of publicRoutes) {
   ]
   if (!expected.every((value) => html.includes(value))) throw new Error(`Generated metadata validation failed for ${route.path}`)
   if (!/<h1[\s>]/.test(html)) throw new Error(`Prerendered ${route.path} has no <h1> — the route did not render server-side`)
+  // An <h1> alone is not proof the right page rendered: NotFoundPage has one too,
+  // so an unwired route silently prerendered a 404 body under an indexable title.
+  if (html.includes(NOT_FOUND_MARKER)) {
+    throw new Error(`Prerendered ${route.path} rendered the 404 page — the route is missing from routes.tsx`)
+  }
+  if (html.includes(SUSPENSE_MARKER)) {
+    throw new Error(`Prerendered ${route.path} contains only the Suspense fallback — the page was not resolved eagerly`)
+  }
 }
 
 // Stamp per-URL <lastmod> from each page's last commit date. The checked-in
@@ -139,8 +151,19 @@ const pageSources = {
   '/careers': 'CareersPage', '/driver-handbook': 'DriverHandbookPage',
 }
 
+// Detail routes are rendered by one component each, so their lastmod tracks that
+// component. Ordered longest-prefix-first: /service-areas/interstate/* must win
+// over /service-areas/*.
+const pageSourcePrefixes = [
+  ['/service-areas/interstate/', 'RouteDetailPage'],
+  ['/service-areas/', 'ServiceAreaDetailPage'],
+  ['/services/', 'ServiceDetailPage'],
+  ['/fleet/', 'FleetDetailPage'],
+]
+
 const lastModified = (routePath) => {
   const source = pageSources[routePath]
+    ?? pageSourcePrefixes.find(([prefix]) => routePath.startsWith(prefix))?.[1]
   if (!source) throw new Error(`No page source mapped for ${routePath} — add it to pageSources`)
   try {
     const stdout = execFileSync('git', ['log', '-1', '--format=%cs', '--', `src/pages/${source}.tsx`], { cwd: projectRoot, encoding: 'utf8' }).trim()

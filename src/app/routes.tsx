@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { SiteLayout } from '../components/layout/SiteLayout'
 import routeSeo from '../data/routeSeo.json'
@@ -12,15 +13,34 @@ const legacyRedirects = [
   ['/book-now', routeSeo.book.path],
 ] as const
 
+/**
+ * The Suspense boundary lives here, not in App, because the prerenderer and the
+ * browser must render the *same* tree. When only the client wrapped the routes
+ * in Suspense, the server HTML had no boundary for React to match against, so
+ * every page failed hydration and fell back to a full client render — throwing
+ * away the prerendered DOM it had just been served.
+ */
 export function SiteRoutes({ pages }: { pages: PageMap }) {
-  const { home: Home, about: About, services: Services, fleet: Fleet, serviceAreas: ServiceAreas, book: Book, contact: Contact, careers: Careers, driverHandbook: DriverHandbook, notFound: NotFound } = pages
+  return <Suspense fallback={<div className="page-loader" role="status">Loading 1st Class Express…</div>}>
+    <SiteRouteTable pages={pages} />
+  </Suspense>
+}
+
+function SiteRouteTable({ pages }: { pages: PageMap }) {
+  const { home: Home, about: About, services: Services, serviceDetail: ServiceDetail, fleet: Fleet, fleetDetail: FleetDetail, serviceAreas: ServiceAreas, serviceAreaDetail: ServiceAreaDetail, routeDetail: RouteDetail, book: Book, contact: Contact, careers: Careers, driverHandbook: DriverHandbook, notFound: NotFound } = pages
   return <Routes>
     <Route element={<SiteLayout />}>
       <Route index element={<Home />} />
       <Route path={routeSeo.about.path} element={<About />} />
       <Route path={routeSeo.services.path} element={<Services />} />
+      <Route path={`${routeSeo.services.path}/:serviceId`} element={<ServiceDetail />} />
       <Route path={routeSeo.fleet.path} element={<Fleet />} />
+      <Route path={`${routeSeo.fleet.path}/:fleetId`} element={<FleetDetail />} />
       <Route path={routeSeo.serviceAreas.path} element={<ServiceAreas />} />
+      {/* Declared before the :regionId sibling for readability; React Router
+          ranks the static "interstate" segment above the dynamic one regardless. */}
+      <Route path={`${routeSeo.serviceAreas.path}/interstate/:routeId`} element={<RouteDetail />} />
+      <Route path={`${routeSeo.serviceAreas.path}/:regionId`} element={<ServiceAreaDetail />} />
       <Route path={routeSeo.book.path} element={<Book />} />
       <Route path={routeSeo.contact.path} element={<Contact />} />
       <Route path={routeSeo.careers.path} element={<Careers />} />

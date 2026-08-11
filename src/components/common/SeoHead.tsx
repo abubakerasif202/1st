@@ -15,7 +15,7 @@ const businessSchema = {
   legalName: '1st Class Express Pty Ltd',
   url: base,
   knowsAbout: ['Freight transport', 'Interstate linehaul', 'Dedicated drivers', 'Fleet management'],
-  logo: `${base}/brand/first-class-express-logo.png`,
+  logo: `${base}/brand/first-class-express-logo.webp`,
   image: socialImage,
   description: 'Australian-owned freight delivery, professional driver and fleet-management services across metropolitan, regional and interstate routes.',
   foundingDate: '2013',

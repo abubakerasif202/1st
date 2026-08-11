@@ -3,86 +3,67 @@ import { Link, useParams } from 'react-router-dom'
 import { Breadcrumbs } from '../components/common/Breadcrumbs'
 import { PageHero } from '../components/common/PageHero'
 import { SeoHead } from '../components/common/SeoHead'
+import { interstateRoutes } from '../data/interstateRoutes'
+import { findRouteMeta } from '../lib/routeMeta'
 import NotFoundPage from './NotFoundPage'
-
-const routesData: Record<string, { title: string; origin: string; dest: string; transit: string; description: string }> = {
-  'sydney-melbourne': {
-    title: 'Sydney to Melbourne Freight Linehaul',
-    origin: 'Sydney, NSW',
-    dest: 'Melbourne, VIC',
-    transit: 'Overnight / Next-Day',
-    description: 'Scheduled daily linehaul corridor connecting Sydney and Melbourne metropolitan hubs for palletised, bulk, and B-double freight.'
-  },
-  'sydney-brisbane': {
-    title: 'Sydney to Brisbane Freight Linehaul',
-    origin: 'Sydney, NSW',
-    dest: 'Brisbane, QLD',
-    transit: '24–36 Hours',
-    description: 'Express interstate corridor servicing Sydney to Brisbane commercial freight, regional drops, and manufacturing runs.'
-  },
-  'sydney-canberra': {
-    title: 'Sydney to Canberra Freight Linehaul',
-    origin: 'Sydney, NSW',
-    dest: 'Canberra, ACT',
-    transit: 'Same-Day / Overnight',
-    description: 'Frequent linehaul service between Sydney and Canberra for commercial freight, government deliveries, and express cargo.'
-  }
-}
 
 export default function RouteDetailPage() {
   const { routeId } = useParams<{ routeId: string }>()
-  const routeInfo = routeId ? routesData[routeId] : undefined
+  const route = interstateRoutes.find((item) => item.slug === routeId)
 
-  if (!routeInfo) {
-    return <NotFoundPage />
-  }
+  if (!route) return <NotFoundPage />
 
-  return (
-    <>
-      <SeoHead
-        title={`${routeInfo.title} | 1st Class Express`}
-        description={routeInfo.description}
-        path={`/service-areas/interstate/${routeId}`}
-      />
-      <Breadcrumbs
-        items={[
-          { label: 'Service Areas', path: '/service-areas' },
-          { label: 'Interstate', path: '/service-areas' },
-          { label: routeInfo.title },
-        ]}
-      />
-      <PageHero
-        eyebrow="Interstate Corridor"
-        title={routeInfo.title}
-        intro={routeInfo.description}
-        image="/images/replacement/prime-mover-hero-branded.png"
-      />
-      <section className="lovable-section lovable-section--soft">
-        <div className="container-page max-w-4xl">
-          <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-8 space-y-6">
-            <div className="flex flex-wrap gap-6 text-slate-200">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-5 h-5 text-amber-400" />
-                <span><strong>Origin:</strong> {routeInfo.origin}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="w-5 h-5 text-amber-400" />
-                <span><strong>Destination:</strong> {routeInfo.dest}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Truck className="w-5 h-5 text-amber-400" />
-                <span><strong>Estimated Transit:</strong> {routeInfo.transit}</span>
-              </div>
-            </div>
-            <p className="text-slate-300 leading-relaxed">{routeInfo.description}</p>
-            <div className="pt-4">
-              <Link to="/quote" className="lovable-btn lovable-btn--primary inline-flex items-center">
-                Get a Route Quote <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-            </div>
+  const path = `/service-areas/interstate/${route.slug}`
+  const meta = findRouteMeta(path) ?? { path, title: `${route.title} | 1st Class Express`, description: route.description }
+
+  const facts = [
+    [MapPin, 'Origin', route.origin],
+    [MapPin, 'Destination', route.destination],
+    [Truck, 'Estimated transit', route.transit],
+  ] as const
+
+  return <>
+    <SeoHead title={meta.title} description={meta.description} path={path} />
+    <Breadcrumbs items={[{ label: 'Service Areas', path: '/service-areas' }, { label: route.title }]} />
+    <PageHero eyebrow="Interstate Corridor" title={route.title} intro={route.description} image="/images/replacement/prime-mover-hero-branded.webp" showBreadcrumb={false} />
+
+    <section className="lovable-section lovable-section--soft">
+      <div className="container-page detail-layout">
+        <div className="detail-main">
+          <div className="lovable-heading">
+            <p className="lovable-kicker">Corridor Detail</p>
+            <h2>How This Route Runs</h2>
           </div>
+          <dl className="detail-specs">
+            {facts.map(([Icon, term, value]) => <div key={term}><dt><Icon size={16} aria-hidden="true" />{term}</dt><dd>{value}</dd></div>)}
+          </dl>
+          <p className="detail-note-text">Interstate movements are subject to route, freight, timing, access and compliance requirements, and are confirmed for the engagement.</p>
         </div>
-      </section>
-    </>
-  )
+
+        <aside className="detail-aside">
+          <h2>Quote This Route</h2>
+          <p>Share the pickup, destination, freight profile and preferred timing and we will confirm the route and the most suitable transport configuration.</p>
+          <Link className="lovable-btn lovable-btn--primary" to="/quote">Request a Quote <ArrowRight size={16} aria-hidden="true" /></Link>
+        </aside>
+      </div>
+    </section>
+
+    <section className="lovable-section">
+      <div className="container-page">
+        <div className="lovable-heading">
+          <p className="lovable-kicker">Other Corridors</p>
+          <h2>More Interstate Routes</h2>
+        </div>
+        <div className="lovable-feature-grid">
+          {interstateRoutes.filter(item => item.slug !== route.slug).map(item =>
+            <article className="lovable-feature" key={item.slug}>
+              <Truck aria-hidden="true" />
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <Link className="fleet-card-link" to={`/service-areas/interstate/${item.slug}`}>View corridor <ArrowRight size={15} aria-hidden="true" /></Link>
+            </article>)}
+        </div>
+      </div>
+    </section>
+  </>
 }

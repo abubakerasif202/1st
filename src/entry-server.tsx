@@ -10,13 +10,17 @@ let pages: PageMap | undefined
 // only put the Suspense fallback into the static HTML.
 async function resolvePages(): Promise<PageMap> {
   if (pages) return pages
-  const [home, about, services, fleet, serviceAreas, book, contact, careers, driverHandbook, notFound] = await Promise.all([
-    pageLoaders.home(), pageLoaders.about(), pageLoaders.services(), pageLoaders.fleet(), pageLoaders.serviceAreas(),
-    pageLoaders.book(), pageLoaders.contact(), pageLoaders.careers(), pageLoaders.driverHandbook(), pageLoaders.notFound(),
+  const [home, about, services, serviceDetail, fleet, fleetDetail, serviceAreas, serviceAreaDetail, routeDetail, book, contact, careers, driverHandbook, notFound] = await Promise.all([
+    pageLoaders.home(), pageLoaders.about(), pageLoaders.services(), pageLoaders.serviceDetail(),
+    pageLoaders.fleet(), pageLoaders.fleetDetail(), pageLoaders.serviceAreas(), pageLoaders.serviceAreaDetail(),
+    pageLoaders.routeDetail(), pageLoaders.book(), pageLoaders.contact(), pageLoaders.careers(),
+    pageLoaders.driverHandbook(), pageLoaders.notFound(),
   ])
   pages = {
-    home: home.default, about: about.default, services: services.default, fleet: fleet.default,
-    serviceAreas: serviceAreas.default, book: book.default, contact: contact.default,
+    home: home.default, about: about.default, services: services.default, serviceDetail: serviceDetail.default,
+    fleet: fleet.default, fleetDetail: fleetDetail.default, serviceAreas: serviceAreas.default,
+    serviceAreaDetail: serviceAreaDetail.default, routeDetail: routeDetail.default,
+    book: book.default, contact: contact.default,
     careers: careers.default, driverHandbook: driverHandbook.default, notFound: notFound.default,
   }
   return pages

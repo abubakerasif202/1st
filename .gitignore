@@ -1,12 +1,13 @@
 node_modules
 dist
+dist-ssr
 coverage
 playwright-report
 test-results
+.gstack
+.playwright-cli
 *.tsbuildinfo
 .env
 .env.*
 !.env.example
 .vercel
-dist-ssr
-.gstack/

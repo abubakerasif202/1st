@@ -48,7 +48,9 @@ async function buildSocialCard() {
 }
 
 async function buildIcons() {
-  const source = path.join(brandDir, 'first-class-express-logo.png')
+  // The committed brand logo is WebP-only; the original PNG master was removed
+  // from public/ because it shipped unused alongside the WebP the site renders.
+  const source = path.join(brandDir, 'first-class-express-logo.webp')
   for (const size of [192, 512]) {
     const target = path.join(brandDir, `icon-${size}.png`)
     await sharp(source).resize({ width: size, height: size, fit: 'contain', background: '#070708' }).png().toFile(target)
