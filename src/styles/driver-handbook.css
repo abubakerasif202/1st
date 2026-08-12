@@ -403,7 +403,9 @@
   margin-top: 30px;
   padding-top: 7px;
   border-top: 1px solid var(--hb-rule);
-  color: #8b867c;
+  /* 8.5px running footer: --hb-faint clears 4.5:1 on the white sheet, the
+     previous #8b867c only managed 3.6:1. */
+  color: var(--hb-faint);
   font-family: var(--hb-mono);
   font-size: 8.5px;
   letter-spacing: .1em;

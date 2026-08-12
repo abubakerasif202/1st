@@ -1,0 +1,150 @@
+/* ============================================================================
+   1st Class Express — the colour system.
+
+   This file is the ONLY place colour tokens are declared. index.css and
+   lovable-refresh.css previously each shipped their own `:root` block, so
+   `--gold`, `--muted` and `--text` resolved differently depending on which
+   stylesheet won the cascade. That is why light-surface greys were landing on
+   dark sections (and `--ink` text on an `--ink` background).
+
+   Two layers, and the distinction matters:
+
+     PALETTE  raw brand colours. Fixed values. Never bind text straight to a
+              palette token unless you know the surface it sits on.
+     ROLE     semantic slots components consume (--muted, --accent-text, ...).
+              Roles are re-bound per surface below, so a component inherits the
+              right colour wherever it is placed. No !important, no per-page
+              overrides — put a component on a dark ground and its text follows.
+
+   Contrast: every role pair below clears WCAG AA against its own surface
+   (4.5:1 normal text, 3:1 large text and icons).
+   ========================================================================== */
+
+:root {
+  /* ---- Palette: black ------------------------------------------------- */
+  --ink: #11171d;          /* primary dark ground   */
+  --ink-2: #182129;        /* raised dark panel     */
+  --ink-3: #202b34;        /* dark ground, lifted   */
+  --black: #0b1015;
+  --charcoal: #121414;
+  --slate: #1c3042;
+  --surface: #1a1c1c;
+  --raised: #282a2b;
+
+  /* ---- Palette: paper -------------------------------------------------- */
+  --paper: #fff;
+  --cream: #f5f2ea;
+  --line: #dfe3e5;
+
+  /* ---- Palette: gold ---------------------------------------------------
+     Three weights because one gold cannot serve both grounds. --gold reads
+     8.9:1 on --ink but only 2.0:1 on white, so light surfaces get --gold-deep
+     (6.1:1 on white, 5.4:1 on cream) wherever gold carries text or an icon.
+     --gold-light is a dark-ground-only highlight.                           */
+  --gold: #d1b35a;
+  --gold-light: #f2ca50;
+  --gold-deep: #7a5f14;
+
+  /* ---- Palette: red ---------------------------------------------------- */
+  --red: #d42d48;
+  --red-dark: #b71939;     /* 6.5:1 on white — light grounds */
+  --red-bright: #ff8095;   /* 7.5:1 on ink   — dark grounds  */
+
+  /* ---- Roles: light surface (the default) ------------------------------ */
+  --text-strong: #10161b;  /* headings, vehicle names          */
+  --text-body: #333d45;    /* primary body copy                */
+  --muted: #5b6670;        /* secondary copy                   */
+  --label: #5b6670;        /* metadata / spec labels           */
+  --accent-text: var(--gold-deep);
+  --accent-icon: var(--gold-deep);
+  --danger-text: var(--red-dark);
+  --border: rgba(122, 95, 20, .38);
+  --rule: var(--line);
+
+  /* Outline / secondary buttons. Bound as roles so the same .lovable-btn--ink
+     or --secondary renders legibly on either ground. */
+  --btn-outline-fg: var(--ink);
+  --btn-outline-bd: #8b959c;
+  --btn-outline-hover-fg: #fff;
+  --btn-outline-hover-bg: var(--ink);
+  --btn-outline-hover-bd: var(--ink);
+  --text: var(--text-strong);
+  --text-inverse: #f7f4ec;
+}
+
+/* ---- Roles: dark surface ----------------------------------------------
+   Every container that paints a dark ground re-binds the role slots. Add new
+   dark containers to this list rather than overriding colours downstream.   */
+.lovable-section--dark,
+.lovable-final-cta,
+.lovable-hero,
+.premium-hero,
+.page-hero,
+.cta-band,
+.not-found,
+.site-footer,
+.site-header,
+.announcement,
+.mobile-panel,
+.intro-screen,
+.breadcrumb-nav,
+.quote-side,
+.detail-aside,
+.contact-form-card,
+.quick-quote-section,
+.route-explorer__panel,
+.route-assurance,
+.application-form,
+.role-card,
+.fleet-detail-card,
+.about-capability-grid article,
+.premium-proof-rail,
+.lovable-stats__grid,
+.hero-enquiry-card,
+.quick-quote-assurance,
+.lovable-fleet-card__copy,
+.premium-operations-media > div,
+.lovable-section--dark .lovable-feature {
+  --text-strong: #fff;
+  --text-body: #e4e8ea;
+  --muted: #bcc5cb;
+  --label: #aeb7bd;
+  --accent-text: var(--gold);
+  --accent-icon: var(--gold);
+  --danger-text: var(--red-bright);
+  --border: rgba(209, 179, 90, .42);
+  --rule: rgba(255, 255, 255, .16);
+  --btn-outline-fg: #f7f4ec;
+  --btn-outline-bd: rgba(255, 255, 255, .4);
+  --btn-outline-hover-fg: var(--ink);
+  --btn-outline-hover-bg: var(--gold);
+  --btn-outline-hover-bd: var(--gold);
+  --text: #fff;
+  --text-inverse: var(--ink);
+}
+
+/* ---- Roles: light islands inside dark sections -------------------------
+   A white card nested in a dark section must flip the roles back, otherwise it
+   inherits the dark bindings from its parent and goes low-contrast.         */
+.quick-quote-form,
+.quote-form,
+.lovable-section--dark .lovable-service-card,
+.lovable-section--dark .lovable-route-card,
+.lovable-section--dark .faq-item {
+  --text-strong: #10161b;
+  --text-body: #333d45;
+  --muted: #5b6670;
+  --label: #5b6670;
+  --accent-text: var(--gold-deep);
+  --accent-icon: var(--gold-deep);
+  --danger-text: var(--red-dark);
+  --border: rgba(122, 95, 20, .38);
+  --rule: var(--line);
+  --btn-outline-fg: var(--ink);
+  --btn-outline-bd: #8b959c;
+  --btn-outline-hover-fg: #fff;
+  --btn-outline-hover-bg: var(--ink);
+  --btn-outline-hover-bd: var(--ink);
+  --text: #10161b;
+  --text-inverse: #f7f4ec;
+}

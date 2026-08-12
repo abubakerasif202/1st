@@ -34,21 +34,21 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
           ...(item.path ? { item: `${siteUrl}${item.path}` } : {}),
         })),
       }} />
-      <nav aria-label="Breadcrumb" className="breadcrumb-nav text-xs sm:text-sm text-slate-400 py-3 bg-slate-950/60 border-b border-slate-800/80">
+      <nav aria-label="Breadcrumb" className="breadcrumb-nav text-xs sm:text-sm">
         <div className="container-page flex items-center flex-wrap gap-1.5">
-          <Link to="/" className="breadcrumb-nav__link inline-flex items-center gap-1 hover:text-amber-400 transition-colors">
+          <Link to="/" className="breadcrumb-nav__link inline-flex items-center gap-1">
             <Home className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Home</span>
           </Link>
           {items.map((item) => (
             <span key={`${item.label}-${item.path ?? 'current'}`} className="flex items-center gap-1.5">
-              <ChevronRight className="w-3.5 h-3.5 text-slate-600 flex-shrink-0" aria-hidden="true" />
+              <ChevronRight className="breadcrumb-nav__sep w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
               {item.path ? (
-                <Link to={item.path} className="breadcrumb-nav__link hover:text-amber-400 transition-colors">
+                <Link to={item.path} className="breadcrumb-nav__link">
                   {item.label}
                 </Link>
               ) : (
-                <span className="text-slate-200 font-medium" aria-current="page">{item.label}</span>
+                <span className="font-medium" aria-current="page">{item.label}</span>
               )}
             </span>
           ))}
