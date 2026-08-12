@@ -10,7 +10,7 @@ const routeConfigPath = path.join(projectRoot, 'src', 'data', 'routeSeo.json')
 const sitemapPath = path.join(projectRoot, 'public', 'sitemap.xml')
 const vercelConfigPath = path.join(projectRoot, 'vercel.json')
 const siteUrl = (process.env.VITE_SITE_URL || 'https://www.1stclassexpress.com.au').replace(/\/$/, '')
-const socialImage = `${siteUrl}/images/replacement/prime-mover-hero-branded.webp`
+const socialImage = `${siteUrl}/images/replacement/social-card.jpg`
 const markerPattern = /<!-- route-meta:start -->[\s\S]*?<!-- route-meta:end -->/
 const rootPattern = /<div id="root"><\/div>/
 // Text unique to NotFoundPage and to App's Suspense fallback. Both are legitimate

@@ -30,3 +30,14 @@ export const interstateRoutes = [
 ] as const
 
 export type InterstateRoute = (typeof interstateRoutes)[number]
+
+// These are the interstate destinations supported by the verified company data.
+// Corridor pages only exist for the three routes above; Adelaide and Perth are
+// assessed per movement, so the UI must not imply a fixed schedule for them.
+export const interstateCoverage = [
+  { name: 'Canberra', label: 'Canberra, ACT', type: 'Regional and interstate', description: 'Freight and driver services connecting Sydney and Canberra, with timing and vehicle requirements confirmed for each movement.' },
+  { name: 'Melbourne', label: 'Melbourne, VIC', type: 'Interstate corridor', description: 'Planned linehaul freight between Sydney and Melbourne, with the route, timing and vehicle confirmed for each booking.' },
+  { name: 'Adelaide', label: 'Adelaide, SA', type: 'Interstate by assessment', description: 'Adelaide freight is assessed per movement, subject to the route, freight profile, timing and vehicle availability.' },
+  { name: 'Brisbane', label: 'Brisbane, QLD', type: 'Interstate corridor', description: 'Planned linehaul freight between Sydney and Brisbane, with the route, timing and vehicle confirmed for each booking.' },
+  { name: 'Perth', label: 'Perth, WA', type: 'Interstate by assessment', description: 'Perth freight is assessed per movement, subject to the route, freight profile, timing and vehicle availability.' },
+] as const

@@ -27,7 +27,7 @@
   "servicesInterstate": {
     "path": "/services/interstate",
     "title": "Interstate Linehaul Freight Services | 1st Class Express",
-    "description": "Scheduled interstate linehaul freight transport connecting Sydney, Melbourne, Brisbane, Adelaide, Canberra and Darwin."
+    "description": "Planned interstate linehaul freight from Sydney to Canberra, Melbourne and Brisbane, with Adelaide and Perth assessed per movement."
   },
   "servicesBulkFreight": {
     "path": "/services/bulk-freight",
@@ -52,7 +52,7 @@
   "servicesDangerousGoods": {
     "path": "/services/dangerous-goods",
     "title": "Dangerous Goods Transport Services | 1st Class Express",
-    "description": "Compliant dangerous goods freight transport with certified drivers, specialized equipment, and documentation checks."
+    "description": "Assessed dangerous-goods freight support, with documentation, equipment and qualified personnel confirmed before acceptance."
   },
   "fleet": {
     "path": "/fleet",
@@ -112,12 +112,12 @@
   "serviceAreasInterstateSydneyBrisbane": {
     "path": "/service-areas/interstate/sydney-brisbane",
     "title": "Sydney to Brisbane Interstate Freight | 1st Class Express",
-    "description": "Express linehaul transport services connecting Sydney and Brisbane with scheduled express freight runs."
+    "description": "Planned linehaul freight between Sydney and Brisbane, with timing confirmed after the route and freight profile are assessed."
   },
   "serviceAreasInterstateSydneyCanberra": {
     "path": "/service-areas/interstate/sydney-canberra",
     "title": "Sydney to Canberra Freight Services | 1st Class Express",
-    "description": "Direct freight and driver services connecting Sydney and Canberra (ACT) for local and commercial transport."
+    "description": "Freight and driver services between Sydney and Canberra, with the route, timing and vehicle confirmed for each movement."
   },
   "book": {
     "path": "/quote",
@@ -131,8 +131,8 @@
   },
   "careers": {
     "path": "/careers",
-    "title": "Driver Jobs & Careers | 1st Class Express Australia",
-    "description": "View available driving roles and apply for local or interstate driving opportunities with 1st Class Express, an Australian transport company."
+    "title": "Driver Careers & Expressions of Interest | 1st Class Express",
+    "description": "Register your interest in local or interstate driving work with 1st Class Express. Current roles are assessed as opportunities become available."
   },
   "driverHandbook": {
     "path": "/driver-handbook",

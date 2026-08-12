@@ -22,7 +22,7 @@ describe('Lovable-aligned primary routes', () => {
     ['/service-areas', /Metropolitan, Regional And Interstate/i],
     ['/quote', /Tell Us What Needs Moving/i],
     ['/contact', /Let's Get Your Freight Moving/i],
-    ['/careers', /Drive Your Career Forward/i],
+    ['/careers', /Register Your Interest In Driving With Us/i],
     ['/driver-handbook', /Driving with 1st Class Express/i],
   ])('renders %s with the reference heading', async (route, heading) => {
     renderRoute(route)

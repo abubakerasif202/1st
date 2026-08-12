@@ -40,7 +40,7 @@ export default function CareersPage() {
   return <>
     <SeoHead {...routeSeo.careers} />
     <JobPostingSchema />
-    <PageHero eyebrow="Careers" title="Drive Your Career Forward" intro="Join a professional Australian transport team, with local and interstate driving opportunities for experienced, reliable drivers." image="/images/replacement/prime-mover-hero-branded.webp" />
+    <PageHero eyebrow="Careers" title="Register Your Interest In Driving With Us" intro="Experienced, reliable drivers can register their interest in local Sydney and interstate work. Opportunities are assessed as they become available." image="/images/replacement/prime-mover-hero-branded.webp" />
 
     <section className="lovable-section lovable-section--soft">
       <div className="container-page">
@@ -51,7 +51,7 @@ export default function CareersPage() {
 
     <section id="roles" className="lovable-section lovable-section--dark">
       <div className="container-page">
-        <div className="lovable-heading"><p className="lovable-kicker">Available Driver Roles</p><h2>Current Driving Opportunities</h2><p>Roles are shown as open, expressions of interest, or currently closed. Registering interest does not guarantee an offer of work.</p></div>
+        <div className="lovable-heading"><p className="lovable-kicker">Driver Expressions Of Interest</p><h2>Register For Future Opportunities</h2><p>Roles are currently expressions of interest. Registering interest does not guarantee an offer of work.</p></div>
         <div className="role-card-grid">{driverRoles.map(role => <RoleCard key={role.id} role={role} />)}</div>
       </div>
     </section>

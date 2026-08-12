@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { company } from '../../data/company'
 
 const base = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, '') || 'https://www.1stclassexpress.com.au'
-const socialImage = `${base}/images/replacement/prime-mover-hero-branded.webp`
+const socialImage = `${base}/images/replacement/social-card.jpg`
 // Typed as Organization rather than LocalBusiness: LocalBusiness requires a
 // verified postal address, and publishing a guessed one is worse than omitting
 // the type. Add "address" (PostalAddress) plus openingHoursSpecification and
