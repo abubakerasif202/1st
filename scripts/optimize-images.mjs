@@ -19,6 +19,9 @@ const brandDir = path.join(projectRoot, 'public', 'brand')
 const MAX_WIDTH = 1920
 const WEBP_QUALITY = 78
 const OG_SOURCE = 'prime-mover-hero-branded.png'
+// The logo is flat brand colour over one background, so a quantised palette is
+// visually lossless here and roughly a third of the size of full-colour PNG.
+const ICON_PNG = { palette: true, quality: 90, effort: 10, compressionLevel: 9 }
 const kb = (bytes) => `${Math.round(bytes / 1024)} kB`
 
 async function sizeOf(file) {
@@ -57,7 +60,7 @@ async function buildIcons() {
     await sharp(source)
       .resize({ width: size, height: size, fit: 'contain', background: '#070708' })
       .flatten({ background: '#070708' })
-      .png()
+      .png(ICON_PNG)
       .toFile(target)
     console.log(`icon-${size}.png`)
   }
@@ -66,7 +69,7 @@ async function buildIcons() {
     .resize({ width: 410, height: 410, fit: 'contain', background: '#070708' })
     .extend({ top: 51, bottom: 51, left: 51, right: 51, background: '#070708' })
     .flatten({ background: '#070708' })
-    .png()
+    .png(ICON_PNG)
     .toFile(path.join(brandDir, 'icon-maskable-512.png'))
   console.log('icon-maskable-512.png')
 }
