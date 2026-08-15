@@ -122,8 +122,8 @@
 .quote-stepper__marker{display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:50%;background:#fff;border:2px solid var(--line);color:var(--muted);font:800 .78rem 'Archivo',sans-serif;transition:background .2s,border-color .2s,color .2s}
 .quote-stepper__step.is-complete .quote-stepper__marker,.quote-stepper__step.is-current .quote-stepper__marker{background:var(--gold);border-color:var(--gold);color:#151305}
 .quote-stepper__step.is-current .quote-stepper__marker{box-shadow:0 0 0 4px rgba(209,179,90,.25)}
-.quote-stepper__label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
-.quote-stepper__step.is-current .quote-stepper__label{color:var(--ink)}
+.quote-stepper__label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#5a666e}
+.quote-stepper__step.is-complete .quote-stepper__label,.quote-stepper__step.is-current .quote-stepper__label{color:var(--ink);font-weight:800}
 .quote-form h3{grid-column:1/-1;margin:0 0 .2rem;font-size:1.5rem;outline:none}
 
 .quote-presets{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-top:.45rem}

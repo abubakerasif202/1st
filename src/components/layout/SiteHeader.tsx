@@ -86,7 +86,7 @@ export function SiteHeader() {
               onClick={() => setOpen(false)}
               aria-label="Close menu"
             >
-              <X />
+              <X aria-hidden="true" />
             </button>
 
             <img
@@ -165,7 +165,7 @@ export function SiteHeader() {
             aria-controls="mobile-menu"
             aria-label="Open menu"
           >
-            <Menu />
+            <Menu aria-hidden="true" />
           </button>
         </div>
       </header>
