@@ -9,12 +9,17 @@ import { interstateCoverage, interstateRoutes } from '../data/interstateRoutes'
 import { serviceRegions } from '../data/serviceRegions'
 import routeSeo from '../data/routeSeo.json'
 
-const groups = [
-  ['Sydney & Metropolitan', ['Sydney Metropolitan Area','Sydney CBD','Parramatta','Western Sydney','Northern Sydney','South Sydney']],
-  ['Greater New South Wales', ['Wollongong','Wagga Wagga','Narrandera','Griffith','Albury','Blue Mountains','Lithgow','Bathurst','Orange','Mudgee','Dubbo','Parkes']],
-  ['Central Coast & Hunter', ['Central Coast','Newcastle','Muswellbrook','Tamworth']],
-  ['Interstate Linehaul', interstateCoverage.map(({ label, type }) => type === 'Interstate by assessment' ? `${label} — subject to route review` : label)],
-] as const
+interface RouteGroup {
+  title: string
+  items: readonly string[]
+}
+
+const groups: readonly RouteGroup[] = [
+  { title: 'Sydney & Metropolitan', items: ['Sydney Metropolitan Area','Sydney CBD','Parramatta','Western Sydney','Northern Sydney','South Sydney'] },
+  { title: 'Greater New South Wales', items: ['Wollongong','Wagga Wagga','Narrandera','Griffith','Albury','Blue Mountains','Lithgow','Bathurst','Orange','Mudgee','Dubbo','Parkes'] },
+  { title: 'Central Coast & Hunter', items: ['Central Coast','Newcastle','Muswellbrook','Tamworth'] },
+  { title: 'Interstate Linehaul', items: interstateCoverage.map(({ label, type }) => type === 'Interstate by assessment' ? `${label} — subject to route review` : label) },
+]
 
 export default function ServiceAreasPage(){
   const [searchTerm, setSearchTerm] = useState('')
@@ -42,10 +47,12 @@ export default function ServiceAreasPage(){
 
   const filteredGroups = useMemo(() => {
     if (!normalizedQuery) return groups
-    return groups.map(([title, items]) => {
-      const matchingItems = items.filter(item => item.toLowerCase().includes(normalizedQuery))
-      return matchingItems.length > 0 ? [title, matchingItems] as const : null
-    }).filter(Boolean) as typeof groups
+    return groups
+      .map(({ title, items }) => ({
+        title,
+        items: items.filter(item => item.toLowerCase().includes(normalizedQuery)),
+      }))
+      .filter(group => group.items.length > 0)
   }, [normalizedQuery])
 
   return <>
@@ -85,7 +92,7 @@ export default function ServiceAreasPage(){
           <p>Availability is confirmed after reviewing freight type, access, timing and vehicle requirements.</p>
         </div>
         <div className="lovable-route-grid">
-          {filteredGroups.map(([title,items]) => (
+          {filteredGroups.map(({ title, items }) => (
             <article className="lovable-route-card" key={title}>
               <MapPinned aria-hidden="true"/>
               <h3>{title}</h3>
