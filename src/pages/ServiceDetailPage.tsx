@@ -52,7 +52,7 @@ export default function ServiceDetailPage() {
           <ShieldAlert aria-hidden="true" />
           <h2>Book This Service</h2>
           <p>Send through the freight dimensions, pickup, destination and timing for {service.title.toLowerCase()} and the operations team will confirm the next step.</p>
-          <Link className="lovable-btn lovable-btn--primary" to="/quote">Request a Quote <ArrowRight size={16} aria-hidden="true" /></Link>
+          <Link className="lovable-btn lovable-btn--primary" to={`/quote?service=${encodeURIComponent(service.slug)}`}>Request a Quote <ArrowRight size={16} aria-hidden="true" /></Link>
         </aside>
       </div>
     </section>

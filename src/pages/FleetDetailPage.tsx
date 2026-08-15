@@ -49,7 +49,7 @@ export default function FleetDetailPage() {
         <aside className="detail-aside">
           <h2>Book This Vehicle</h2>
           <p>Tell us what needs moving and where. We will confirm whether {vehicle.title.toLowerCase()} suit the job, or recommend the configuration that does.</p>
-          <Link className="lovable-btn lovable-btn--primary" to="/quote">Request a Quote <ArrowRight size={16} aria-hidden="true" /></Link>
+          <Link className="lovable-btn lovable-btn--primary" to={`/quote?vehicle=${encodeURIComponent(vehicle.title)}`}>Request a Quote <ArrowRight size={16} aria-hidden="true" /></Link>
         </aside>
       </div>
     </section>

@@ -27,7 +27,7 @@ export function FleetExplorer() {
               <div><dt>Service type</dt><dd>{serviceType}</dd></div>
               <div><dt>Availability</dt><dd>{availability}</dd></div>
             </dl>
-            <div className="lovable-actions"><Link className="lovable-btn lovable-btn--primary" to="/quote">Request a Quote <ArrowRight size={16} aria-hidden="true"/></Link><Link className="lovable-btn lovable-btn--ink" to={`/fleet/${slug}`}>View {title} details</Link></div>
+            <div className="lovable-actions"><Link className="lovable-btn lovable-btn--primary" to={`/quote?vehicle=${encodeURIComponent(title)}`}>Request a Quote <ArrowRight size={16} aria-hidden="true"/></Link><Link className="lovable-btn lovable-btn--ink" to={`/fleet/${slug}`}>View {title} details</Link></div>
           </div>
         </article>
       ))}

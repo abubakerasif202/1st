@@ -43,7 +43,7 @@ export default function RouteDetailPage() {
         <aside className="detail-aside">
           <h2>Quote This Route</h2>
           <p>Share the pickup, destination, freight profile and preferred timing and we will confirm the route and the most suitable transport configuration.</p>
-          <Link className="lovable-btn lovable-btn--primary" to="/quote">Request a Quote <ArrowRight size={16} aria-hidden="true" /></Link>
+          <Link className="lovable-btn lovable-btn--primary" to={`/quote?from=${encodeURIComponent(route.origin)}&to=${encodeURIComponent(route.destination)}`}>Request a Quote <ArrowRight size={16} aria-hidden="true" /></Link>
         </aside>
       </div>
     </section>
