@@ -30,7 +30,11 @@
          driver handbook uses them, and it loads them itself. Keep this in sync
          with src/data/fonts.json (site). -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&amp;family=Barlow:wght@400;600;700&amp;family=JetBrains+Mono:wght@600;700;800&amp;display=swap" />
-    <link rel="icon" href="/brand/logo-mark.png" />
+    <!-- The monogram alone, not the full lockup: a tab strip draws this at 16px,
+         where the wordmark and tagline are an illegible smear. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/brand/favicon-180.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="preload" as="image" href="/brand/first-class-express-logo.webp" />
     <!-- Organization JSON-LD is rendered by SeoHead so it stays in one place; it

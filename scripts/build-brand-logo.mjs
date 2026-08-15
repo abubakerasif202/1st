@@ -23,9 +23,6 @@ const HIGH = 40
 // 816x900 is far more than the largest slot (170 CSS px in the footer, so 510px
 // at 3x). Half size keeps every rendering crisp and the file small.
 const LOGO_WIDTH = 560
-// Browsers draw a favicon at 16-64px; the 512 icon in the web manifest is what
-// installers use, so this only needs to cover a retina tab strip.
-const FAVICON_SIZE = 256
 
 const kb = (bytes) => `${Math.round(bytes / 1024)} kB`
 
@@ -65,16 +62,90 @@ await transparent
   .webp({ quality: 82, alphaQuality: 60, effort: 6 })
   .toFile(logoPath)
 
-// Square, contain-fitted favicon. The logo-mark.jpg it replaces squeezed a
-// 816x900 logo into a 300x300 box, so the mark was both distorted and boxed in
-// black on every tab strip.
-const markPath = path.join(brandDir, 'logo-mark.png')
-await transparent
-  .clone()
-  .resize({ width: FAVICON_SIZE, height: FAVICON_SIZE, fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-  .png({ compressionLevel: 9, palette: true })
-  .toFile(markPath)
+/**
+ * The bounding box of the "1e" monogram.
+ *
+ * The full lockup is four stacked elements — monogram, road, wordmark, tagline
+ * — separated by bands of empty rows. A tab strip draws the icon at 16px, where
+ * the wordmark and tagline are a grey smear, so the favicon uses the monogram
+ * alone. Found by scanning rather than hard-coded, so a re-exported master with
+ * different spacing still crops correctly.
+ */
+function monogramBox() {
+  const rowHasInk = []
+  for (let y = 0; y < info.height; y++) {
+    let ink = false
+    for (let x = 0; x < info.width && !ink; x++) ink = keyed[(y * info.width + x) * 4 + 3] > 8
+    rowHasInk.push(ink)
+  }
 
-for (const file of [master, logoPath, markPath]) {
+  // The monogram runs from the first inked row to the first gap taller than 2%
+  // of the image — big enough to skip antialiasing gaps inside the letterforms.
+  const minGap = Math.round(info.height * 0.02)
+  const top = rowHasInk.indexOf(true)
+  let bottom = info.height - 1
+  for (let y = top, gap = 0; y < info.height; y++) {
+    gap = rowHasInk[y] ? 0 : gap + 1
+    if (gap >= minGap) { bottom = y - gap; break }
+  }
+
+  let left = info.width, right = 0
+  for (let y = top; y <= bottom; y++) {
+    for (let x = 0; x < info.width; x++) {
+      if (keyed[(y * info.width + x) * 4 + 3] > 8) {
+        if (x < left) left = x
+        if (x > right) right = x
+      }
+    }
+  }
+  return { left, top, width: right - left + 1, height: bottom - top + 1 }
+}
+
+const box = monogramBox()
+console.log(`monogram crop: ${box.width}x${box.height} at ${box.left},${box.top}`)
+const monogram = await transparent.clone().extract(box).png().toBuffer()
+
+/**
+ * The monogram centred in a transparent square with a small margin, so the mark
+ * is not flush against the edge of a tab or a home-screen tile.
+ *
+ * Deliberately three separate pipelines rather than one chain: sharp applies
+ * its operations in a fixed order regardless of call order, so a chained
+ * `.extend().flatten()` flattened first and left the padding transparent, and a
+ * second `.resize()` in one chain silently replaces the first.
+ */
+async function squareMark(size, opaque = false) {
+  const fitted = await sharp(monogram)
+    .resize({ width: Math.round(size * 0.88), height: Math.round(size * 0.88), fit: 'inside' })
+    .png()
+    .toBuffer()
+  const { width, height } = await sharp(fitted).metadata()
+  const left = Math.floor((size - width) / 2)
+  const top = Math.floor((size - height) / 2)
+
+  const square = await sharp(fitted)
+    .extend({ top, left, bottom: size - height - top, right: size - width - left, background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png()
+    .toBuffer()
+
+  // iOS ignores alpha on a home-screen icon and composites it onto white, which
+  // would put gold artwork on a white ground. Flatten it onto the brand black.
+  return (opaque ? sharp(square).flatten({ background: '#070708' }) : sharp(square))
+    .png({ compressionLevel: 9, palette: true })
+}
+
+const icons = [
+  ['favicon-16.png', 16, false],
+  ['favicon-32.png', 32, false],
+  ['favicon-180.png', 180, true],
+]
+const iconPaths = []
+for (const [name, size, opaque] of icons) {
+  const target = path.join(brandDir, name)
+  await (await squareMark(size, opaque)).toFile(target)
+  iconPaths.push(target)
+}
+
+for (const file of [master, logoPath, ...iconPaths]) {
   console.log(`${path.basename(file).padEnd(42)} ${kb((await readFile(file)).byteLength).padStart(8)}`)
 }
