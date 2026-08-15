@@ -14,7 +14,7 @@
     "typecheck": "tsc -b --pretty false",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "optimize:images": "node scripts/optimize-images.mjs && node scripts/generate-image-variants.mjs",
+    "optimize:images": "node scripts/build-brand-logo.mjs && node scripts/optimize-images.mjs && node scripts/generate-image-variants.mjs",
     "optimize:variants": "node scripts/generate-image-variants.mjs"
   },
   "dependencies": {

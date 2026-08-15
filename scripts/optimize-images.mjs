@@ -48,18 +48,24 @@ async function buildSocialCard() {
 }
 
 async function buildIcons() {
-  // The committed brand logo is WebP-only; the original PNG master was removed
-  // from public/ because it shipped unused alongside the WebP the site renders.
+  // Built from the transparent logo, then flattened: an installed app icon has
+  // to be opaque, and a maskable one especially — the launcher crops it to
+  // whatever shape it likes and any alpha shows through as a hole.
   const source = path.join(brandDir, 'first-class-express-logo.webp')
   for (const size of [192, 512]) {
     const target = path.join(brandDir, `icon-${size}.png`)
-    await sharp(source).resize({ width: size, height: size, fit: 'contain', background: '#070708' }).png().toFile(target)
+    await sharp(source)
+      .resize({ width: size, height: size, fit: 'contain', background: '#070708' })
+      .flatten({ background: '#070708' })
+      .png()
+      .toFile(target)
     console.log(`icon-${size}.png`)
   }
   // Maskable icons need the logo inset so the safe zone survives a circle crop.
   await sharp(source)
     .resize({ width: 410, height: 410, fit: 'contain', background: '#070708' })
     .extend({ top: 51, bottom: 51, left: 51, right: 51, background: '#070708' })
+    .flatten({ background: '#070708' })
     .png()
     .toFile(path.join(brandDir, 'icon-maskable-512.png'))
   console.log('icon-maskable-512.png')
