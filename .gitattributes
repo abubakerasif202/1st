@@ -1,0 +1,12 @@
+# Normalise line endings. Without this the repo shows every file as modified on
+# a Windows checkout, because the working tree is CRLF while HEAD stores LF.
+* text=auto eol=lf
+
+# Binary assets must never be line-ending converted.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
