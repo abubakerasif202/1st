@@ -5,7 +5,6 @@ import App from '../app/App'
 import { PageHero } from '../components/common/PageHero'
 import { AnnouncementBar } from '../components/layout/AnnouncementBar'
 import { SiteFooter } from '../components/layout/SiteFooter'
-import { AnimatedLogoIntro } from '../components/sections/AnimatedLogoIntro'
 import { company } from '../data/company'
 import indexHtml from '../../index.html?raw'
 
@@ -19,8 +18,8 @@ describe('post-merge review regressions', () => {
     try {
       mutableCompany.tagline = 'Single source test tagline'
       window.sessionStorage.clear()
-      render(<MemoryRouter><AnnouncementBar/><SiteFooter/><AnimatedLogoIntro/></MemoryRouter>)
-      expect(screen.getAllByText(/Single source test tagline/)).toHaveLength(3)
+      render(<MemoryRouter><AnnouncementBar/><SiteFooter/></MemoryRouter>)
+      expect(screen.getAllByText(/Single source test tagline/)).toHaveLength(2)
     } finally {
       mutableCompany.tagline = originalTagline
     }
@@ -38,7 +37,6 @@ describe('post-merge review regressions', () => {
     ['/services', 'Same Day and Next Day'],
     ['/fleet', '1-Tonne Vans'],
   ])('uses level-three headings for cards on %s', async (route, cardTitle) => {
-    window.sessionStorage.setItem('intro-seen', 'true')
     render(<MemoryRouter initialEntries={[route]}><App/></MemoryRouter>)
 
     expect(await screen.findByRole('heading', { level: 3, name: cardTitle })).toBeInTheDocument()
@@ -50,7 +48,6 @@ describe('post-merge review regressions', () => {
     Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', { configurable: true, value: scrollIntoView })
 
     try {
-      window.sessionStorage.setItem('intro-seen', 'true')
       render(<MemoryRouter initialEntries={['/services#same-day']}><App/></MemoryRouter>)
 
       const targetHeading = await screen.findByRole('heading', { name: 'Same Day and Next Day' })
@@ -71,7 +68,6 @@ describe('post-merge review regressions', () => {
   })
 
   it('publishes verified business structured data without inventing an address', async () => {
-    window.sessionStorage.setItem('intro-seen', 'true')
     render(<MemoryRouter initialEntries={['/']}><App/></MemoryRouter>)
     await screen.findByRole('heading', { level: 1 })
 

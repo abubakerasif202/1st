@@ -1,7 +1,5 @@
 import { expect, test } from '@playwright/test'
 
-test.beforeEach(async ({ page }) => { await page.addInitScript(() => sessionStorage.setItem('intro-seen', 'true')) })
-
 test('primary journey and quote validation', async ({ page, isMobile }) => {
   await page.goto('/')
   await expect(page.getByRole('heading', { name: /Reliable Freight\. Professional Drivers\. Australia-Wide\./i })).toBeVisible()

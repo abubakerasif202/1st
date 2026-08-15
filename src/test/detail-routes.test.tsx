@@ -14,7 +14,6 @@ import { services } from '../data/services'
 const timeout = 15_000
 
 function renderRoute(route: string) {
-  window.sessionStorage.setItem('intro-seen', 'true')
   render(<MemoryRouter initialEntries={[route]}><App /></MemoryRouter>)
 }
 

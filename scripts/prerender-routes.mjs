@@ -7,6 +7,7 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const outputRoot = path.join(projectRoot, 'dist')
 const templatePath = path.join(outputRoot, 'index.html')
 const routeConfigPath = path.join(projectRoot, 'src', 'data', 'routeSeo.json')
+const fontsConfigPath = path.join(projectRoot, 'src', 'data', 'fonts.json')
 const sitemapPath = path.join(projectRoot, 'public', 'sitemap.xml')
 const vercelConfigPath = path.join(projectRoot, 'vercel.json')
 const siteUrl = (process.env.VITE_SITE_URL || 'https://www.1stclassexpress.com.au').replace(/\/$/, '')
@@ -73,13 +74,21 @@ function applyMetadata(template, route, options) {
   return template.replace(markerPattern, renderMetadata(route, options))
 }
 
-const [template, routeConfigRaw, sitemap, vercelConfigRaw] = await Promise.all([
+const [template, routeConfigRaw, sitemap, vercelConfigRaw, fontsConfigRaw] = await Promise.all([
   readFile(templatePath, 'utf8'),
   readFile(routeConfigPath, 'utf8'),
   readFile(sitemapPath, 'utf8'),
   readFile(vercelConfigPath, 'utf8'),
+  readFile(fontsConfigPath, 'utf8'),
 ])
 const routeConfig = JSON.parse(routeConfigRaw)
+const fonts = JSON.parse(fontsConfigRaw)
+
+// DriverHandbookPage appends this itself after a client-side navigation, but a
+// cold load of the printable handbook has to arrive with its faces already
+// declared, or the document reflows once the effect runs.
+const withHandbookFonts = (html) =>
+  html.replace('</head>', `    <link rel="stylesheet" href="${fonts.handbook.replaceAll('&', '&amp;')}" />\n  </head>`)
 const vercelConfig = JSON.parse(vercelConfigRaw)
 const publicRoutes = Object.entries(routeConfig).filter(([name]) => name !== 'notFound')
 const publicPaths = publicRoutes.map(([, route]) => route.path)
@@ -102,8 +111,9 @@ if (vercelConfig.rewrites.some(({ source }) => source.includes('*') || source.in
   throw new Error('Catch-all Vercel rewrites are not allowed because they turn unknown routes into soft 404s')
 }
 
-for (const [, route] of publicRoutes) {
-  const html = await applyMarkup(applyMetadata(template, route), route)
+for (const [name, route] of publicRoutes) {
+  const rendered = await applyMarkup(applyMetadata(template, route), route)
+  const html = name === 'driverHandbook' ? withHandbookFonts(rendered) : rendered
   const outputPath = route.path === '/'
     ? templatePath
     : path.join(outputRoot, route.path.slice(1), 'index.html')

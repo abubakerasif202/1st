@@ -1,5 +1,6 @@
 import { ArrowRight, CheckCircle2, ClipboardCheck, MapPinned, PackageCheck, Phone, Route, ShieldCheck, Truck, UserRoundCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { ResponsiveImage } from '../components/common/ResponsiveImage'
 import { SeoHead } from '../components/common/SeoHead'
 import { QuickQuoteForm } from '../components/forms/QuickQuoteForm'
 import { company, phoneHref } from '../data/company'
@@ -25,15 +26,12 @@ export default function HomePage() {
     <SeoHead {...routeSeo.home}/>
 
     <section className="lovable-hero premium-hero" aria-labelledby="home-hero-title">
-      <img
+      <ResponsiveImage
         className="lovable-hero__image"
         src="/images/replacement/prime-mover-network-hero.webp"
         alt="1st Class Express branded prime mover beneath a map of interstate freight routes across Australia"
-        width="1672"
-        height="941"
-        loading="eager"
-        fetchPriority="high"
-        decoding="async"
+        sizes="100vw"
+        priority
       />
       <div className="lovable-hero__overlay" aria-hidden="true"/>
       <div className="container-page premium-hero__content">
@@ -63,15 +61,15 @@ export default function HomePage() {
         </div>
         <div className="premium-fleet-grid">
           <figure className="premium-fleet-grid__main">
-            <img src="/images/replacement/fleet-lineup-depot-branded.webp" alt="1st Class Express branded fleet lined up at the depot" width="1672" height="941" loading="lazy" decoding="async"/>
+            <ResponsiveImage src="/images/replacement/fleet-lineup-depot-branded.webp" alt="1st Class Express branded fleet lined up at the depot" sizes="(max-width: 1024px) 100vw, 66vw"/>
             <figcaption><strong>One-tonne vans to B-doubles</strong><span>Configuration and availability confirmed for each booking.</span></figcaption>
           </figure>
           <figure>
-            <img src="/images/replacement/prime-mover-sunset-branded.webp" alt="1st Class Express branded prime mover at sunset" width="1672" height="941" loading="lazy" decoding="async"/>
+            <ResponsiveImage src="/images/replacement/prime-mover-sunset-branded.webp" alt="1st Class Express branded prime mover at sunset" sizes="(max-width: 1024px) 100vw, 33vw"/>
             <figcaption><strong>Interstate linehaul</strong><span>Route and load requirements reviewed before confirmation.</span></figcaption>
           </figure>
           <figure>
-            <img src="/images/replacement/warehouse-dock-branded.webp" alt="1st Class Express branded freight operation at a loading dock" width="1672" height="941" loading="lazy" decoding="async"/>
+            <ResponsiveImage src="/images/replacement/warehouse-dock-branded.webp" alt="1st Class Express branded freight operation at a loading dock" sizes="(max-width: 1024px) 100vw, 33vw"/>
             <figcaption><strong>Freight coordination</strong><span>Vehicle, driver, timing and handling planned together.</span></figcaption>
           </figure>
         </div>
@@ -99,7 +97,7 @@ export default function HomePage() {
     <section className="lovable-section lovable-section--soft">
       <div className="container-page premium-operations-grid">
         <div className="premium-operations-media">
-          <img src="/images/replacement/warehouse-loading-branded.webp" alt="1st Class Express freight being coordinated for loading" width="1376" height="768" loading="lazy" decoding="async"/>
+          <ResponsiveImage src="/images/replacement/warehouse-loading-branded.webp" alt="1st Class Express freight being coordinated for loading" sizes="(max-width: 1024px) 100vw, 50vw"/>
           <div><ClipboardCheck aria-hidden="true"/><strong>Planned around your operation</strong><span>Single movements, recurring runs, driver support and managed fleet requirements.</span></div>
         </div>
         <div>

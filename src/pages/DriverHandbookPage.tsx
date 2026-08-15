@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Printer } from 'lucide-react'
 import { SeoHead } from '../components/common/SeoHead'
+import fonts from '../data/fonts.json'
 import { company, phoneHref } from '../data/company'
 import { companyProfile } from '../data/companyProfile'
 import { fleet } from '../data/fleet'
@@ -17,6 +18,21 @@ function SectionHeading({ index }: { index: number }) {
   return <h2 id={slug(title)}><span>{sectionNumber(index)}</span>{title}</h2>
 }
 
+// Hanken Grotesk and Playfair Display are used by this page and nothing else,
+// so they are not in index.html — every other route would have paid for seven
+// font files it never renders. The prerenderer writes the same <link> into this
+// route's static document, so the print faces are there before hydration and
+// the page does not reflow; this effect only covers client-side navigation.
+function useHandbookFonts() {
+  useEffect(() => {
+    if (document.querySelector(`link[href="${fonts.handbook}"]`)) return
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = fonts.handbook
+    document.head.appendChild(link)
+  }, [])
+}
+
 // The handbook is an A4 document first and a web page second. The body class
 // lets the print stylesheet strip the site chrome without touching how any
 // other route prints.
@@ -28,6 +44,7 @@ function usePrintChrome() {
 }
 
 export default function DriverHandbookPage() {
+  useHandbookFonts()
   usePrintChrome()
   const [firstHalf, secondHalf] = [handbook.contents.slice(0, 6), handbook.contents.slice(6)]
 

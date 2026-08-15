@@ -1,0 +1,92 @@
+{
+  "/images/replacement/australia-network-map.webp": {
+    "width": 1672,
+    "height": 941,
+    "widths": [
+      640,
+      1024,
+      1672
+    ]
+  },
+  "/images/replacement/complete-fleet-lineup-branded.webp": {
+    "width": 1672,
+    "height": 941,
+    "widths": [
+      640,
+      1024,
+      1672
+    ]
+  },
+  "/images/replacement/delivery-fleet-sydney-branded.webp": {
+    "width": 1376,
+    "height": 768,
+    "widths": [
+      640,
+      1024,
+      1376
+    ]
+  },
+  "/images/replacement/fleet-lineup-depot-branded.webp": {
+    "width": 1672,
+    "height": 941,
+    "widths": [
+      640,
+      1024,
+      1672
+    ]
+  },
+  "/images/replacement/fleet-lineup-yard-branded.webp": {
+    "width": 1672,
+    "height": 941,
+    "widths": [
+      640,
+      1024,
+      1672
+    ]
+  },
+  "/images/replacement/prime-mover-hero-branded.webp": {
+    "width": 1376,
+    "height": 768,
+    "widths": [
+      640,
+      1024,
+      1376
+    ]
+  },
+  "/images/replacement/prime-mover-network-hero.webp": {
+    "width": 1672,
+    "height": 941,
+    "widths": [
+      640,
+      1024,
+      1672
+    ]
+  },
+  "/images/replacement/prime-mover-sunset-branded.webp": {
+    "width": 1672,
+    "height": 941,
+    "widths": [
+      640,
+      1024,
+      1672
+    ]
+  },
+  "/images/replacement/warehouse-dock-branded.webp": {
+    "width": 1672,
+    "height": 941,
+    "widths": [
+      640,
+      1024,
+      1672
+    ]
+  },
+  "/images/replacement/warehouse-loading-branded.webp": {
+    "width": 1376,
+    "height": 768,
+    "widths": [
+      640,
+      1024,
+      1376
+    ]
+  }
+}

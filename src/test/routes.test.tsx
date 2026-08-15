@@ -5,7 +5,6 @@ import App from '../app/App'
 import { company } from '../data/company'
 
 function renderRoute(route: string) {
-  window.sessionStorage.setItem('intro-seen', 'true')
   render(<MemoryRouter initialEntries={[route]}><App /></MemoryRouter>)
 }
 

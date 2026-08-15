@@ -2,16 +2,15 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    // Colours live in src/styles/theme.css as CSS custom properties, not here:
+    // the site is hand-written CSS and never used a `brand-*` utility, so the
+    // palette that used to sit in this file was a second source of truth that
+    // could only drift. The `fontFamily` block was worse — it declared Inter,
+    // which the site has never loaded.
     extend: {
-      colors: {
-        brand: {
-          black: '#070708', charcoal: '#101318', slate: '#1c3042',
-          gold: '#d6bd63', pale: '#f1df8d', red: '#ef3155', crimson: '#b71939',
-        },
-      },
       fontFamily: {
-        display: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
-        sans: ['Inter', 'Segoe UI', 'Arial', 'sans-serif'],
+        display: ['Archivo', 'Segoe UI', 'Arial', 'sans-serif'],
+        sans: ['Barlow', 'Segoe UI', 'Arial', 'sans-serif'],
       },
     },
   },

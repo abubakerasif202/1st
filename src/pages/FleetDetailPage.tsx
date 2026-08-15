@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Breadcrumbs } from '../components/common/Breadcrumbs'
 import { PageHero } from '../components/common/PageHero'
+import { ResponsiveImage } from '../components/common/ResponsiveImage'
 import { SeoHead } from '../components/common/SeoHead'
 import { fleet } from '../data/fleet'
 import { findRouteMeta } from '../lib/routeMeta'
@@ -63,7 +64,7 @@ export default function FleetDetailPage() {
         <div className="lovable-fleet-grid">
           {fleet.filter(item => item.slug !== vehicle.slug).slice(0, 3).map(({ slug, title, use, image }) =>
             <article className="lovable-fleet-card" key={slug}>
-              <img src={image} alt={`1st Class Express ${title}`} loading="lazy" decoding="async" width="1672" height="941" />
+              <ResponsiveImage src={image} alt={`1st Class Express ${title}`} sizes="(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 33vw"/>
               <div className="lovable-fleet-card__copy">
                 <h3>{title}</h3>
                 <p>{use}</p>

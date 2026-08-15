@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { ResponsiveImage } from '../common/ResponsiveImage'
 import { fleet } from '../../data/fleet'
 
 export function FleetExplorer() {
@@ -17,7 +18,7 @@ export function FleetExplorer() {
     <div className="fleet-explorer__list">
       {visibleFleet.map(({ slug, title, use, bestFor, serviceType, availability, image, icon: Icon, capability }, index) => (
         <article className={`fleet-explorer__row lovable-split${index % 2 === 1 ? ' fleet-explorer__row--reverse' : ''}`} key={title}>
-          <div className="lovable-split__image fleet-explorer__image"><img src={image} alt={`${title} transport option`} width="1672" height="941" loading="lazy" decoding="async"/></div>
+          <div className="lovable-split__image fleet-explorer__image"><ResponsiveImage src={image} alt={`${title} transport option`} sizes="(max-width: 1024px) 100vw, 50vw"/></div>
           <div className="fleet-explorer__body">
             <div className="fleet-detail-card__heading"><Icon aria-hidden="true"/><h3>{title}</h3></div>
             <span className="route-explorer__badge">{capability}</span>

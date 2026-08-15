@@ -2,6 +2,7 @@ import { ArrowRight, MapPinned, Phone, Route, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PageHero } from '../components/common/PageHero'
+import { ResponsiveImage } from '../components/common/ResponsiveImage'
 import { RouteExplorer } from '../components/sections/RouteExplorer'
 import { SeoHead } from '../components/common/SeoHead'
 import { company, phoneHref } from '../data/company'
@@ -150,7 +151,7 @@ export default function ServiceAreasPage(){
           <p>1st Class Express supports planned interstate freight from Sydney to Canberra, Melbourne and Brisbane, with Adelaide and Perth movements assessed for each booking.</p>
         </div>
         <div className="route-map-visual">
-          <img src="/images/replacement/australia-network-map.webp" alt="Map of Australia illustrating 1st Class Express interstate freight coverage from Sydney to Canberra, Melbourne, Brisbane, Adelaide and Perth" loading="lazy" width="1672" height="941"/>
+          <ResponsiveImage src="/images/replacement/australia-network-map.webp" alt="Map of Australia illustrating 1st Class Express interstate freight coverage from Sydney to Canberra, Melbourne, Brisbane, Adelaide and Perth" sizes="(max-width: 1440px) 100vw, 1440px"/>
         </div>
       </div>
     </section>
