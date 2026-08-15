@@ -64,7 +64,9 @@ describe('forms', () => {
     expect(await form.findByRole('heading', { name: 'Review And Submit' })).toBeInTheDocument()
     expect(form.getByText('Sydney NSW')).toBeInTheDocument()
     expect(form.getByText('Melbourne VIC')).toBeInTheDocument()
-    expect(form.getByText('Jordan')).toBeInTheDocument()
+    // The summary renders first and last name as one node, so match the full
+    // string — getByText('Jordan') is an exact match and never matched it.
+    expect(form.getByText('Jordan Smith')).toBeInTheDocument()
     expect(form.getByText('jordan@acme.com')).toBeInTheDocument()
 
     fireEvent.click(form.getByRole('button', { name: /request my quote/i }))

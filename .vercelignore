@@ -1,3 +1,14 @@
 stitch_1st_class_express_homepage_redesign_v1/
 playwright-report/
 test-results/
+
+# Nothing below is read by the production build; keeping it out of the upload
+# keeps deploys fast (assets/source-images alone is ~26MB of PNG masters).
+assets/
+opendesign/
+docs/
+e2e/
+.agents/
+.claude/
+.codex/
+.gstack/

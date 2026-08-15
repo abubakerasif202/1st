@@ -32,6 +32,7 @@ export default function HomePage() {
         width="1672"
         height="941"
         loading="eager"
+        fetchPriority="high"
         decoding="async"
       />
       <div className="lovable-hero__overlay" aria-hidden="true"/>

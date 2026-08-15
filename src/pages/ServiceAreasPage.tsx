@@ -85,6 +85,11 @@ export default function ServiceAreasPage(){
             </button>
           )}
         </div>
+        <p className="sr-only" role="status">
+          {normalizedQuery
+            ? `${filteredRegions.length + filteredRoutes.length} area guides and corridors match ${searchTerm}.`
+            : ''}
+        </p>
 
         <div className="lovable-heading">
           <p className="lovable-kicker">Coverage</p>
@@ -130,6 +135,9 @@ export default function ServiceAreasPage(){
               <Link className="fleet-card-link" to={`/service-areas/interstate/${route.slug}`}>View corridor <ArrowRight size={15} aria-hidden="true"/></Link>
             </article>
           ))}
+          {filteredRegions.length === 0 && filteredRoutes.length === 0 && (
+            <p className="area-search-empty">No area guide or corridor page matches &ldquo;{searchTerm}&rdquo;. Request a quote and we will confirm whether we cover that route.</p>
+          )}
         </div>
       </div>
     </section>
