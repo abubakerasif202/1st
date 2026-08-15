@@ -111,7 +111,7 @@ export function ApplicationForm() {
     <SelectField label="Current licence class" options={licenceClassOptions} registration={register('licenceClass')} error={errors.licenceClass}/>
     <SelectField label="Years of professional driving experience" options={experienceOptions} registration={register('yearsExperience')} error={errors.yearsExperience}/>
     <SelectField label="Legal right to work in Australia" options={yesNoOptions} registration={register('rightToWork')} error={errors.rightToWork}/>
-    <FormField className="full" label="Vehicle types you have driven" placeholder="e.g. rigid trucks, semi-trailers, B-doubles" registration={register('vehicleTypes')} error={errors.vehicleTypes}/>
+    <FormField className="full" label="Vehicle types you have driven" placeholder="e.g. rigid trucks, semi-trailers, B-doubles…" registration={register('vehicleTypes')} error={errors.vehicleTypes}/>
     <label className="form-field full" htmlFor="notes"><span>Relevant tickets, experience or notes <em>(optional)</em></span><textarea id="notes" rows={3} {...register('notes')}/></label>
 
     <fieldset className="full form-fieldset"><legend>Résumé and consent</legend></fieldset>

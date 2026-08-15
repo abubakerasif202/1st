@@ -52,12 +52,22 @@ export function QuoteForm() {
   // errors-appear-on-submit behaviour.
   const [submitAttempted, setSubmitAttempted] = useState(false)
   const isFirstRender = useRef(true)
-  const { register, handleSubmit, trigger, getValues, formState: { errors, isSubmitting } } = useForm<Values>({ resolver: zodResolver(schema), defaultValues: { firstName:'', lastName:'', companyName:'', email:'', phone:'', pickup:'', delivery:'', pickupDate:'', serviceType:'', freight:'', items:'', urgency:'', message:'', website:'' } })
+  const { register, handleSubmit, trigger, getValues, formState: { errors, isSubmitting, isDirty } } = useForm<Values>({ resolver: zodResolver(schema), defaultValues: { firstName:'', lastName:'', companyName:'', email:'', phone:'', pickup:'', delivery:'', pickupDate:'', serviceType:'', freight:'', items:'', urgency:'', message:'', website:'' } })
 
   useEffect(() => {
     if (isFirstRender.current) { isFirstRender.current = false; return }
     document.getElementById('quote-step-heading')?.focus()
   }, [step])
+
+  useEffect(() => {
+    if (!isDirty || submitted) return
+    const onBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = ''
+    }
+    window.addEventListener('beforeunload', onBeforeUnload)
+    return () => window.removeEventListener('beforeunload', onBeforeUnload)
+  }, [isDirty, submitted])
 
   const onSubmit = async (values: Values) => {
     try {
@@ -129,7 +139,7 @@ export function QuoteForm() {
         <div className="quote-summary__item"><dt>Phone</dt><dd>{values.phone}</dd></div>
       </dl>
       <label className="form-field full"><span>Message / special instructions <em>(optional)</em></span><textarea rows={4} {...register('message')}/></label>
-      <label className="check-field full"><input type="checkbox" required aria-required="true" aria-invalid={submitAttempted && !!errors.consent} {...register('consent')}/><span>I consent to 1st Class Express using these details to respond to my quote request.<em className="required-mark" aria-hidden="true"> *</em></span></label>{submitAttempted && errors.consent && <small className="full form-error" role="alert">{errors.consent.message}</small>}
+      <label className="check-field full"><input type="checkbox" required aria-required="true" aria-invalid={submitAttempted && !!errors.consent} aria-describedby={submitAttempted && errors.consent ? 'quote-consent-error' : undefined} {...register('consent')}/><span>I consent to 1st Class Express using these details to respond to my quote request.<em className="required-mark" aria-hidden="true"> *</em></span></label>{submitAttempted && errors.consent && <small id="quote-consent-error" className="full form-error" role="alert">{errors.consent.message}</small>}
       <label className="honeypot" aria-hidden="true">Website<input tabIndex={-1} autoComplete="off" {...register('website')}/></label>
     </>}
 

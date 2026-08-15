@@ -40,9 +40,9 @@ export default function HomePage() {
         <h1 id="home-hero-title" tabIndex={-1}>{companyProfile.homepage.title}</h1>
         <p className="lovable-hero__lead">{companyProfile.homepage.intro}</p>
         <div className="lovable-actions premium-hero__actions">
-          <a className="lovable-btn lovable-btn--primary" href="#quick-quote">Get a Free Quote <ArrowRight size={18}/></a>
+          <a className="lovable-btn lovable-btn--primary" href="#quick-quote">Get a Free Quote <ArrowRight size={18} aria-hidden="true"/></a>
           <Link className="lovable-btn lovable-btn--secondary" to="/fleet">Explore Our Fleet</Link>
-          <a className="premium-hero__phone" href={phoneHref(company.phonePrimary)}><Phone size={18}/> {company.phonePrimary}</a>
+          <a className="premium-hero__phone" href={phoneHref(company.phonePrimary)}><Phone size={18} aria-hidden="true"/> {company.phonePrimary}</a>
         </div>
         <p className="premium-hero__supporting"><CheckCircle2 aria-hidden="true"/> {companyProfile.homepage.supportingLine}</p>
       </div>
@@ -58,7 +58,7 @@ export default function HomePage() {
       <div className="container-page">
         <div className="premium-section-heading">
           <div><p className="lovable-kicker">Fleet Capability</p><h2>The Right Vehicle. The Right Route. One Coordinated Plan.</h2></div>
-          <div><p>From urgent metropolitan deliveries to high-capacity interstate movements, vehicle selection is matched to the freight rather than forced into a fixed template.</p><Link to="/fleet">Explore every vehicle type <ArrowRight size={16}/></Link></div>
+          <div><p>From urgent metropolitan deliveries to high-capacity interstate movements, vehicle selection is matched to the freight rather than forced into a fixed template.</p><Link to="/fleet">Explore every vehicle type <ArrowRight size={16} aria-hidden="true"/></Link></div>
         </div>
         <div className="premium-fleet-grid">
           <figure className="premium-fleet-grid__main">
@@ -81,7 +81,7 @@ export default function HomePage() {
       <div className="container-page">
         <div className="premium-section-heading premium-section-heading--ink">
           <div><p className="lovable-kicker">Eight Documented Services</p><h2>Transport Support Built Around The Job</h2></div>
-          <div><p>Every enquiry begins with the freight, timing, access and route. Specialist or availability-dependent work is confirmed after assessment.</p><Link to="/services">View full service details <ArrowRight size={16}/></Link></div>
+          <div><p>Every enquiry begins with the freight, timing, access and route. Specialist or availability-dependent work is confirmed after assessment.</p><Link to="/services">View full service details <ArrowRight size={16} aria-hidden="true"/></Link></div>
         </div>
         <div className="lovable-service-grid premium-service-grid">
           {services.map(({ id, title, short, icon: Icon }, index) => <article className="lovable-service-card" key={id}>
@@ -89,7 +89,7 @@ export default function HomePage() {
             <Icon aria-hidden="true"/>
             <h3>{title}</h3>
             <p>{short}</p>
-            <Link to={`/services#${id}`}>Service details <ArrowRight size={15}/></Link>
+            <Link to={`/services#${id}`}>Service details <ArrowRight size={15} aria-hidden="true"/></Link>
           </article>)}
         </div>
       </div>
@@ -108,7 +108,7 @@ export default function HomePage() {
           <ul className="premium-check-list">
             {companyProfile.operations.slice(0, 6).map(item => <li key={item}><CheckCircle2 aria-hidden="true"/>{item}</li>)}
           </ul>
-          <Link className="lovable-btn lovable-btn--ink" to="/about">How We Work <ArrowRight size={17}/></Link>
+          <Link className="lovable-btn lovable-btn--ink" to="/about">How We Work <ArrowRight size={17} aria-hidden="true"/></Link>
         </div>
       </div>
     </section>
