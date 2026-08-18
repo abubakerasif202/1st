@@ -19,7 +19,10 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   return <form className={`form-grid ${compact ? 'compact-form' : ''}`} aria-label="Contact enquiry" onSubmit={handleSubmit(onSubmit)} noValidate>
     <FormField label="Name" registration={register('name')} error={errors.name}/><FormField label="Email" type="email" registration={register('email')} error={errors.email}/><FormField label="Phone" type="tel" registration={register('phone')} error={errors.phone}/>
     <label className="form-field full" htmlFor="message"><span>How can we help?<em className="required-mark" aria-hidden="true"> *</em></span><textarea id="message" rows={compact ? 4 : 6} required aria-required="true" {...register('message')} aria-invalid={!!errors.message} aria-describedby={errors.message ? 'message-error' : undefined}/>{errors.message && <small id="message-error" role="alert">{errors.message.message}</small>}</label>
-    <label className="honeypot" aria-hidden="true">Website<input tabIndex={-1} autoComplete="off" {...register('website')}/></label>
+    {/* aria-hidden around a focusable input is the aria-hidden-focus violation;
+        `inert` removes it from the accessibility tree AND the focus order, which
+        is what the other three forms already do. */}
+    <div className="honeypot" inert=""><label htmlFor="contact-website">Website</label><input id="contact-website" tabIndex={-1} autoComplete="off" {...register('website')}/></div>
     <button className="btn-primary" disabled={isSubmitting} type="submit">{isSubmitting ? 'Sending…' : 'Send Enquiry'}</button>{status && <p className={`form-status ${isError ? 'form-status--error' : 'form-status--success'}`} role={isError ? 'alert' : 'status'}>{status}</p>}
   </form>
 }

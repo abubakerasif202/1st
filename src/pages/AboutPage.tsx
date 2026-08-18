@@ -15,7 +15,7 @@ const values = [
 
 export default function AboutPage() { return <>
   <SeoHead {...routeSeo.about}/>
-  <PageHero eyebrow="About Us" title="Australian Owned. Freight Focused." intro={companyProfile.about.title} image="/images/replacement/warehouse-dock-branded.webp"/>
+  <PageHero eyebrow="About Us" title="Australian Owned. Freight Focused." intro={companyProfile.about.title} image="/images/replacement/fleet-lineup-depot-branded.webp"/>
 
   <section className="lovable-section lovable-section--soft"><div className="container-page lovable-split"><div><div className="lovable-heading"><p className="lovable-kicker">Who We Are</p><h2>A Transport Partner, Not Just A Truck</h2>{companyProfile.about.paragraphs.slice(0, 3).map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div><div className="company-established"><strong>{companyProfile.established}</strong><span>Australian-owned transport and logistics capability</span></div></div><div className="lovable-split__image"><ResponsiveImage src="/images/replacement/fleet-lineup-yard-branded.webp" alt="1st Class Express branded fleet at the depot" sizes="(max-width: 1024px) 100vw, 50vw"/></div></div></section>
 

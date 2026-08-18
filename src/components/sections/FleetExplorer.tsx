@@ -15,6 +15,16 @@ export function FleetExplorer() {
       <button type="button" className={`route-explorer__city${activeCategory === null ? ' is-active' : ''}`} aria-pressed={activeCategory === null} onClick={() => setActiveCategory(null)}>All</button>
       {categories.map(category => <button type="button" key={category} className={`route-explorer__city${activeCategory === category ? ' is-active' : ''}`} aria-pressed={activeCategory === category} onClick={() => setActiveCategory(category)}>{category}</button>)}
     </div>
+    {/*
+      Screen-reader feedback for the filter buttons. aria-pressed tells you the
+      control's state, but nothing announced that the list below it had changed —
+      the Service Areas search already had this and the fleet filters did not.
+    */}
+    <p className="sr-only" role="status">
+      {activeCategory
+        ? `Showing ${visibleFleet.length} ${activeCategory} vehicle options.`
+        : `Showing all ${visibleFleet.length} vehicle options.`}
+    </p>
     <div className="fleet-explorer__list">
       {visibleFleet.map(({ slug, title, use, bestFor, serviceType, availability, image, icon: Icon, capability }, index) => (
         <article className={`fleet-explorer__row lovable-split${index % 2 === 1 ? ' fleet-explorer__row--reverse' : ''}`} key={title}>

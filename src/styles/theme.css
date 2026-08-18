@@ -82,8 +82,6 @@
    dark containers to this list rather than overriding colours downstream.   */
 .lovable-section--dark,
 .lovable-final-cta,
-.lovable-hero,
-.premium-hero,
 .page-hero,
 .hybrid-hero,
 .hybrid-hero__rail,
@@ -107,12 +105,9 @@
 .role-card,
 .fleet-detail-card,
 .about-capability-grid article,
-.premium-proof-rail,
-.lovable-stats__grid,
 .hero-enquiry-card,
 .quick-quote-assurance,
 .lovable-fleet-card__copy,
-.premium-operations-media > div,
 .lovable-section--dark .lovable-feature {
   --text-strong: #fff;
   --text-body: #e4e8ea;

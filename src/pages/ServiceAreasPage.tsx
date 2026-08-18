@@ -59,7 +59,7 @@ export default function ServiceAreasPage(){
 
   return <>
     <SeoHead {...routeSeo.serviceAreas}/>
-    <PageHero eyebrow="Service Areas" title="Metropolitan, Regional And Interstate" intro="Local knowledge across Sydney and New South Wales, backed by planned interstate freight services assessed around the route, timing and vehicle requirements." image="/images/replacement/prime-mover-hero-branded.webp" cta={QUOTE_CTA}/>
+    <PageHero eyebrow="Service Areas" title="Metropolitan, Regional And Interstate" intro="Local knowledge across Sydney and New South Wales, backed by planned interstate freight services assessed around the route, timing and vehicle requirements." image="/images/replacement/australia-network-map.webp" cta={QUOTE_CTA}/>
 
     <section className="lovable-section lovable-section--soft">
       <div className="container-page">
@@ -152,7 +152,7 @@ export default function ServiceAreasPage(){
           <p>1st Class Express supports planned interstate freight from Sydney to Canberra, Melbourne and Brisbane, with Adelaide and Perth movements assessed for each booking.</p>
         </div>
         <div className="route-map-visual">
-          <ResponsiveImage src="/images/replacement/australia-network-map.webp" alt="Map of Australia illustrating 1st Class Express interstate freight coverage from Sydney to Canberra, Melbourne, Brisbane, Adelaide and Perth" sizes="(max-width: 1440px) 100vw, 1440px"/>
+          <ResponsiveImage src="/images/replacement/australia-network-map.webp" alt="Illustration of an Australian freight route network, with major capital cities linked by highlighted corridors" sizes="(max-width: 1440px) 100vw, 1440px"/>
         </div>
       </div>
     </section>

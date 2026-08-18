@@ -45,6 +45,14 @@ export function ResponsiveImage({ src, alt, sizes, className, priority = false, 
   return <img
     {...priorityProps}
     className={className}
+    /*
+     * A photo that 404s or fails to decode used to leave the reserved box empty
+     * — on a light section that reads as a broken page. Marking the element
+     * instead lets CSS paint the brand placeholder ground it already uses while
+     * the file is in flight, so a failure degrades to "image pending" rather
+     * than "something is wrong with this site".
+     */
+    onError={(event) => event.currentTarget.classList.add('is-broken')}
     src={src}
     srcSet={srcSet}
     sizes={srcSet ? sizes : undefined}

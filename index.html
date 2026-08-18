@@ -36,7 +36,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png" />
     <link rel="apple-touch-icon" href="/brand/favicon-180.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="preload" as="image" href="/brand/first-class-express-logo.webp" />
+    <!-- The header mark is in the first paint on every route; the full lockup
+         only appears in the footer, so it is not worth a preload. -->
+    <link rel="preload" as="image" href="/brand/first-class-express-mark.webp" />
     <!-- Organization JSON-LD is rendered by SeoHead so it stays in one place; it
          is server-rendered into every route, so non-JS crawlers still receive it. -->
   </head>

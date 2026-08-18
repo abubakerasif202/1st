@@ -52,6 +52,16 @@ export default function CareersPage() {
     <section id="roles" className="lovable-section lovable-section--dark">
       <div className="container-page">
         <div className="lovable-heading"><p className="lovable-kicker">Driver Expressions Of Interest</p><h2>Register For Future Opportunities</h2><p>Roles are currently expressions of interest. Registering interest does not guarantee an offer of work.</p></div>
+        {/* The page is long by necessity — requirements, handbook and privacy
+            notice all have to stay. These links let a candidate go straight from
+            the top of the role list to the application with that role already
+            selected; ApplicationForm reads the same ?role= parameter the role
+            cards use, so the two cannot drift apart. */}
+        <ul className="role-jump" aria-label="Apply for a specific role">
+          {driverRoles.filter(role => role.status !== 'closed').map(role => (
+            <li key={role.id}><Link to={`/careers?role=${encodeURIComponent(role.title)}#apply`}><small>{role.status === 'open' ? 'Apply' : 'Register'}</small>{role.title}</Link></li>
+          ))}
+        </ul>
         <div className="role-card-grid">{driverRoles.map(role => <RoleCard key={role.id} role={role} />)}</div>
       </div>
     </section>

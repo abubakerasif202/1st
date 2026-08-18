@@ -124,7 +124,7 @@ export function ApplicationForm() {
     <label className="check-field full"><input type="checkbox" required aria-required="true" aria-invalid={!!errors.privacyAcknowledgement} aria-describedby={errors.privacyAcknowledgement ? 'privacyAcknowledgement-error' : undefined} {...register('privacyAcknowledgement')}/><span>I acknowledge the privacy notice and consent to 1st Class Express contacting me about this application.<em className="required-mark" aria-hidden="true"> *</em></span></label>
     {errors.privacyAcknowledgement && <small id="privacyAcknowledgement-error" className="full form-error" role="alert">{errors.privacyAcknowledgement.message}</small>}
 
-    <label className="honeypot" aria-hidden="true">Website<input tabIndex={-1} autoComplete="off" {...register('website')}/></label>
+    <div className="honeypot" inert=""><label htmlFor="careers-website">Website</label><input id="careers-website" tabIndex={-1} autoComplete="off" {...register('website')}/></div>
     <button className="btn-primary full" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Sending…' : 'Submit Application'}</button>
     {status && <p className={`form-status full ${isError ? 'form-status--error' : 'form-status--success'}`} role={isError ? 'alert' : 'status'}>{status}</p>}
   </form>

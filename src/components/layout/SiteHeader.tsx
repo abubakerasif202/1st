@@ -130,12 +130,21 @@ export function SiteHeader() {
     <>
       <header className="site-header">
         <div className="container-page header-inner">
+          {/*
+            The compact header renders the official "1e" monogram, not the full
+            lockup. At the 40-48px the header slot allows, the lockup's wordmark
+            and "COMMITTED TO DELIVER A QUALITY SERVICE" tagline were sub-pixel
+            smears. The mark is cropped from the same master by
+            scripts/build-brand-logo.mjs — nothing is redrawn — and the full
+            lockup still carries the footer and the mobile drawer. The link owns
+            the accessible name, so the image itself is decorative.
+          */}
           <NavLink className="brand" to="/" aria-label="1st Class Express home">
             <img
-              src="/brand/first-class-express-logo.webp"
-              alt="1st Class Express"
-              width="138"
-              height="150"
+              src="/brand/first-class-express-mark.webp"
+              alt=""
+              width="220"
+              height="156"
             />
           </NavLink>
 

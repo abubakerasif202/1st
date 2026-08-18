@@ -24,11 +24,52 @@ const { render } = await import(pathToFileURL(path.join(projectRoot, 'dist-ssr',
 // Crawlers that do not execute JavaScript — most notably the AI answer-engine
 // bots — only ever see what lands inside #root here, so every route ships fully
 // rendered markup and the browser hydrates it.
-async function applyMarkup(template, route) {
-  if (!rootPattern.test(template)) throw new Error('The #root mount point is missing from dist/index.html')
+async function renderRoute(route) {
   const markup = await render(route.path)
   if (markup.length < 1000) throw new Error(`Prerendered markup for ${route.path} is suspiciously small (${markup.length} chars)`)
+  return markup
+}
+
+function applyMarkup(template, markup) {
+  if (!rootPattern.test(template)) throw new Error('The #root mount point is missing from dist/index.html')
   return template.replace(rootPattern, `<div id="root">${markup}</div>`)
+}
+
+/**
+ * A <link rel="preload"> for the route's own hero photograph.
+ *
+ * eager + fetchpriority on the <img> only helps once the parser has reached the
+ * element, which on these documents is after the whole prerendered header. The
+ * hero is the LCP element on every route, so it is worth discovering in the
+ * head instead. Derived from the rendered markup rather than a hand-kept
+ * path -> image table, because a table drifts the moment a page changes hero.
+ *
+ * imagesrcset/imagesizes are copied verbatim from the <img>: a bare href would
+ * preload the full-width file and then let the browser download a different
+ * srcset candidate, costing a second request on every phone. The brand mark in
+ * the header is also fetchpriority=high, so the match is restricted to /images/.
+ */
+function heroPreload(markup) {
+  // Case-insensitive: react-dom/server emits `srcSet`, not `srcset`. HTML
+  // attribute names are case-insensitive so the browser does not care, but a
+  // case-sensitive match here silently dropped imagesrcset from every preload
+  // and left phones downloading the 1672w file next to the 640w one they used.
+  const attribute = (tag, name) => tag.match(new RegExp(name + '="([^"]*)"', 'i'))?.[1]
+  const hero = [...markup.matchAll(/<img\b[^>]*>/g)]
+    .map(([tag]) => tag)
+    .find((tag) => tag.includes('fetchpriority="high"') && /src="\/images\//.test(tag))
+  if (!hero) return ''
+
+  const href = attribute(hero, 'src')
+  const srcset = attribute(hero, 'srcset')
+  const sizes = attribute(hero, 'sizes')
+  return [
+    '    <link rel="preload" as="image" fetchpriority="high"',
+    `href="${href}"`,
+    srcset ? `imagesrcset="${srcset}"` : '',
+    srcset && sizes ? `imagesizes="${sizes}"` : '',
+    '/>',
+  ].filter(Boolean).join(' ')
 }
 
 const escapeHtml = (value) => value
@@ -38,7 +79,7 @@ const escapeHtml = (value) => value
   .replaceAll('"', '&quot;')
   .replaceAll("'", '&#39;')
 
-function renderMetadata(route, { indexable = true, canonical = true } = {}) {
+function renderMetadata(route, { indexable = true, canonical = true, preload = '' } = {}) {
   const title = escapeHtml(route.title)
   const description = escapeHtml(route.description)
   const routeUrl = `${siteUrl}${route.path === '/' ? '/' : route.path}`
@@ -65,6 +106,8 @@ function renderMetadata(route, { indexable = true, canonical = true } = {}) {
     `    <meta name="twitter:image" content="${escapeHtml(socialImage)}" />`,
     '    <!-- route-meta:end -->',
   )
+
+  if (preload) tags.splice(1, 0, preload)
 
   return tags.join('\n')
 }
@@ -112,7 +155,8 @@ if (vercelConfig.rewrites.some(({ source }) => source.includes('*') || source.in
 }
 
 for (const [name, route] of publicRoutes) {
-  const rendered = await applyMarkup(applyMetadata(template, route), route)
+  const markup = await renderRoute(route)
+  const rendered = applyMarkup(applyMetadata(template, route, { preload: heroPreload(markup) }), markup)
   const html = name === 'driverHandbook' ? withHandbookFonts(rendered) : rendered
   const outputPath = route.path === '/'
     ? templatePath
@@ -123,9 +167,9 @@ for (const [name, route] of publicRoutes) {
 
 await writeFile(
   path.join(outputRoot, '404.html'),
-  await applyMarkup(
+  applyMarkup(
     applyMetadata(template, routeConfig.notFound, { indexable: false, canonical: false }),
-    routeConfig.notFound,
+    await renderRoute(routeConfig.notFound),
   ),
 )
 

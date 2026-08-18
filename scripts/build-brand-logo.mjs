@@ -134,6 +134,20 @@ async function squareMark(size, opaque = false) {
     .png({ compressionLevel: 9, palette: true })
 }
 
+/**
+ * The compact header mark.
+ *
+ * The header slot is ~44px tall, where the full lockup's wordmark and tagline
+ * are an unreadable smear — the monogram alone stays recognisable. This is the
+ * same crop the favicons use, taken from the official master, not a redraw.
+ * The full lockup still ships for the footer and the mobile drawer.
+ */
+const markPath = path.join(brandDir, 'first-class-express-mark.webp')
+await sharp(monogram)
+  .resize({ width: 220 })
+  .webp({ quality: 88, alphaQuality: 70, effort: 6 })
+  .toFile(markPath)
+
 const icons = [
   ['favicon-16.png', 16, false],
   ['favicon-32.png', 32, false],
@@ -146,6 +160,6 @@ for (const [name, size, opaque] of icons) {
   iconPaths.push(target)
 }
 
-for (const file of [master, logoPath, ...iconPaths]) {
+for (const file of [master, logoPath, markPath, ...iconPaths]) {
   console.log(`${path.basename(file).padEnd(42)} ${kb((await readFile(file)).byteLength).padStart(8)}`)
 }

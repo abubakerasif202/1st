@@ -62,9 +62,9 @@ describe('post-merge review regressions', () => {
     }
   })
 
-  it('preloads the optimized logo used by the rendered header', () => {
-    expect(indexHtml).toContain('<link rel="preload" as="image" href="/brand/first-class-express-logo.webp" />')
-    expect(indexHtml).not.toContain('rel="preload" as="image" href="/brand/first-class-express-logo.png"')
+  it('preloads the compact mark the header actually renders, not the full lockup', () => {
+    expect(indexHtml).toContain('<link rel="preload" as="image" href="/brand/first-class-express-mark.webp" />')
+    expect(indexHtml).not.toContain('rel="preload" as="image" href="/brand/first-class-express-logo')
   })
 
   it('publishes verified business structured data without inventing an address', async () => {
