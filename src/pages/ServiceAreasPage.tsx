@@ -2,6 +2,7 @@ import { ArrowRight, MapPinned, Phone, Route, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PageHero } from '../components/common/PageHero'
+import { QUOTE_CTA } from '../lib/cta'
 import { ResponsiveImage } from '../components/common/ResponsiveImage'
 import { RouteExplorer } from '../components/sections/RouteExplorer'
 import { SeoHead } from '../components/common/SeoHead'
@@ -58,7 +59,7 @@ export default function ServiceAreasPage(){
 
   return <>
     <SeoHead {...routeSeo.serviceAreas}/>
-    <PageHero eyebrow="Service Areas" title="Metropolitan, Regional And Interstate" intro="Local knowledge across Sydney and New South Wales, backed by planned interstate freight services assessed around the route, timing and vehicle requirements." image="/images/replacement/prime-mover-hero-branded.webp"/>
+    <PageHero eyebrow="Service Areas" title="Metropolitan, Regional And Interstate" intro="Local knowledge across Sydney and New South Wales, backed by planned interstate freight services assessed around the route, timing and vehicle requirements." image="/images/replacement/prime-mover-hero-branded.webp" cta={QUOTE_CTA}/>
 
     <section className="lovable-section lovable-section--soft">
       <div className="container-page">

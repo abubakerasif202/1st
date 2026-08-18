@@ -2,6 +2,7 @@ import { ArrowRight, MapPin, Truck } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Breadcrumbs } from '../components/common/Breadcrumbs'
 import { PageHero } from '../components/common/PageHero'
+import { QUOTE_CTA } from '../lib/cta'
 import { SeoHead } from '../components/common/SeoHead'
 import { interstateRoutes } from '../data/interstateRoutes'
 import { findRouteMeta } from '../lib/routeMeta'
@@ -25,7 +26,7 @@ export default function RouteDetailPage() {
   return <>
     <SeoHead title={meta.title} description={meta.description} path={path} />
     <Breadcrumbs items={[{ label: 'Service Areas', path: '/service-areas' }, { label: route.title }]} />
-    <PageHero eyebrow="Interstate Corridor" title={route.title} intro={route.description} image="/images/replacement/prime-mover-hero-branded.webp" showBreadcrumb={false} />
+    <PageHero eyebrow="Interstate Corridor" title={route.title} intro={route.description} image="/images/replacement/prime-mover-hero-branded.webp" showBreadcrumb={false} cta={QUOTE_CTA} />
 
     <section className="lovable-section lovable-section--soft">
       <div className="container-page detail-layout">

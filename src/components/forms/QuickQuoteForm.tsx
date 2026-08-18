@@ -56,7 +56,14 @@ export function QuickQuoteForm() {
     <label className="form-field full" htmlFor="quick-freight"><span>What are you moving?<em className="required-mark" aria-hidden="true"> *</em></span><textarea id="quick-freight" rows={4} required aria-required="true" {...register('freight')} aria-invalid={!!errors.freight} aria-describedby={errors.freight ? 'quick-freight-error' : undefined}/>{errors.freight && <small id="quick-freight-error" role="alert">{errors.freight.message}</small>}</label>
     <label className="check-field full"><input type="checkbox" required aria-required="true" aria-invalid={!!errors.consent} aria-describedby={errors.consent ? 'quick-consent-error' : undefined} {...register('consent')}/><span>I consent to 1st Class Express using these details to respond to my quote request.<em className="required-mark" aria-hidden="true"> *</em></span></label>
     {errors.consent && <small id="quick-consent-error" className="full form-error" role="alert">{errors.consent.message}</small>}
-    <label className="honeypot" aria-hidden="true">Website<input tabIndex={-1} autoComplete="off" {...register('website')}/></label>
+    {/*
+      Honeypot. `aria-hidden` on a wrapper that contains a focusable input is the
+      aria-hidden-focus violation; `inert` is the attribute actually designed for
+      this — it removes the subtree from the accessibility tree *and* from focus
+      order, so there is no hidden-but-reachable control. The field still renders,
+      still registers and still submits, so the empty-value check is unchanged.
+    */}
+    <div className="honeypot" inert=""><label htmlFor="website">Website</label><input id="website" tabIndex={-1} autoComplete="off" {...register('website')}/></div>
     <button className="btn-primary" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Sending…' : 'Get My Free Quote'}</button>
     {status && <p className={`form-status full ${isError ? 'form-status--error' : 'form-status--success'}`} role={isError ? 'alert' : 'status'}>{status}</p>}
   </form>

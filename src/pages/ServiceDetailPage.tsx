@@ -2,6 +2,7 @@ import { ArrowRight, CheckCircle2, ShieldAlert } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Breadcrumbs } from '../components/common/Breadcrumbs'
 import { PageHero } from '../components/common/PageHero'
+import { QUOTE_CTA } from '../lib/cta'
 import { SeoHead } from '../components/common/SeoHead'
 import { services } from '../data/services'
 import { findRouteMeta } from '../lib/routeMeta'
@@ -32,7 +33,7 @@ export default function ServiceDetailPage() {
   return <>
     <SeoHead title={meta.title} description={meta.description} path={path} />
     <Breadcrumbs items={[{ label: 'Services', path: '/services' }, { label: service.title }]} />
-    <PageHero eyebrow="Transport Capability" title={service.title} intro={service.short} image={service.image} showBreadcrumb={false} />
+    <PageHero eyebrow="Transport Capability" title={service.title} intro={service.short} image={service.image} showBreadcrumb={false} cta={QUOTE_CTA} />
 
     <section className="lovable-section lovable-section--soft">
       <div className="container-page detail-layout">

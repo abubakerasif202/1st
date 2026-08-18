@@ -70,6 +70,11 @@
   --btn-outline-hover-bd: var(--ink);
   --text: var(--text-strong);
   --text-inverse: #f7f4ec;
+
+  /* Focus ring. Two colours, not one: the ring plus a contrasting halo so the
+     indicator stays visible whichever ground the control ends up on. */
+  --focus-ring: #0b1015;
+  --focus-halo: #fff;
 }
 
 /* ---- Roles: dark surface ----------------------------------------------
@@ -80,6 +85,11 @@
 .lovable-hero,
 .premium-hero,
 .page-hero,
+.hybrid-hero,
+.hybrid-hero__rail,
+.hybrid-capability-panel,
+.hybrid-operations,
+.hybrid-operations-media > div,
 .cta-band,
 .not-found,
 .site-footer,
@@ -120,6 +130,8 @@
   --btn-outline-hover-bd: var(--gold);
   --text: #fff;
   --text-inverse: var(--ink);
+  --focus-ring: #fff;
+  --focus-halo: #0b1015;
 }
 
 /* ---- Roles: light islands inside dark sections -------------------------
@@ -146,4 +158,6 @@
   --btn-outline-hover-bd: var(--ink);
   --text: #10161b;
   --text-inverse: #f7f4ec;
+  --focus-ring: #0b1015;
+  --focus-halo: #fff;
 }

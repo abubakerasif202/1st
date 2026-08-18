@@ -2,6 +2,7 @@ import { ArrowRight, CheckCircle2, MapPinned } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Breadcrumbs } from '../components/common/Breadcrumbs'
 import { PageHero } from '../components/common/PageHero'
+import { QUOTE_CTA } from '../lib/cta'
 import { SeoHead } from '../components/common/SeoHead'
 import { interstateRoutes } from '../data/interstateRoutes'
 import { serviceRegions } from '../data/serviceRegions'
@@ -20,7 +21,7 @@ export default function ServiceAreaDetailPage() {
   return <>
     <SeoHead title={meta.title} description={meta.description} path={path} />
     <Breadcrumbs items={[{ label: 'Service Areas', path: '/service-areas' }, { label: region.eyebrow }]} />
-    <PageHero eyebrow={region.eyebrow} title={region.title} intro={region.intro} image={region.image} showBreadcrumb={false} />
+    <PageHero eyebrow={region.eyebrow} title={region.title} intro={region.intro} image={region.image} showBreadcrumb={false} cta={QUOTE_CTA} />
 
     <section className="lovable-section lovable-section--soft">
       <div className="container-page detail-layout">

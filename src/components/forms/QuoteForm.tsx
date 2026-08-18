@@ -210,7 +210,14 @@ export function QuoteForm() {
 
       <label className="form-field full"><span>Message / special instructions <em>(optional)</em></span><textarea rows={4} {...register('message')}/></label>
       <label className="check-field full"><input type="checkbox" required aria-required="true" aria-invalid={submitAttempted && !!errors.consent} aria-describedby={submitAttempted && errors.consent ? 'quote-consent-error' : undefined} {...register('consent')}/><span>I consent to 1st Class Express using these details to respond to my quote request.<em className="required-mark" aria-hidden="true"> *</em></span></label>{submitAttempted && errors.consent && <small id="quote-consent-error" className="full form-error" role="alert">{errors.consent.message}</small>}
-      <label className="honeypot" aria-hidden="true">Website<input tabIndex={-1} autoComplete="off" {...register('website')}/></label>
+      {/*
+      Honeypot. `aria-hidden` on a wrapper that contains a focusable input is the
+      aria-hidden-focus violation; `inert` is the attribute actually designed for
+      this — it removes the subtree from the accessibility tree *and* from focus
+      order, so there is no hidden-but-reachable control. The field still renders,
+      still registers and still submits, so the empty-value check is unchanged.
+    */}
+    <div className="honeypot" inert=""><label htmlFor="website">Website</label><input id="website" tabIndex={-1} autoComplete="off" {...register('website')}/></div>
     </>}
 
     <div className="quote-form-nav full">

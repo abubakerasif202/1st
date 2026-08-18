@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Breadcrumbs } from '../components/common/Breadcrumbs'
 import { PageHero } from '../components/common/PageHero'
+import { QUOTE_CTA } from '../lib/cta'
 import { ResponsiveImage } from '../components/common/ResponsiveImage'
 import { SeoHead } from '../components/common/SeoHead'
 import { fleet } from '../data/fleet'
@@ -32,7 +33,7 @@ export default function FleetDetailPage() {
   return <>
     <SeoHead title={meta.title} description={meta.description} path={path} />
     <Breadcrumbs items={[{ label: 'Our Fleet', path: '/fleet' }, { label: vehicle.title }]} />
-    <PageHero eyebrow={vehicle.category} title={vehicle.title} intro={vehicle.use} image={vehicle.image} showBreadcrumb={false} />
+    <PageHero eyebrow={vehicle.category} title={vehicle.title} intro={vehicle.use} image={vehicle.image} showBreadcrumb={false} cta={QUOTE_CTA} />
 
     <section className="lovable-section lovable-section--soft">
       <div className="container-page detail-layout">

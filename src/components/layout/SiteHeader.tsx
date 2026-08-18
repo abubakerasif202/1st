@@ -1,4 +1,4 @@
-import { Menu, Phone, X } from 'lucide-react'
+import { ArrowRight, Menu, Phone, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { NavLink } from 'react-router-dom'
@@ -98,22 +98,28 @@ export function SiteHeader() {
 
             <nav aria-label="Mobile primary">
               {links.map(([label, to]) => (
-                <NavLink
-                  key={to}
-                  to={to}
-                  onClick={() => setOpen(false)}
-                  style={{ color: '#fff' }}
-                >
+                <NavLink key={to} to={to} onClick={() => setOpen(false)}>
                   {label}
                 </NavLink>
               ))}
-              <NavLink to="/quote" onClick={() => setOpen(false)} style={{ color: '#fff' }}>
+            </nav>
+
+            {/*
+              The desktop .header-cta is display:none below 820px, so before this
+              the drawer offered no conversion emphasis at all — "Request a Quote"
+              was the eighth identical nav row. Pinned to the end of the panel so
+              both actions sit in comfortable thumb reach.
+            */}
+            <div className="mobile-panel__actions">
+              <NavLink className="lovable-btn lovable-btn--primary" to="/quote" onClick={() => setOpen(false)}>
                 Request a Quote
+                <ArrowRight size={18} aria-hidden="true" />
               </NavLink>
-              <a href={phoneHref(company.phonePrimary)} style={{ color: '#fff' }}>
+              <a className="lovable-btn lovable-btn--secondary" href={phoneHref(company.phonePrimary)}>
+                <Phone size={18} aria-hidden="true" />
                 Call {company.phonePrimary}
               </a>
-            </nav>
+            </div>
           </div>
         </div>,
         document.body,

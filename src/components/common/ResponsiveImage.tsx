@@ -41,7 +41,9 @@ export function ResponsiveImage({ src, alt, sizes, className, priority = false, 
     ? entry.widths.map(width => `${variantSrc(src, width, entry.width)} ${width}w`).join(', ')
     : undefined
 
+  const priorityProps = priority ? { fetchpriority: 'high' as const } : {}
   return <img
+    {...priorityProps}
     className={className}
     src={src}
     srcSet={srcSet}
@@ -51,7 +53,6 @@ export function ResponsiveImage({ src, alt, sizes, className, priority = false, 
     width={entry?.width}
     height={entry?.height}
     loading={priority ? 'eager' : 'lazy'}
-    fetchPriority={priority ? 'high' : undefined}
     decoding="async"
   />
 }

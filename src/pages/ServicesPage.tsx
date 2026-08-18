@@ -1,6 +1,7 @@
 import { ArrowRight, CheckCircle2, Route, Truck, UserRoundCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PageHero } from '../components/common/PageHero'
+import { QUOTE_CTA } from '../lib/cta'
 import { ResponsiveImage } from '../components/common/ResponsiveImage'
 import { SeoHead } from '../components/common/SeoHead'
 import { companyProfile } from '../data/companyProfile'
@@ -19,7 +20,7 @@ export default function ServicesPage() { return <>
   <SeoHead {...routeSeo.services}/>
   <ServiceSchema items={services}/>
   <FaqSchema items={serviceFaqs}/>
-  <PageHero eyebrow="Our Services" title="Transport Built Around Your Freight" intro="From urgent local runs to high-capacity interstate movements, we match the transport plan to the freight." image="/images/replacement/delivery-fleet-sydney-branded.webp"/>
+  <PageHero eyebrow="Our Services" title="Transport Built Around Your Freight" intro="From urgent local runs to high-capacity interstate movements, we match the transport plan to the freight." image="/images/replacement/delivery-fleet-sydney-branded.webp" cta={QUOTE_CTA}/>
 
   <section className="lovable-section"><div className="container-page"><div className="lovable-heading"><p className="lovable-kicker">Complete Capability</p><h2>Delivery, People And Operational Support</h2><p>1st Class Express can support the physical freight movement and the driver or fleet requirements around it, subject to assessment, agreement and availability.</p></div><div className="service-capability-grid">{capabilityGroups.map(([title,text,Icon]) => <article key={title}><Icon aria-hidden="true"/><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
 
