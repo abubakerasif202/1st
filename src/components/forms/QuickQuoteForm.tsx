@@ -13,7 +13,7 @@ const schema = z.object({
   pickup: z.string().min(3, 'Enter pickup suburb or postcode'),
   delivery: z.string().min(3, 'Enter delivery suburb or postcode'),
   freight: z.string().min(10, 'Describe the freight'),
-  consent: z.literal(true, { errorMap: () => ({ message: 'Consent is required to submit' }) }),
+  consent: z.literal(true, { error: 'Consent is required to submit' }),
   website: z.string().max(0),
 })
 

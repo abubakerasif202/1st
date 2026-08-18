@@ -38,7 +38,7 @@ const schema = z.object({
     .refine(list => list.length === 1, 'Attach your résumé (PDF, DOC or DOCX)')
     .refine(withinSizeLimit, 'File must be 5MB or smaller')
     .refine(acceptedFileList, 'Accepted formats: PDF, DOC or DOCX'),
-  privacyAcknowledgement: z.literal(true, { errorMap: () => ({ message: 'Privacy acknowledgement is required' }) }),
+  privacyAcknowledgement: z.literal(true, { error: 'Privacy acknowledgement is required' }),
   website: z.string().max(0),
 })
 type Values = z.infer<typeof schema>
