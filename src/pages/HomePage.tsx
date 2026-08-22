@@ -47,8 +47,8 @@ export default function HomePage() {
     <section className="hybrid-hero" aria-labelledby="home-hero-title">
       <ResponsiveImage
         className="hybrid-hero__image"
-        src="/images/replacement/prime-mover-network-hero.webp"
-        alt="1st Class Express branded prime mover beneath a map of interstate freight routes across Australia"
+        src="/images/replacement/fleet-lineup-skyline-branded.webp"
+        alt="1st Class Express branded fleet, from delivery vans to a prime mover and trailer, lined up at the depot at sunset"
         sizes="100vw"
         priority
       />
@@ -111,7 +111,7 @@ export default function HomePage() {
 
     <section className="hybrid-section hybrid-operations" aria-labelledby="operations-title">
       <div className="container-page hybrid-operations-grid">
-        <div ref={operationsMediaRef} className={`hybrid-operations-media ${operationsMediaClass}`}><ResponsiveImage src="/images/replacement/fleet-lineup-depot-branded.webp" alt="1st Class Express branded fleet lined up at the depot" sizes="(max-width: 900px) 100vw, 52vw"/><div><strong>One-tonne vans to B-doubles</strong><span>Configuration and availability confirmed for each booking.</span></div></div>
+        <div ref={operationsMediaRef} className={`hybrid-operations-media ${operationsMediaClass}`}><ResponsiveImage src="/images/replacement/prime-mover-van-duo-branded.webp" alt="1st Class Express branded delivery van and prime mover parked together at the depot at sunset" sizes="(max-width: 900px) 100vw, 52vw"/><div><strong>One-tonne vans to B-doubles</strong><span>Configuration and availability confirmed for each booking.</span></div></div>
         <div><p className="lovable-kicker">Operational proof</p><h2 id="operations-title">Planned around your business.</h2><p>{companyProfile.about.paragraphs[4]}</p><ul className="hybrid-check-list">{companyProfile.operations.slice(1, 5).map(item => <li key={item}><CheckCircle2 aria-hidden="true"/>{item}</li>)}</ul><Link className="lovable-btn lovable-btn--secondary" to="/about">How We Work <ArrowRight size={17} aria-hidden="true"/></Link></div>
       </div>
     </section>

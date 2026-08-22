@@ -35,6 +35,15 @@
       1672
     ]
   },
+  "/images/replacement/fleet-lineup-skyline-branded.webp": {
+    "width": 1672,
+    "height": 941,
+    "widths": [
+      640,
+      1024,
+      1672
+    ]
+  },
   "/images/replacement/fleet-lineup-yard-branded.webp": {
     "width": 1672,
     "height": 941,
@@ -69,6 +78,14 @@
       640,
       1024,
       1672
+    ]
+  },
+  "/images/replacement/prime-mover-van-duo-branded.webp": {
+    "width": 941,
+    "height": 1672,
+    "widths": [
+      640,
+      941
     ]
   },
   "/images/replacement/warehouse-dock-branded.webp": {

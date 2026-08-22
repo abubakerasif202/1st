@@ -57,9 +57,9 @@ describe('Lovable-aligned primary routes', () => {
 
   it('delivers a dimensioned WebP hero asset', async () => {
     renderRoute('/')
-    const hero = await screen.findByRole('img', { name: /branded prime mover.*interstate freight routes/i })
+    const hero = await screen.findByRole('img', { name: /branded fleet.*prime mover and trailer/i })
 
-    expect(hero).toHaveAttribute('src', '/images/replacement/prime-mover-network-hero.webp')
+    expect(hero).toHaveAttribute('src', '/images/replacement/fleet-lineup-skyline-branded.webp')
     expect(hero).toHaveAttribute('width', '1672')
     expect(hero).toHaveAttribute('height', '941')
   })
