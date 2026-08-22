@@ -6,12 +6,15 @@ import { SiteFooter } from './SiteFooter'
 import { SiteHeader } from './SiteHeader'
 
 export function SiteLayout() {
-  const { pathname, hash, key } = useLocation()
-  const initialRoute = useRef(true)
+  const { pathname, hash } = useLocation()
+  const lastLocationRef = useRef(hash ? '' : `${pathname}${hash}`)
   const mainRef = useRef<HTMLElement>(null)
   useEffect(() => {
     const main = mainRef.current
     if (!main) return
+    const locationId = `${pathname}${hash}`
+    if (lastLocationRef.current === locationId) return
+    lastLocationRef.current = locationId
     let observer: MutationObserver | undefined
     const focusDestination = () => {
       if (hash) {
@@ -34,9 +37,6 @@ export function SiteLayout() {
     }
 
     if (!hash) window.scrollTo({ top: 0, behavior: 'instant' })
-    if (initialRoute.current && !hash) { initialRoute.current = false; return }
-    initialRoute.current = false
-
     const frame = window.requestAnimationFrame(() => {
       if (focusDestination()) return
       observer = new MutationObserver(() => {
@@ -45,6 +45,6 @@ export function SiteLayout() {
       observer.observe(main, { childList: true, subtree: true })
     })
     return () => { window.cancelAnimationFrame(frame); observer?.disconnect() }
-  }, [pathname, hash, key])
+  }, [pathname, hash])
   return <><a className="skip-link" href="#main">Skip to content</a><AnnouncementBar/><SiteHeader/><main ref={mainRef} id="main"><Outlet/></main><SiteFooter/><MobileActionBar/></>
 }

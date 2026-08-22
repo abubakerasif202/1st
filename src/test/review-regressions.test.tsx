@@ -62,6 +62,27 @@ describe('post-merge review regressions', () => {
     }
   })
 
+  it('does not move focus or scroll a non-fragment route on its initial load', async () => {
+    const scrollIntoView = vi.fn()
+    const originalScrollIntoView = HTMLElement.prototype.scrollIntoView
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', { configurable: true, value: scrollIntoView })
+
+    try {
+      render(<MemoryRouter initialEntries={['/fleet/rigid-trucks']}><App/></MemoryRouter>)
+
+      const heading = await screen.findByRole('heading', { level: 1, name: 'Rigid Trucks' })
+      await new Promise(resolve => window.requestAnimationFrame(resolve))
+      expect(scrollIntoView).not.toHaveBeenCalled()
+      expect(heading).not.toHaveFocus()
+    } finally {
+      if (originalScrollIntoView) {
+        Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', { configurable: true, value: originalScrollIntoView })
+      } else {
+        Reflect.deleteProperty(HTMLElement.prototype, 'scrollIntoView')
+      }
+    }
+  })
+
   it('preloads the compact mark the header actually renders, not the full lockup', () => {
     expect(indexHtml).toContain('<link rel="preload" as="image" href="/brand/first-class-express-mark.webp" />')
     expect(indexHtml).not.toContain('rel="preload" as="image" href="/brand/first-class-express-logo')
