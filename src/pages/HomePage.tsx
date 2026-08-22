@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom'
 import { ResponsiveImage } from '../components/common/ResponsiveImage'
 import { SeoHead } from '../components/common/SeoHead'
 import { QuickQuoteForm } from '../components/forms/QuickQuoteForm'
+import { RouteMarquee } from '../components/sections/RouteMarquee'
 import { company, phoneHref } from '../data/company'
 import { companyProfile } from '../data/companyProfile'
+import { useReveal } from '../hooks/useReveal'
 import { interstateCoverage } from '../data/interstateRoutes'
 import { serviceRegions } from '../data/serviceRegions'
 import { services } from '../data/services'
@@ -34,6 +36,11 @@ const coverageCards = company.cities.map(city => {
 })
 
 export default function HomePage() {
+  const { ref: capabilityListRef, className: capabilityListClass } = useReveal<HTMLDivElement>()
+  const { ref: capabilityMoreRef, className: capabilityMoreClass } = useReveal<HTMLDivElement>()
+  const { ref: coverageGridRef, className: coverageGridClass } = useReveal<HTMLDivElement>()
+  const { ref: operationsMediaRef, className: operationsMediaClass } = useReveal<HTMLDivElement>()
+
   return <>
     <SeoHead {...routeSeo.home}/>
 
@@ -64,6 +71,8 @@ export default function HomePage() {
       </div>
     </section>
 
+    <RouteMarquee/>
+
     <section className="hybrid-section hybrid-capability" aria-labelledby="capability-title">
       <div className="container-page">
         <div className="hybrid-section-heading">
@@ -71,7 +80,7 @@ export default function HomePage() {
           <div><p>Every enquiry begins with the freight, timing, access and route. Start with the capability closest to the job, then view the full documented service list.</p><Link to="/services">View all services <ArrowRight size={16} aria-hidden="true"/></Link></div>
         </div>
         <div className="hybrid-capability-grid">
-          <div className="hybrid-capability-list" role="list" aria-label="Core service capabilities">
+          <div ref={capabilityListRef} className={`hybrid-capability-list stagger-children ${capabilityListClass}`} role="list" aria-label="Core service capabilities">
             {capabilityServices.map(({ id, title, short, icon: Icon }, index) => <Link className="hybrid-capability-item" key={id} to={`/services/${id}`} role="listitem"><span className="hybrid-capability-item__index">0{index + 1}</span><Icon aria-hidden="true"/><span><h3>{title}</h3><small>{short}</small></span><ArrowRight aria-hidden="true"/></Link>)}
           </div>
           <div className="hybrid-capability-panel">
@@ -82,7 +91,7 @@ export default function HomePage() {
           </div>
         </div>
         <p className="lovable-kicker hybrid-capability-more__label">Also available</p>
-        <div className="hybrid-capability-more" aria-label="Additional documented services">
+        <div ref={capabilityMoreRef} className={`hybrid-capability-more stagger-children ${capabilityMoreClass}`} aria-label="Additional documented services">
           {secondaryServices.map(({ id, title, short, icon: Icon }) => <Link key={id} to={`/services/${id}`}><Icon aria-hidden="true"/><span><h3>{title}</h3><small>{short}</small></span><ArrowRight aria-hidden="true"/></Link>)}
         </div>
       </div>
@@ -94,13 +103,15 @@ export default function HomePage() {
           <div><p className="lovable-kicker">Decision 02 · Route coverage</p><h2 id="coverage-title">Do We Cover Your Route?</h2></div>
           <div><p>Service areas include Sydney metropolitan and regional movements, Canberra and planned interstate routes assessed for each movement.</p><Link to="/service-areas">Explore service areas <ArrowRight size={16} aria-hidden="true"/></Link></div>
         </div>
-        <div className="hybrid-coverage-grid">{coverageCards.map(({ city, summary }) => <div key={city}><strong>{city}</strong><span>{summary}</span></div>)}</div>
+        <div ref={coverageGridRef} className={`hybrid-coverage-grid stagger-children ${coverageGridClass}`}>{coverageCards.map(({ city, summary }) => <div key={city}><strong>{city}</strong><span>{summary}</span></div>)}</div>
       </div>
     </section>
 
+    <div className="route-divider" aria-hidden="true"/>
+
     <section className="hybrid-section hybrid-operations" aria-labelledby="operations-title">
       <div className="container-page hybrid-operations-grid">
-        <div className="hybrid-operations-media"><ResponsiveImage src="/images/replacement/fleet-lineup-depot-branded.webp" alt="1st Class Express branded fleet lined up at the depot" sizes="(max-width: 900px) 100vw, 52vw"/><div><strong>One-tonne vans to B-doubles</strong><span>Configuration and availability confirmed for each booking.</span></div></div>
+        <div ref={operationsMediaRef} className={`hybrid-operations-media ${operationsMediaClass}`}><ResponsiveImage src="/images/replacement/fleet-lineup-depot-branded.webp" alt="1st Class Express branded fleet lined up at the depot" sizes="(max-width: 900px) 100vw, 52vw"/><div><strong>One-tonne vans to B-doubles</strong><span>Configuration and availability confirmed for each booking.</span></div></div>
         <div><p className="lovable-kicker">Operational proof</p><h2 id="operations-title">Planned around your business.</h2><p>{companyProfile.about.paragraphs[4]}</p><ul className="hybrid-check-list">{companyProfile.operations.slice(1, 5).map(item => <li key={item}><CheckCircle2 aria-hidden="true"/>{item}</li>)}</ul><Link className="lovable-btn lovable-btn--secondary" to="/about">How We Work <ArrowRight size={17} aria-hidden="true"/></Link></div>
       </div>
     </section>

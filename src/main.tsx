@@ -6,6 +6,7 @@ import { preloadPageForPath } from './app/pageLoaders'
 import './styles/theme.css'
 import './styles/index.css'
 import './styles/lovable-refresh.css'
+import './styles/motion.css'
 import './styles/driver-handbook.css'
 
 const container = document.getElementById('root')!

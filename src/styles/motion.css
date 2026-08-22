@@ -1,0 +1,207 @@
+/* ============================================================================
+   Motion system.
+
+   Global `@media(prefers-reduced-motion:reduce)` rules already exist in
+   index.css (crushes every animation/transition duration to .01ms) and
+   lovable-refresh.css (drops fleet/service card hover transforms). Every
+   animation added here is covered by that net automatically, so effects
+   below do not repeat their own reduced-motion query unless they gate
+   whether an effect runs in the first place (the marquee, the scroll-reveal
+   IntersectionObserver in useReveal.ts).
+
+   Hero content stays transform-only, never opacity — see the existing
+   `.page-hero__reveal` comment in lovable-refresh.css. That decision holds
+   here too: above-the-fold copy must be visible in the very first frame.
+   Below-the-fold reveals (`.reveal-pending`) may use opacity because the
+   pending class is only ever added client-side, after mount, before paint —
+   it never exists in the prerendered/no-JS HTML, so JS-less visitors always
+   see the final, fully visible state.
+   ========================================================================== */
+
+:root {
+  --motion-fast: 180ms;
+  --motion-normal: 280ms;
+  --motion-reveal: 560ms;
+  --motion-slow: 900ms;
+  --ease-premium: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* ---- Scroll reveal (useReveal.ts) --------------------------------------- */
+.reveal-pending:not(.stagger-children) {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity var(--motion-reveal) var(--ease-premium), transform var(--motion-reveal) var(--ease-premium);
+}
+.reveal-pending.is-revealed { opacity: 1; transform: none; }
+
+.reveal-pending.stagger-children > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--motion-normal) var(--ease-premium), transform var(--motion-normal) var(--ease-premium);
+}
+.reveal-pending.is-revealed.stagger-children > * { opacity: 1; transform: none; }
+.stagger-children > *:nth-child(1) { transition-delay: 0ms; }
+.stagger-children > *:nth-child(2) { transition-delay: 70ms; }
+.stagger-children > *:nth-child(3) { transition-delay: 140ms; }
+.stagger-children > *:nth-child(4) { transition-delay: 210ms; }
+.stagger-children > *:nth-child(5) { transition-delay: 280ms; }
+.stagger-children > *:nth-child(6) { transition-delay: 350ms; }
+.stagger-children > *:nth-child(7) { transition-delay: 420ms; }
+.stagger-children > *:nth-child(8) { transition-delay: 490ms; }
+
+/* ---- Hero entrance (transform-only, runs unconditionally) --------------- */
+@keyframes hero-rise { from { transform: translateY(26px); } to { transform: none; } }
+.hybrid-hero__content > .lovable-kicker { animation: hero-rise .6s var(--ease-premium) both; }
+.hybrid-hero__content > h1 { animation: hero-rise .6s var(--ease-premium) .08s both; }
+.hybrid-hero__lead { animation: hero-rise .6s var(--ease-premium) .16s both; }
+.hybrid-hero__actions { animation: hero-rise .6s var(--ease-premium) .24s both; }
+.hybrid-hero__supporting { animation: hero-rise .6s var(--ease-premium) .32s both; }
+.hybrid-hero__rail { animation: hero-rise .6s var(--ease-premium) .4s both; }
+
+/* One-shot cinematic settle on the hero photograph. Not looped — a single
+   zoom-out on load, contained by .hybrid-hero's overflow:hidden. */
+@keyframes hero-image-settle { from { transform: scale(1.07); } to { transform: scale(1); } }
+.hybrid-hero__image { animation: hero-image-settle 1.5s var(--ease-premium) both; }
+
+/* Gold-to-red underline drawing under the highlighted hero phrase. */
+.hybrid-hero h1 span { position: relative; display: inline-block; }
+.hybrid-hero h1 span:after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: .05em;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--red));
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: hero-underline .7s var(--ease-premium) .62s both;
+}
+@keyframes hero-underline { to { transform: scaleX(1); } }
+
+/* ---- CTA interactions ---------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+  .lovable-btn svg:last-child,
+  .btn-primary svg:last-child,
+  .btn-secondary svg:last-child,
+  .hybrid-capability-item > svg:last-child,
+  .hybrid-capability-more > a > svg:last-child,
+  .hybrid-section-heading a svg,
+  .fleet-card-link svg,
+  .service-detail-card a svg {
+    transition: transform var(--motion-fast) var(--ease-premium);
+  }
+  .lovable-btn:hover svg:last-child,
+  .btn-primary:hover svg:last-child,
+  .btn-secondary:hover svg:last-child,
+  .hybrid-capability-item:hover > svg:last-child,
+  .hybrid-capability-more > a:hover > svg:last-child,
+  .hybrid-section-heading a:hover svg,
+  .fleet-card-link:hover svg,
+  .service-detail-card a:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Restrained metallic sweep on the primary action only. */
+  .lovable-btn--primary,
+  .btn-primary {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .lovable-btn--primary:before,
+  .btn-primary:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .3) 50%, transparent 70%);
+    transform: translateX(-130%);
+    transition: transform var(--motion-slow) var(--ease-premium);
+  }
+  .lovable-btn--primary:hover:before,
+  .btn-primary:hover:before { transform: translateX(130%); }
+
+  .hybrid-coverage-grid > div {
+    transition: transform var(--motion-normal) var(--ease-premium), box-shadow var(--motion-normal) var(--ease-premium);
+  }
+  .hybrid-coverage-grid > div:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 34px rgba(15, 21, 27, .12);
+  }
+}
+
+/* ---- Animated freight/route bar ------------------------------------------ */
+.route-marquee {
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+  border-top: 1px solid rgba(209, 179, 90, .2);
+  border-bottom: 1px solid rgba(209, 179, 90, .2);
+}
+.route-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: route-marquee-scroll 34s linear infinite;
+}
+.route-marquee:hover .route-marquee__track { animation-play-state: paused; }
+.route-marquee__set { display: flex; align-items: center; flex-shrink: 0; }
+.route-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: .85rem 0;
+  color: var(--gold);
+  font: 800 .8rem 'Archivo', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .13em;
+  white-space: nowrap;
+}
+.route-marquee__dot { margin-left: 1.1rem; color: var(--red); font-size: .5rem; }
+@keyframes route-marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (max-width: 600px) {
+  .route-marquee__item { gap: .85rem; padding: .7rem 0; font-size: .72rem; letter-spacing: .1em; }
+  .route-marquee__dot { margin-left: .85rem; }
+}
+
+/* ---- Route divider (used sparingly between homepage sections) ----------- */
+.route-divider { position: relative; height: 2px; overflow: visible; background: linear-gradient(90deg, transparent, var(--gold), var(--red), transparent); }
+.route-divider:before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 0;
+  width: 9px; height: 9px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  box-shadow: 0 0 14px 2px rgba(209, 179, 90, .55);
+  animation: route-divider-move 7s linear infinite;
+}
+@keyframes route-divider-move { from { left: 0; } to { left: 100%; } }
+
+/* ---- Sticky header shrink on scroll --------------------------------------- */
+.site-header { transition: box-shadow var(--motion-normal) var(--ease-premium); }
+.header-inner { transition: height var(--motion-normal) var(--ease-premium); }
+.brand img { transition: height var(--motion-normal) var(--ease-premium); }
+.site-header.is-scrolled { box-shadow: 0 14px 32px rgba(4, 7, 10, .35); }
+@media (min-width: 821px) {
+  .site-header.is-scrolled .header-inner { height: 66px; }
+  .site-header.is-scrolled .brand img { height: 40px; }
+}
+
+/* ---- Mobile menu motion ---------------------------------------------------
+   Transform-only, same reasoning as the hero: this content only ever exists
+   in the DOM while `open` is true, so there is no prerendered/no-JS state to
+   protect — but keeping it transform-only avoids any frame where the menu is
+   open yet invisible while JS is still catching up. */
+@keyframes mobile-overlay-in { from { opacity: 0; } to { opacity: 1; } }
+.mobile-overlay { animation: mobile-overlay-in .22s ease both; }
+@keyframes mobile-panel-in { from { transform: translateX(28px); } to { transform: translateX(0); } }
+.mobile-panel { animation: mobile-panel-in .32s var(--ease-premium) both; }
+@keyframes mobile-link-in { from { transform: translateX(18px); } to { transform: translateX(0); } }
+.mobile-panel nav a { animation: mobile-link-in .32s var(--ease-premium) both; }
+.mobile-panel nav a:nth-child(1) { animation-delay: .04s; }
+.mobile-panel nav a:nth-child(2) { animation-delay: .08s; }
+.mobile-panel nav a:nth-child(3) { animation-delay: .12s; }
+.mobile-panel nav a:nth-child(4) { animation-delay: .16s; }
+.mobile-panel nav a:nth-child(5) { animation-delay: .2s; }
+.mobile-panel nav a:nth-child(6) { animation-delay: .24s; }
+.mobile-panel nav a:nth-child(7) { animation-delay: .28s; }
