@@ -1,5 +1,5 @@
 import { renderToString } from 'react-dom/server'
-import { StaticRouter } from 'react-router'
+import { StaticRouter } from 'react-router-dom'
 import type { PageMap } from './app/pageLoaders'
 import { pageLoaders } from './app/pageLoaders'
 import { SiteRoutes } from './app/routes'

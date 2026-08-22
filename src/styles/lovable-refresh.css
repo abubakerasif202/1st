@@ -266,6 +266,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .hero-contact-strip svg{flex:0 0 auto}
 .hero-contact-strip span{display:flex;flex-direction:column;line-height:1.25}
 .hero-contact-strip small{font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#e6ebee}
+/* #e6ebee on the first link's solid --red fill is ~4:1, under the 4.5:1 floor
+   normal-size text needs. White clears 4.9:1 on that red without touching the
+   second link, where #e6ebee already sits on a near-black tint and is fine. */
+.hero-contact-strip a:first-child small{color:#fff}
 .hero-contact-strip a:hover small,.hero-contact-strip a:focus-visible small{color:#3a3320}
 @media(max-width:600px){.hero-contact-strip{display:grid}.hero-contact-strip a{width:100%}}
 
