@@ -1,6 +1,6 @@
 export type FormResult = { ok: boolean; message: string }
 
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgqqqld'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mdenjrnl'
 const REQUEST_TIMEOUT_MS = 15_000
 const submissionError = 'The request could not be sent. Please use the phone or email option below.'
 
