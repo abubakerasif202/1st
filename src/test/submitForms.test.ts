@@ -9,7 +9,7 @@ describe('form submission adapter', () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true })
     vi.stubGlobal('fetch', fetchMock)
     await expect(submitQuoteRequest({ firstName: 'Alex', email: 'alex@example.com' })).resolves.toMatchObject({ ok: true })
-    expect(fetchMock).toHaveBeenCalledWith('https://formspree.io/f/mlgqqqld', expect.objectContaining({
+    expect(fetchMock).toHaveBeenCalledWith('https://formspree.io/f/mdenjrnl', expect.objectContaining({
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     }))
