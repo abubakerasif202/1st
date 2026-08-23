@@ -6,11 +6,9 @@ const submissionError = 'The request could not be sent. Please use the phone or 
 
 function resolveEndpoint(kind: 'quote' | 'contact' | 'careers'): string {
   if (kind === 'careers') {
-    return (import.meta.env.VITE_CAREERS_FORM_ENDPOINT as string | undefined)
-      || (import.meta.env.VITE_FORM_ENDPOINT as string | undefined)
-      || FORMSPREE_ENDPOINT
+    return (import.meta.env.VITE_CAREERS_FORM_ENDPOINT as string | undefined) || FORMSPREE_ENDPOINT
   }
-  return (import.meta.env.VITE_FORM_ENDPOINT as string | undefined) || FORMSPREE_ENDPOINT
+  return FORMSPREE_ENDPOINT
 }
 
 async function postForm(kind: 'quote' | 'contact' | 'careers', body: BodyInit, extraHeaders: Record<string, string> = {}): Promise<Response> {
