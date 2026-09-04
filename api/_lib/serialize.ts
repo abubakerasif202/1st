@@ -84,6 +84,8 @@ export interface QuoteDetailRpc {
   quote: QuoteRow
   items: ItemRow[]
   token: string
+  /** create_quote only: false when an idempotency-key replay returned an existing quote. */
+  created?: boolean
 }
 
 const num = (value: number | string | null | undefined): number =>

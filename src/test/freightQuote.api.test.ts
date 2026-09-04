@@ -32,10 +32,10 @@ class FakeRepo implements QuoteRepository {
     this.createCalls += 1
     const key = String(input.quote.idempotency_key ?? '')
     const existing = this.byKey.get(key)
-    if (existing) return existing
+    if (existing) return { ...existing, created: false }
     this.counter += 1
     const reference = `1STCE-${String(this.counter).padStart(6, '0')}`
-    const row = fakeRow(reference, input.quote)
+    const row = { ...fakeRow(reference, input.quote), created: true }
     if (key) this.byKey.set(key, row)
     return row
   }
@@ -168,7 +168,8 @@ describe('POST /api/quotes', () => {
     const b = second.body as { quote: { referenceNumber: string } }
     expect(a.quote.referenceNumber).toBe(b.quote.referenceNumber)
     expect(repo.createCalls).toBe(2) // handler called twice…
-    // …but the fake repo returned the same stored row the second time
+    // …but the replay must not trigger the email path a second time.
+    expect(repo.events.filter((e) => e === 'email_delivery')).toHaveLength(1)
   })
 
   test('never leaks an internal error message to the client', async () => {
