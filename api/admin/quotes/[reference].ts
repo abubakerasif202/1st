@@ -40,9 +40,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
 
       const format = Array.isArray(req.query.format) ? req.query.format[0] : req.query.format
       if (format === 'csv') {
+        const safeName = reference.replace(/[^A-Za-z0-9-]/g, '') || 'quote'
         res.status(200)
         res.setHeader('content-type', 'text/csv; charset=utf-8')
-        res.setHeader('content-disposition', `attachment; filename="${reference}.csv"`)
+        res.setHeader('content-disposition', `attachment; filename="${safeName}.csv"`)
         res.send(quoteToCsv(detail))
         return
       }

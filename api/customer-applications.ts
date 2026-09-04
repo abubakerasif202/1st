@@ -44,7 +44,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     })
 
     const { data, error } = await adminClient().rpc('create_customer_application', { p_app: payload })
-    if (error) throw new HttpError(500, `create_customer_application: ${error.message}`)
+    if (error) {
+      console.error('[api/customer-applications] create_customer_application:', error.message)
+      throw new HttpError(500, 'A database error occurred. Please try again.')
+    }
 
     const row = data as { application_reference: string; status: string } | null
     if (!row) throw new HttpError(500, 'No application returned.')

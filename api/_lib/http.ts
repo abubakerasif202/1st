@@ -52,7 +52,13 @@ export function requireMethod(req: VercelRequest, res: VercelResponse, method: s
  * `req.body`; when it is a string or missing we read the stream ourselves.
  */
 export async function readJsonBody(req: VercelRequest): Promise<unknown> {
-  if (req.body && typeof req.body === 'object') return req.body
+  if (req.body && typeof req.body === 'object') {
+    // Vercel pre-parsed the body; still enforce the ceiling.
+    if (Buffer.byteLength(JSON.stringify(req.body)) > MAX_BODY_BYTES) {
+      throw new HttpError(413, 'Request body too large.')
+    }
+    return req.body
+  }
   if (typeof req.body === 'string') {
     if (Buffer.byteLength(req.body) > MAX_BODY_BYTES) throw new HttpError(413, 'Request body too large.')
     return safeParse(req.body)
@@ -78,8 +84,15 @@ function safeParse(text: string): unknown {
   }
 }
 
-/** Best-effort client IP for rate limiting. */
+/**
+ * Best-effort client IP for rate limiting. Prefers `x-real-ip`, which Vercel's
+ * edge sets to the true client address; `x-forwarded-for` is client-appendable
+ * and only a fallback.
+ */
 export function clientIp(req: VercelRequest): string {
+  const realIp = req.headers['x-real-ip']
+  if (typeof realIp === 'string' && realIp.trim()) return realIp.trim()
+
   const forwarded = req.headers['x-forwarded-for']
   if (typeof forwarded === 'string') return forwarded.split(',')[0]?.trim() || 'unknown'
   if (Array.isArray(forwarded)) return forwarded[0] ?? 'unknown'

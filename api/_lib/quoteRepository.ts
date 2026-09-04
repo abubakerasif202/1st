@@ -52,8 +52,16 @@ export interface QuoteRepository {
   updateQuoteForAdmin(reference: string, patch: AdminQuotePatch): Promise<QuoteDetailRpc>
 }
 
+/**
+ * Raw PostgREST / Postgres errors can carry column names, constraint names and
+ * SQL fragments — never return them to the client. Log the detail server-side
+ * and surface a generic 500.
+ */
 function assertNoError(context: string, error: { message: string } | null): void {
-  if (error) throw new HttpError(500, `${context}: ${error.message}`)
+  if (error) {
+    console.error(`[quoteRepository] ${context}:`, error.message)
+    throw new HttpError(500, 'A database error occurred. Please try again.')
+  }
 }
 
 class SupabaseQuoteRepository implements QuoteRepository {
@@ -92,7 +100,8 @@ class SupabaseQuoteRepository implements QuoteRepository {
     if (error) {
       if (error.message.includes('not found')) throw new HttpError(404, 'Quote not found.')
       if (error.message.includes('not open')) throw new HttpError(409, 'This quote is not open for a response.')
-      throw new HttpError(400, error.message)
+      console.error('[quoteRepository] respond_to_quote:', error.message)
+      throw new HttpError(400, 'That response could not be recorded.')
     }
     return data as QuoteDetailRpc
   }
@@ -129,17 +138,23 @@ class SupabaseQuoteRepository implements QuoteRepository {
 
     if (params.status) query = query.eq('status', params.status)
     if (params.search) {
-      const term = params.search.replace(/[%,()]/g, ' ').trim()
-      query = query.or(
-        [
-          `reference_number.ilike.%${term}%`,
-          `customer_name.ilike.%${term}%`,
-          `customer_email.ilike.%${term}%`,
-          `customer_phone.ilike.%${term}%`,
-          `pickup_suburb.ilike.%${term}%`,
-          `delivery_suburb.ilike.%${term}%`,
-        ].join(','),
-      )
+      // Only allow characters that can legitimately appear in a reference,
+      // name, email, phone or suburb. This strips every PostgREST filter
+      // metacharacter (`, . : ( ) * %`) so the .or() string cannot be
+      // restructured, and caps the length.
+      const term = params.search.replace(/[^a-zA-Z0-9 @'-]/g, ' ').trim().slice(0, 80)
+      if (term) {
+        query = query.or(
+          [
+            `reference_number.ilike.%${term}%`,
+            `customer_name.ilike.%${term}%`,
+            `customer_email.ilike.%${term}%`,
+            `customer_phone.ilike.%${term}%`,
+            `pickup_suburb.ilike.%${term}%`,
+            `delivery_suburb.ilike.%${term}%`,
+          ].join(','),
+        )
+      }
     }
 
     const { data, error, count } = await query

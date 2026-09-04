@@ -11,5 +11,3 @@ test-results
 .env.*
 !.env.example
 .vercel
-
-.vercel

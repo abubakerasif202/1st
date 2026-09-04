@@ -30,6 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     if (!reference) throw new HttpError(400, 'A reference is required.')
 
     if (req.method === 'GET') {
+      enforceRateLimit(`respond-view:${clientIp(req)}`, 60, 10 * 60 * 1000)
       const token = tokenQuery(req)
       if (!token) throw new HttpError(400, 'A token is required.')
       const rpc = await quoteRepository().findByReferenceAndToken(reference, token)

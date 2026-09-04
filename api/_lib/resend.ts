@@ -47,8 +47,20 @@ async function send(payload: ResendPayload): Promise<EmailResult> {
   }
 }
 
+/** Strip control characters (CR/LF included) so user text can't tamper with the subject line. */
+function clean(value: string): string {
+  let out = ''
+  for (const ch of value) {
+    const code = ch.codePointAt(0) ?? 0
+    out += code < 0x20 || code === 0x7f ? ' ' : ch
+  }
+  return out.replace(/ {2,}/g, ' ').trim()
+}
+
 function route(quote: QuoteDetail): string {
-  return `${quote.pickup.suburb} ${quote.pickup.state} → ${quote.delivery.suburb} ${quote.delivery.state}`
+  return clean(
+    `${quote.pickup.suburb} ${quote.pickup.state} → ${quote.delivery.suburb} ${quote.delivery.state}`,
+  )
 }
 
 export async function sendInternalQuoteNotification(quote: QuoteDetail): Promise<EmailResult> {

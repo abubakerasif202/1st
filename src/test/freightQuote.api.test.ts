@@ -171,6 +171,24 @@ describe('POST /api/quotes', () => {
     // …but the fake repo returned the same stored row the second time
   })
 
+  test('never leaks an internal error message to the client', async () => {
+    repo.createQuote = async () => {
+      throw new Error('column "foo" does not exist — SELECT ... FROM quotes')
+    }
+    const res = mockRes()
+    await handler(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { method: 'POST', body: validBody({ idempotencyKey: 'idem-leak001' }), headers: { 'x-forwarded-for': '9.9.9.9' }, socket: {} } as any,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      res as any,
+    )
+    expect(res.statusCode).toBe(500)
+    const raw = JSON.stringify(res.body)
+    expect(raw).not.toContain('column')
+    expect(raw).not.toContain('SELECT')
+    expect(raw).toContain('temporarily unable')
+  })
+
   test('rejects an invalid form with field errors', async () => {
     const res = mockRes()
     await handler(
