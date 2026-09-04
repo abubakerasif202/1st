@@ -1,7 +1,7 @@
 // Browser client for the secure customer accept/decline page.
 
-import { INFRASTRUCTURE_MESSAGE, QuoteApiError } from './api'
-import type { QuoteDetail } from './types'
+import { INFRASTRUCTURE_MESSAGE, QuoteApiError } from './api.js'
+import type { QuoteDetail } from './types.js'
 
 async function parse(response: Response): Promise<QuoteApiError> {
   let message = 'Something went wrong.'

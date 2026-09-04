@@ -103,7 +103,13 @@ describe('prerender route contract', () => {
     // SPA-only routes (confirmation, respond) are served the app shell and are
     // deliberately absent from routeSeo.json / sitemap.xml. Mirror the allowlist
     // in scripts/prerender-routes.mjs.
-    const appShellSources = ['/quote/:reference/confirmation', '/quote/:reference/respond']
+    const appShellSources = [
+      '/quote/:reference/confirmation',
+      '/quote/:reference/respond',
+      '/admin',
+      '/admin/quotes',
+      '/admin/quotes/:reference',
+    ]
     const seoRewrites = vercel.rewrites.filter(({ source }) => !appShellSources.includes(source))
     const expected = publicRoutes.map(route => route.path).filter(path => path !== '/')
     expect(seoRewrites.map(rewrite => rewrite.source).sort()).toEqual(expected.sort())

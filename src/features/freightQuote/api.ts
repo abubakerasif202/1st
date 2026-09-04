@@ -5,8 +5,8 @@
 // the UI can tell "your input is invalid" (validation) apart from "our systems
 // are down, nothing was lost" (infrastructure).
 
-import type { QuoteFormValues } from './schema'
-import type { QuoteDetail } from './types'
+import type { QuoteFormValues } from './schema.js'
+import type { QuoteDetail } from './types.js'
 
 export type QuoteApiErrorKind = 'validation' | 'infrastructure' | 'not_found' | 'unknown'
 

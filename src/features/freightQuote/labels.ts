@@ -5,7 +5,7 @@ import type {
   DeliveryAuthority,
   FreightItemType,
   ServicePriority,
-} from './types'
+} from './types.js'
 
 export const SERVICE_PRIORITY_LABELS: Record<ServicePriority, string> = {
   urgent: 'Urgent / ASAP',

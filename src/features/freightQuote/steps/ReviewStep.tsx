@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useFormContext, useWatch } from 'react-hook-form'
-import { summariseTotals } from '../calculations'
-import { QuoteSummary } from '../QuoteSummary'
-import type { QuoteFormValues } from '../schema'
+import { summariseTotals } from '../calculations.js'
+import { QuoteSummary } from '../QuoteSummary.js'
+import type { QuoteFormValues } from '../schema.js'
 
 interface ReviewStepProps {
   onEdit: (stepIndex: number) => void

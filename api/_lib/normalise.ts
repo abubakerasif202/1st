@@ -2,9 +2,9 @@
 // RPC expects. Totals and per-line volume are computed here (server-side),
 // never taken from the request body.
 
-import { lineVolumeM3, summariseTotals } from '../../src/features/freightQuote/calculations'
-import type { QuoteFormValues } from '../../src/features/freightQuote/schema'
-import type { FreightItemInput } from '../../src/features/freightQuote/types'
+import { lineVolumeM3, summariseTotals } from '../../src/features/freightQuote/calculations.js'
+import type { QuoteFormValues } from '../../src/features/freightQuote/schema.js'
+import type { FreightItemInput } from '../../src/features/freightQuote/types.js'
 
 export interface NormalisedQuote {
   quote: Record<string, unknown>
@@ -37,7 +37,7 @@ export function normaliseQuote(
       customer_name: form.customerName,
       customer_email: form.customerEmail,
       customer_phone: form.customerPhone,
-      preferred_contact_method: form.preferredContactMethod ?? null,
+      preferred_contact_method: form.preferredContactMethod || null,
       customer_reference: form.customerReference ?? null,
       customer_notes: form.customerNotes ?? null,
 

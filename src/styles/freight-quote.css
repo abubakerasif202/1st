@@ -47,7 +47,8 @@
   min-height: 44px;
   width: 100%;
 }
-.fq-field__control:focus-visible {
+.fq-field__control:focus-visible,
+.fq-field__control:focus {
   outline: 2px solid var(--focus-ring, #1f6feb);
   outline-offset: 1px;
   border-color: transparent;
@@ -73,7 +74,8 @@
 .fq-check {
   display: flex;
   gap: 0.55rem;
-  align-items: flex-start;
+  align-items: center;
+  min-height: 44px;
   font-size: 0.9rem;
   line-height: 1.4;
   cursor: pointer;
@@ -161,10 +163,18 @@
   gap: 0.4rem;
   background: none;
   border: 0;
-  padding: 0.3rem 0.4rem;
+  padding: 0.5rem 0.6rem;
+  min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
   font: inherit;
   color: var(--muted, #6b7075);
   cursor: pointer;
+}
+.fq-progress__btn:focus-visible,
+.fq-progress__btn:focus {
+  outline: 2px solid var(--focus-ring, #1f6feb);
+  outline-offset: 2px;
 }
 .fq-progress__btn:disabled {
   cursor: default;
@@ -386,7 +396,8 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
-.fq-btn:focus-visible {
+.fq-btn:focus-visible,
+.fq-btn:focus {
   outline: 2px solid var(--focus-ring, #1f6feb);
   outline-offset: 2px;
 }
@@ -553,6 +564,11 @@
   flex-direction: column;
   gap: var(--fq-gap);
 }
+.fq-respond h1,
+.fq-admin h1 {
+  font-size: clamp(1.4rem, 1.1rem + 1.4vw, 2rem);
+  margin: 0;
+}
 .fq-respond__price {
   display: grid;
   gap: 0.4rem;
@@ -600,6 +616,143 @@
 .fq-terms-page__section h2 {
   color: var(--fq-ink);
   font-size: 1.15rem;
+}
+
+/* ---------- admin console ---------- */
+.fq-admin {
+  --fq-gap: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.fq-admin__bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.85rem;
+  color: var(--muted, #6b7075);
+}
+.fq-admin__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.fq-admin__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+.fq-admin__head h1 {
+  margin: 0;
+  font-size: clamp(1.3rem, 1.1rem + 1vw, 1.8rem);
+}
+.fq-admin__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.fq-admin__filters {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+.fq-admin__filters .fq-field__control {
+  max-width: 420px;
+}
+.fq-admin__table-wrap {
+  overflow-x: auto;
+}
+.fq-admin__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.fq-admin__table th,
+.fq-admin__table td {
+  border-bottom: var(--fq-border, 1px solid #d9d9d9);
+  padding: 0.6rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+.fq-admin__table th {
+  background: #f3f3f1;
+  position: sticky;
+  top: 0;
+}
+.fq-admin__muted {
+  color: var(--muted, #6b7075);
+  font-size: 0.82rem;
+}
+.fq-admin__empty {
+  text-align: center;
+  color: var(--muted, #6b7075);
+  padding: 2rem 0;
+}
+.fq-admin__pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  font-size: 0.85rem;
+}
+.fq-admin__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.fq-admin__card {
+  border: var(--fq-border, 1px solid #d9d9d9);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.fq-admin__card h2 {
+  margin: 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.fq-admin__status-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.fq-admin__summary {
+  white-space: pre-wrap;
+  font-size: 0.8rem;
+  background: #f7f7f5;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.fq-status {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #eceff1;
+  color: #33404a;
+}
+.fq-status--quoted,
+.fq-status--accepted {
+  background: #e5f3ea;
+  color: #1c6b3a;
+}
+.fq-status--declined,
+.fq-status--cancelled {
+  background: #fdecef;
+  color: var(--red-dark, #b71939);
+}
+.fq-status--in_transit,
+.fq-status--booked {
+  background: #eaf1fb;
+  color: #1f4e8c;
 }
 
 /* ---------- responsive ---------- */

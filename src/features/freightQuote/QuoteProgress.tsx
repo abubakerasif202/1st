@@ -1,4 +1,4 @@
-import { WIZARD_STEPS } from './wizardSteps'
+import { WIZARD_STEPS } from './wizardSteps.js'
 
 interface QuoteProgressProps {
   current: number

@@ -124,6 +124,11 @@
     "title": "Request a Freight Quote Online | 1st Class Express",
     "description": "Request a freight quote for local, linehaul and interstate transport across Australia. Tell us what is moving, where and when, and we will plan the job."
   },
+  "customerApplication": {
+    "path": "/customer-application",
+    "title": "Open a Freight Account | 1st Class Express Customer Application",
+    "description": "Apply to open a freight account with 1st Class Express. Provide your business details, sites, contacts and requested payment terms for review."
+  },
   "freightTerms": {
     "path": "/freight-terms",
     "title": "Freight Terms & Conditions | 1st Class Express",

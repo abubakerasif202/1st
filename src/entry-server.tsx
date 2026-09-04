@@ -10,19 +10,20 @@ let pages: PageMap | undefined
 // only put the Suspense fallback into the static HTML.
 async function resolvePages(): Promise<PageMap> {
   if (pages) return pages
-  const [home, about, services, serviceDetail, fleet, fleetDetail, serviceAreas, serviceAreaDetail, routeDetail, book, freightTerms, quoteConfirmation, quoteRespond, contact, careers, driverHandbook, notFound] = await Promise.all([
+  const [home, about, services, serviceDetail, fleet, fleetDetail, serviceAreas, serviceAreaDetail, routeDetail, book, freightTerms, customerApplication, quoteConfirmation, quoteRespond, adminSection, contact, careers, driverHandbook, notFound] = await Promise.all([
     pageLoaders.home(), pageLoaders.about(), pageLoaders.services(), pageLoaders.serviceDetail(),
     pageLoaders.fleet(), pageLoaders.fleetDetail(), pageLoaders.serviceAreas(), pageLoaders.serviceAreaDetail(),
-    pageLoaders.routeDetail(), pageLoaders.book(), pageLoaders.freightTerms(), pageLoaders.quoteConfirmation(),
-    pageLoaders.quoteRespond(), pageLoaders.contact(), pageLoaders.careers(),
+    pageLoaders.routeDetail(), pageLoaders.book(), pageLoaders.freightTerms(), pageLoaders.customerApplication(),
+    pageLoaders.quoteConfirmation(), pageLoaders.quoteRespond(), pageLoaders.adminSection(), pageLoaders.contact(), pageLoaders.careers(),
     pageLoaders.driverHandbook(), pageLoaders.notFound(),
   ])
   pages = {
     home: home.default, about: about.default, services: services.default, serviceDetail: serviceDetail.default,
     fleet: fleet.default, fleetDetail: fleetDetail.default, serviceAreas: serviceAreas.default,
     serviceAreaDetail: serviceAreaDetail.default, routeDetail: routeDetail.default,
-    book: book.default, freightTerms: freightTerms.default, quoteConfirmation: quoteConfirmation.default,
-    quoteRespond: quoteRespond.default, contact: contact.default,
+    book: book.default, freightTerms: freightTerms.default, customerApplication: customerApplication.default,
+    quoteConfirmation: quoteConfirmation.default, quoteRespond: quoteRespond.default, adminSection: adminSection.default,
+    contact: contact.default,
     careers: careers.default, driverHandbook: driverHandbook.default, notFound: notFound.default,
   }
   return pages

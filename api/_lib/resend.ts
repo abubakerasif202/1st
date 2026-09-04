@@ -6,9 +6,9 @@
 //    is already saved and must not be lost over an email problem
 //  * logs carry the reference and route only, never customer PII
 
-import { formatQuoteSummary } from '../../src/features/freightQuote/clipboard'
-import type { QuoteDetail } from '../../src/features/freightQuote/types'
-import { env } from './env'
+import { formatQuoteSummary } from '../../src/features/freightQuote/clipboard.js'
+import type { QuoteDetail } from '../../src/features/freightQuote/types.js'
+import { env } from './env.js'
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails'
 
@@ -47,8 +47,20 @@ async function send(payload: ResendPayload): Promise<EmailResult> {
   }
 }
 
+/** Strip control characters (CR/LF included) so user text can't tamper with the subject line. */
+function clean(value: string): string {
+  let out = ''
+  for (const ch of value) {
+    const code = ch.codePointAt(0) ?? 0
+    out += code < 0x20 || code === 0x7f ? ' ' : ch
+  }
+  return out.replace(/ {2,}/g, ' ').trim()
+}
+
 function route(quote: QuoteDetail): string {
-  return `${quote.pickup.suburb} ${quote.pickup.state} → ${quote.delivery.suburb} ${quote.delivery.state}`
+  return clean(
+    `${quote.pickup.suburb} ${quote.pickup.state} → ${quote.delivery.suburb} ${quote.delivery.state}`,
+  )
 }
 
 export async function sendInternalQuoteNotification(quote: QuoteDetail): Promise<EmailResult> {

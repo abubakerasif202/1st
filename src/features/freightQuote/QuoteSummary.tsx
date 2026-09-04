@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react'
-import { lineVolumeM3 } from './calculations'
+import { lineVolumeM3 } from './calculations.js'
 import {
   DELIVERY_AUTHORITY_LABELS,
   FREIGHT_ITEM_TYPE_LABELS,
   SERVICE_PRIORITY_LABELS,
-} from './labels'
-import type { QuoteFormValues } from './schema'
-import type { QuoteTotals } from './types'
+} from './labels.js'
+import type { QuoteFormValues } from './schema.js'
+import type { QuoteTotals } from './types.js'
 
 interface QuoteSummaryProps {
   data: QuoteFormValues

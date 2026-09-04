@@ -4,10 +4,10 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { z } from 'zod'
-import { clientIp, HttpError, readJsonBody, sendError, sendJson } from '../../_lib/http'
-import { quoteRepository } from '../../_lib/quoteRepository'
-import { enforceRateLimit } from '../../_lib/rateLimit'
-import { toQuoteDetail } from '../../_lib/serialize'
+import { clientIp, HttpError, readJsonBody, sendError, sendJson } from '../../_lib/http.js'
+import { quoteRepository } from '../../_lib/quoteRepository.js'
+import { enforceRateLimit } from '../../_lib/rateLimit.js'
+import { toQuoteDetail } from '../../_lib/serialize.js'
 
 const bodySchema = z.object({
   token: z.string().trim().min(16).max(200),
@@ -30,6 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     if (!reference) throw new HttpError(400, 'A reference is required.')
 
     if (req.method === 'GET') {
+      enforceRateLimit(`respond-view:${clientIp(req)}`, 60, 10 * 60 * 1000)
       const token = tokenQuery(req)
       if (!token) throw new HttpError(400, 'A token is required.')
       const rpc = await quoteRepository().findByReferenceAndToken(reference, token)

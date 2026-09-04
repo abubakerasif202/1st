@@ -8,7 +8,7 @@ import type {
   QuoteDetail,
   QuoteStatus,
   ServicePriority,
-} from '../../src/features/freightQuote/types'
+} from '../../src/features/freightQuote/types.js'
 
 interface QuoteRow {
   reference_number: string

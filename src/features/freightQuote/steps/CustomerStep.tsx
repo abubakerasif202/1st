@@ -1,5 +1,5 @@
-import { RadioGroup, TextAreaField, TextField } from '../fields'
-import { CONTACT_METHOD_OPTIONS } from '../options'
+import { RadioGroup, TextAreaField, TextField } from '../fields.js'
+import { CONTACT_METHOD_OPTIONS } from '../options.js'
 
 export function CustomerStep() {
   return (

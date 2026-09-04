@@ -7,7 +7,7 @@
 // on_hold / declined / cancelled are reachable from most active states. A
 // delivered or cancelled quote is terminal.
 
-import type { QuoteStatus } from './types'
+import type { QuoteStatus } from './types.js'
 
 const TRANSITIONS: Record<QuoteStatus, readonly QuoteStatus[]> = {
   new: ['reviewing', 'quoted', 'on_hold', 'declined', 'cancelled'],

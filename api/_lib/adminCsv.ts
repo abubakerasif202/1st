@@ -1,10 +1,10 @@
 // CSV shaping for the admin exports. Uses the shared RFC-4180 + formula-guard
 // helpers; this module only decides which columns go where.
 
-import { buildCsv } from '../../src/features/freightQuote/csv'
-import { FREIGHT_ITEM_TYPE_LABELS, SERVICE_PRIORITY_LABELS } from '../../src/features/freightQuote/labels'
-import type { QuoteDetail } from '../../src/features/freightQuote/types'
-import type { AdminQuoteListRow } from './quoteRepository'
+import { buildCsv } from '../../src/features/freightQuote/csv.js'
+import { FREIGHT_ITEM_TYPE_LABELS, SERVICE_PRIORITY_LABELS } from '../../src/features/freightQuote/labels.js'
+import type { QuoteDetail } from '../../src/features/freightQuote/types.js'
+import type { AdminQuoteListRow } from './quoteRepository.js'
 
 const LIST_HEADERS = [
   'Reference',

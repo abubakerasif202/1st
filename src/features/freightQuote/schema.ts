@@ -15,7 +15,7 @@ import {
   DELIVERY_AUTHORITIES,
   FREIGHT_ITEM_TYPES,
   SERVICE_PRIORITIES,
-} from './types'
+} from './types.js'
 
 const AU_POSTCODE = /^\d{4}$/
 const TIME_24H = /^([01]\d|2[0-3]):[0-5]\d$/
@@ -111,7 +111,7 @@ const customerShape = {
   customerName: requiredText('Your name'),
   customerEmail: z.string().trim().min(1, 'Enter your email').max(200).email('Enter a valid email'),
   customerPhone: phone,
-  preferredContactMethod: z.enum(['email', 'phone']).optional(),
+  preferredContactMethod: z.enum(['email', 'phone']).or(z.literal('')).nullish(),
   customerReference: trimmed(100).optional(),
   customerNotes: trimmed(2000).optional(),
 }

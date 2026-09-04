@@ -1,7 +1,7 @@
 // Step metadata for the 6-step quote wizard. `fields` is the set react-hook-form
 // re-validates before letting the user advance past that step.
 
-import type { QuoteFormValues } from './schema'
+import type { QuoteFormValues } from './schema.js'
 
 export type QuoteFieldName = keyof QuoteFormValues
 
@@ -70,14 +70,7 @@ export const WIZARD_STEPS: readonly WizardStep[] = [
     label: 'Your details',
     heading: 'Your Details',
     blurb: 'So we can send the quote back and reference it against your records.',
-    fields: [
-      'customerCompany',
-      'customerName',
-      'customerEmail',
-      'customerPhone',
-      'preferredContactMethod',
-      'customerReference',
-    ],
+    fields: ['customerCompany', 'customerName', 'customerEmail', 'customerPhone', 'customerReference'],
   },
   {
     id: 'review',
