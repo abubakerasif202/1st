@@ -225,6 +225,7 @@ for (const [, route] of publicRoutes) {
 const pageSources = {
   '/': 'HomePage', '/about': 'AboutPage', '/services': 'ServicesPage', '/fleet': 'FleetPage',
   '/service-areas': 'ServiceAreasPage', '/quote': 'BookNowPage', '/freight-terms': 'FreightTermsPage',
+  '/customer-application': 'CustomerApplicationPage',
   '/contact': 'ContactPage', '/careers': 'CareersPage', '/driver-handbook': 'DriverHandbookPage',
 }
 

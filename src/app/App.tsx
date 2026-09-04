@@ -17,6 +17,7 @@ const pages: PageMap = {
   routeDetail: lazy(pageLoaders.routeDetail),
   book: lazy(pageLoaders.book),
   freightTerms: lazy(pageLoaders.freightTerms),
+  customerApplication: lazy(pageLoaders.customerApplication),
   quoteConfirmation: lazy(pageLoaders.quoteConfirmation),
   quoteRespond: lazy(pageLoaders.quoteRespond),
   contact: lazy(pageLoaders.contact),
