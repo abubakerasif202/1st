@@ -111,7 +111,7 @@ const customerShape = {
   customerName: requiredText('Your name'),
   customerEmail: z.string().trim().min(1, 'Enter your email').max(200).email('Enter a valid email'),
   customerPhone: phone,
-  preferredContactMethod: z.enum(['email', 'phone']).optional(),
+  preferredContactMethod: z.enum(['email', 'phone']).or(z.literal('')).nullish(),
   customerReference: trimmed(100).optional(),
   customerNotes: trimmed(2000).optional(),
 }

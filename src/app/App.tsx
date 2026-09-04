@@ -20,6 +20,7 @@ const pages: PageMap = {
   customerApplication: lazy(pageLoaders.customerApplication),
   quoteConfirmation: lazy(pageLoaders.quoteConfirmation),
   quoteRespond: lazy(pageLoaders.quoteRespond),
+  adminSection: lazy(pageLoaders.adminSection),
   contact: lazy(pageLoaders.contact),
   careers: lazy(pageLoaders.careers),
   driverHandbook: lazy(pageLoaders.driverHandbook),

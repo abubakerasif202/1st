@@ -10,9 +10,11 @@ test('primary journey and quote validation', async ({ page, isMobile }) => {
   await expect(page).toHaveURL(/fleet/)
   if (isMobile) { await page.getByRole('button', { name: 'Open menu' }).click(); await page.getByRole('dialog').getByRole('link', { name: /Request a Quote/i }).click() } else { await page.getByRole('link', { name: /Request a Quote/i }).first().click() }
   await expect(page).toHaveURL(/quote/)
-  await page.getByRole('button', { name: /Next/i }).click()
-  await expect(page.getByText('Enter pickup suburb or postcode')).toBeVisible()
-  await expect(page.getByText('Select a preferred date')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Pickup Details' })).toBeVisible()
+  await page.getByRole('button', { name: /^Next$/ }).click()
+  // The wizard blocks navigation and surfaces field errors on the pickup step.
+  await expect(page.getByText('Pickup address is required')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Pickup Details' })).toBeVisible()
 })
 
 // Asserts a *visible* action rather than the first in DOM order: the

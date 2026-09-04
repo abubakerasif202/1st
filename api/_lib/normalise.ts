@@ -37,7 +37,7 @@ export function normaliseQuote(
       customer_name: form.customerName,
       customer_email: form.customerEmail,
       customer_phone: form.customerPhone,
-      preferred_contact_method: form.preferredContactMethod ?? null,
+      preferred_contact_method: form.preferredContactMethod || null,
       customer_reference: form.customerReference ?? null,
       customer_notes: form.customerNotes ?? null,
 

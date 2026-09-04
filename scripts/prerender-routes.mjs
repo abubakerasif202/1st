@@ -144,6 +144,9 @@ const sitemapPaths = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(([, url]) =
 const APP_SHELL_REWRITES = [
   { source: '/quote/:reference/confirmation', destination: '/app.html' },
   { source: '/quote/:reference/respond', destination: '/app.html' },
+  { source: '/admin', destination: '/app.html' },
+  { source: '/admin/quotes', destination: '/app.html' },
+  { source: '/admin/quotes/:reference', destination: '/app.html' },
 ]
 const appShellSources = APP_SHELL_REWRITES.map(({ source }) => source)
 
