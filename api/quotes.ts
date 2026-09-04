@@ -55,20 +55,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     const rpc = await quoteRepository().createQuote(normalised)
     const quote = toQuoteDetail(rpc)
 
-    // DB is committed. Email is best-effort from here on.
-    const [internal, ack] = await Promise.all([
-      sendInternalQuoteNotification(quote).catch((e) => ({ sent: false, error: String(e) })),
-      sendCustomerQuoteAcknowledgement(quote).catch((e) => ({ sent: false, error: String(e) })),
-    ])
-    if (!internal.sent || !ack.sent) {
-      await quoteRepository()
-        .recordEvent(
-          quote.referenceNumber,
-          'email_delivery',
-          { internal, customer: ack },
-          'system',
-        )
-        .catch(() => undefined)
+    // DB is committed. Email is best-effort — and only on a genuine first
+    // submission, never on an idempotency-key replay.
+    if (rpc.created !== false) {
+      const [internal, ack] = await Promise.all([
+        sendInternalQuoteNotification(quote).catch((e) => ({ sent: false, error: String(e) })),
+        sendCustomerQuoteAcknowledgement(quote).catch((e) => ({ sent: false, error: String(e) })),
+      ])
+      if (!internal.sent || !ack.sent) {
+        await quoteRepository()
+          .recordEvent(quote.referenceNumber, 'email_delivery', { internal, customer: ack }, 'system')
+          .catch(() => undefined)
+      }
     }
 
     sendJson(res, 201, { quote, token: rpc.token })
