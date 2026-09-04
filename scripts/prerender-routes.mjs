@@ -136,8 +136,31 @@ const vercelConfig = JSON.parse(vercelConfigRaw)
 const publicRoutes = Object.entries(routeConfig).filter(([name]) => name !== 'notFound')
 const publicPaths = publicRoutes.map(([, route]) => route.path)
 const sitemapPaths = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(([, url]) => new URL(url).pathname)
-const rewritePaths = vercelConfig.rewrites.map(({ source }) => source)
+// SPA-only routes: real pages that must never be indexed and have no prerendered
+// document. Vercel serves the app shell (dist/app.html) and React renders them
+// client-side. They are deliberately kept out of routeSeo.json / sitemap.xml.
+// Each names an exact path shape with a :param — not a catch-all — so genuinely
+// unknown URLs still hard-404.
+const APP_SHELL_REWRITES = [
+  { source: '/quote/:reference/confirmation', destination: '/app.html' },
+  { source: '/quote/:reference/respond', destination: '/app.html' },
+]
+const appShellSources = APP_SHELL_REWRITES.map(({ source }) => source)
+
+const rewritePaths = vercelConfig.rewrites
+  .map(({ source }) => source)
+  .filter((source) => !appShellSources.includes(source))
 const expectedRewritePaths = publicPaths.filter((routePath) => routePath !== '/')
+
+// Every declared app-shell rewrite must be present in vercel.json and point at
+// the shell — nothing else.
+for (const { source, destination } of APP_SHELL_REWRITES) {
+  const match = vercelConfig.rewrites.find((rewrite) => rewrite.source === source)
+  if (!match) throw new Error(`vercel.json is missing the app-shell rewrite for ${source}`)
+  if (match.destination !== destination) {
+    throw new Error(`app-shell rewrite ${source} must point at ${destination}, not ${match.destination}`)
+  }
+}
 
 const assertSamePaths = (label, actual, expected) => {
   const sortedActual = [...actual].sort()
@@ -201,8 +224,8 @@ for (const [, route] of publicRoutes) {
 // the dates are generated, because a hand-maintained date is always wrong.
 const pageSources = {
   '/': 'HomePage', '/about': 'AboutPage', '/services': 'ServicesPage', '/fleet': 'FleetPage',
-  '/service-areas': 'ServiceAreasPage', '/quote': 'BookNowPage', '/contact': 'ContactPage',
-  '/careers': 'CareersPage', '/driver-handbook': 'DriverHandbookPage',
+  '/service-areas': 'ServiceAreasPage', '/quote': 'BookNowPage', '/freight-terms': 'FreightTermsPage',
+  '/contact': 'ContactPage', '/careers': 'CareersPage', '/driver-handbook': 'DriverHandbookPage',
 }
 
 // Detail routes are rendered by one component each, so their lastmod tracks that
@@ -240,4 +263,25 @@ if (!notFoundHtml.includes('noindex, nofollow') || notFoundHtml.includes('rel="c
   throw new Error('404.html must be noindex and must not declare a canonical URL')
 }
 
-console.log(`Generated ${publicRoutes.length} indexable route documents and 404.html`)
+// dist/app.html — the client-rendered shell for the SPA-only routes above. No
+// prerendered body (React renders on load), noindex, no canonical.
+const appShellRoute = {
+  path: '/app',
+  title: 'Loading… | 1st Class Express',
+  description: 'Loading 1st Class Express.',
+}
+const appShellHtml = applyMarkup(
+  applyMetadata(template, appShellRoute, { indexable: false, canonical: false }),
+  '',
+)
+if (!appShellHtml.includes('noindex, nofollow') || appShellHtml.includes('rel="canonical"')) {
+  throw new Error('app.html must be noindex and must not declare a canonical URL')
+}
+if (!/<div id="root"><\/div>/.test(appShellHtml)) {
+  throw new Error('app.html must ship an empty #root so the browser renders the route')
+}
+await writeFile(path.join(outputRoot, 'app.html'), appShellHtml)
+
+console.log(
+  `Generated ${publicRoutes.length} indexable route documents, 404.html and app.html`,
+)

@@ -11,4 +11,11 @@ export default tseslint.config(
   // `npm run lint` should only ever report on the site itself.
   { ignores: ['dist', 'coverage', 'playwright-report', 'first-class-express', 'opendesign', '.superdesign', '_to_delete', 'archive-*', '.codex'] },
   { extends: [js.configs.recommended, ...tseslint.configs.recommended], files: ['**/*.{ts,tsx}'], languageOptions: { ecmaVersion: 2022, globals: globals.browser }, plugins: { 'react-hooks': reactHooks, 'react-refresh': reactRefresh }, rules: { ...reactHooks.configs.recommended.rules, 'react-refresh/only-export-components': ['warn', { allowConstantExport: true }] } },
+  // Serverless functions run on Node, not in the browser, and are not subject to
+  // the React Fast Refresh rule.
+  {
+    files: ['api/**/*.ts'],
+    languageOptions: { globals: { ...globals.node } },
+    rules: { 'react-refresh/only-export-components': 'off' },
+  },
 )
