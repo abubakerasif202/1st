@@ -51,16 +51,16 @@ export function requireMethod(req: VercelRequest, res: VercelResponse, method: s
  * Parses a JSON body, enforcing a size ceiling. Vercel usually pre-parses
  * `req.body`; when it is a string or missing we read the stream ourselves.
  */
-export async function readJsonBody(req: VercelRequest): Promise<unknown> {
+export async function readJsonBody(req: VercelRequest, maxBytes = MAX_BODY_BYTES): Promise<unknown> {
   if (req.body && typeof req.body === 'object') {
     // Vercel pre-parsed the body; still enforce the ceiling.
-    if (Buffer.byteLength(JSON.stringify(req.body)) > MAX_BODY_BYTES) {
+    if (Buffer.byteLength(JSON.stringify(req.body)) > maxBytes) {
       throw new HttpError(413, 'Request body too large.')
     }
     return req.body
   }
   if (typeof req.body === 'string') {
-    if (Buffer.byteLength(req.body) > MAX_BODY_BYTES) throw new HttpError(413, 'Request body too large.')
+    if (Buffer.byteLength(req.body) > maxBytes) throw new HttpError(413, 'Request body too large.')
     return safeParse(req.body)
   }
 
@@ -69,7 +69,7 @@ export async function readJsonBody(req: VercelRequest): Promise<unknown> {
   for await (const chunk of req as AsyncIterable<Buffer | string>) {
     const buffer = typeof chunk === 'string' ? Buffer.from(chunk, 'utf8') : chunk
     size += buffer.length
-    if (size > MAX_BODY_BYTES) throw new HttpError(413, 'Request body too large.')
+    if (size > maxBytes) throw new HttpError(413, 'Request body too large.')
     chunks.push(buffer)
   }
   if (size === 0) return {}
