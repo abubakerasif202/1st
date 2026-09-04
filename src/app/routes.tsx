@@ -27,7 +27,7 @@ export function SiteRoutes({ pages }: { pages: PageMap }) {
 }
 
 function SiteRouteTable({ pages }: { pages: PageMap }) {
-  const { home: Home, about: About, services: Services, serviceDetail: ServiceDetail, fleet: Fleet, fleetDetail: FleetDetail, serviceAreas: ServiceAreas, serviceAreaDetail: ServiceAreaDetail, routeDetail: RouteDetail, book: Book, freightTerms: FreightTerms, customerApplication: CustomerApplication, quoteConfirmation: QuoteConfirmation, quoteRespond: QuoteRespond, contact: Contact, careers: Careers, driverHandbook: DriverHandbook, notFound: NotFound } = pages
+  const { home: Home, about: About, services: Services, serviceDetail: ServiceDetail, fleet: Fleet, fleetDetail: FleetDetail, serviceAreas: ServiceAreas, serviceAreaDetail: ServiceAreaDetail, routeDetail: RouteDetail, book: Book, freightTerms: FreightTerms, customerApplication: CustomerApplication, quoteConfirmation: QuoteConfirmation, quoteRespond: QuoteRespond, adminSection: AdminSection, contact: Contact, careers: Careers, driverHandbook: DriverHandbook, notFound: NotFound } = pages
   return <Routes>
     <Route element={<SiteLayout />}>
       <Route index element={<Home />} />
@@ -46,6 +46,7 @@ function SiteRouteTable({ pages }: { pages: PageMap }) {
       <Route path={`${routeSeo.book.path}/:reference/respond`} element={<QuoteRespond />} />
       <Route path={routeSeo.freightTerms.path} element={<FreightTerms />} />
       <Route path={routeSeo.customerApplication.path} element={<CustomerApplication />} />
+      <Route path="/admin/*" element={<AdminSection />} />
       <Route path={routeSeo.contact.path} element={<Contact />} />
       <Route path={routeSeo.careers.path} element={<Careers />} />
       <Route path={routeSeo.driverHandbook.path} element={<DriverHandbook />} />

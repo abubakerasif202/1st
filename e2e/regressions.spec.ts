@@ -100,8 +100,8 @@ test('no homepage text has collapsed onto its own background', async ({ page }) 
 /* -------------------------------------------------------------------------- */
 
 const TOUCH_TARGET_CASES = [
-  ['/quote', '.check-field', 'consent control'],
-  ['/quote', '.quote-stepper__btn', 'quote step buttons'],
+  ['/quote', '.fq-terms .fq-check', 'consent control'],
+  ['/quote', '.fq-progress__btn', 'quote step buttons'],
   ['/', '.hybrid-section-heading > div:last-child a', 'inline conversion links'],
 ] as const
 
@@ -109,7 +109,7 @@ for (const [url, selector, label] of TOUCH_TARGET_CASES) {
   test(`touch target: ${label} clears 44px at 390px`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 })
     await page.goto(url)
-    if (url === '/quote' && selector === '.check-field') await advanceToReviewStep(page)
+    if (url === '/quote' && selector.includes('fq-check')) await advanceToReviewStep(page)
     const undersized = await page.locator(selector).evaluateAll((elements) =>
       elements
         .map((element) => ({ box: element.getBoundingClientRect(), text: element.textContent?.trim() ?? '' }))
@@ -189,8 +189,8 @@ test('representative controls expose a visible focus ring on both grounds', asyn
   const cases = [
     ['/', '.hybrid-hero .lovable-btn--secondary'],
     ['/', '.hybrid-coverage .hybrid-section-heading a'],
-    ['/quote', '.quote-form input'],
-    ['/quote', '.quote-form-nav .btn-primary'],
+    ['/quote', '.fq-wizard .fq-field__control'],
+    ['/quote', '.fq-wizard__nav .fq-btn--primary'],
   ] as const
 
   for (const [url, selector] of cases) {
@@ -243,23 +243,39 @@ test('descriptive homepage body copy is not set below 15px', async ({ page }) =>
   expect(tooSmall).toEqual([])
 })
 
-/** The consent checkbox only exists on the final review step. */
+/** The consent checkbox only exists on the final review step of the wizard. */
 async function advanceToReviewStep(page: import('@playwright/test').Page) {
-  await page.getByLabel(/Pickup suburb/i).fill('Sydney 2000')
-  await page.getByLabel(/Preferred pickup date/i).fill('2030-01-01')
-  await page.getByRole('button', { name: /^Next$/ }).click()
-  await page.getByLabel(/Delivery suburb/i).fill('Melbourne 3000')
-  await page.getByRole('button', { name: /^Next$/ }).click()
-  await page.getByLabel(/Service type/i).selectOption({ index: 1 })
-  await page.getByLabel(/Urgency/i).selectOption({ index: 1 })
-  await page.getByLabel(/Freight description/i).fill('Two pallets of packaged goods, forklift access both ends.')
-  await page.getByLabel(/Approximate number of items/i).fill('2')
-  await page.getByRole('button', { name: /^Next$/ }).click()
-  await page.getByLabel(/First name/i).fill('Alex')
-  await page.getByLabel(/Last name/i).fill('Taylor')
-  await page.getByLabel(/Company name/i).fill('Example Freight')
-  await page.getByLabel(/Email/i).fill('alex@example.com')
-  await page.getByLabel(/Phone/i).fill('0400000000')
-  await page.getByRole('button', { name: /^Next$/ }).click()
-  await expect(page.locator('.check-field')).toBeVisible()
+  const next = () => page.getByRole('button', { name: /^Next$/ }).click()
+
+  await page.fill('#pickupAddressLine1', '10 Loading Dock Rd')
+  await page.fill('#pickupSuburb', 'Sydney')
+  await page.selectOption('#pickupState', 'NSW')
+  await page.fill('#pickupPostcode', '2000')
+  await page.fill('#pickupContactName', 'Pat Lee')
+  await page.fill('#pickupContactPhone', '0400 000 001')
+  await page.fill('#pickupDate', '2030-01-01')
+  await page.fill('#pickupCutoffTime', '16:00')
+  await next()
+
+  await page.fill('#deliveryAddressLine1', '22 Receiving St')
+  await page.fill('#deliverySuburb', 'Melbourne')
+  await page.selectOption('#deliveryState', 'VIC')
+  await page.fill('#deliveryPostcode', '3000')
+  await page.fill('#deliveryContactName', 'Sam Ray')
+  await page.fill('#deliveryContactPhone', '0400 000 002')
+  await page.fill('#deliveryCutoffTime', '17:00')
+  await next()
+
+  await next() // freight items are pre-populated with one valid line
+
+  await page.getByRole('radio', { name: /Next Business Day/ }).check()
+  await page.getByRole('radio', { name: /Signature Required/ }).check()
+  await next()
+
+  await page.fill('#customerName', 'Alex Taylor')
+  await page.fill('#customerEmail', 'alex@example.com')
+  await page.fill('#customerPhone', '0400 000 000')
+  await next()
+
+  await expect(page.locator('.fq-terms .fq-check')).toBeVisible()
 }
