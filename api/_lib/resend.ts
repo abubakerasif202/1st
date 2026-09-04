@@ -9,53 +9,12 @@
 import { formatQuoteSummary } from '../../src/features/freightQuote/clipboard.js'
 import type { QuoteDetail } from '../../src/features/freightQuote/types.js'
 import { env } from './env.js'
+import { cleanHeader as clean, sendViaResend, type EmailResult } from './mailer.js'
 
-const RESEND_ENDPOINT = 'https://api.resend.com/emails'
+export type { EmailResult }
 
-export interface EmailResult {
-  sent: boolean
-  skippedReason?: string
-  error?: string
-}
-
-interface ResendPayload {
-  from: string
-  to: string[]
-  subject: string
-  text: string
-  reply_to?: string
-}
-
-async function send(payload: ResendPayload): Promise<EmailResult> {
-  if (process.env.VITEST) return { sent: false, skippedReason: 'test' }
-  const key = env.resendApiKey()
-  if (!key) return { sent: false, skippedReason: 'RESEND_API_KEY not configured' }
-
-  try {
-    const response = await fetch(RESEND_ENDPOINT, {
-      method: 'POST',
-      headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
-    if (!response.ok) {
-      const body = await response.text()
-      return { sent: false, error: `Resend ${response.status}: ${body.slice(0, 200)}` }
-    }
-    return { sent: true }
-  } catch (error) {
-    return { sent: false, error: error instanceof Error ? error.message : 'network error' }
-  }
-}
-
-/** Strip control characters (CR/LF included) so user text can't tamper with the subject line. */
-function clean(value: string): string {
-  let out = ''
-  for (const ch of value) {
-    const code = ch.codePointAt(0) ?? 0
-    out += code < 0x20 || code === 0x7f ? ' ' : ch
-  }
-  return out.replace(/ {2,}/g, ' ').trim()
-}
+const send = (payload: { from: string; to: string[]; subject: string; text: string; reply_to?: string }) =>
+  sendViaResend({ ...payload, replyTo: payload.reply_to })
 
 function route(quote: QuoteDetail): string {
   return clean(

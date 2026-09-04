@@ -25,6 +25,9 @@ export const env = {
   resendApiKey: () => optional('RESEND_API_KEY'),
   quoteFromEmail: () => optional('QUOTE_FROM_EMAIL'),
   quoteInternalEmail: () => optional('QUOTE_INTERNAL_EMAIL'),
+  // Enquiry / careers routing falls back to the operations mailbox.
+  enquiryToEmail: () => optional('ENQUIRY_TO_EMAIL') ?? optional('QUOTE_INTERNAL_EMAIL'),
+  careersToEmail: () => optional('CAREERS_TO_EMAIL') ?? optional('QUOTE_INTERNAL_EMAIL'),
 
   freightTermsVersion: () => optional('FREIGHT_TERMS_VERSION') ?? '2026-09-01',
   adminEmails: () =>

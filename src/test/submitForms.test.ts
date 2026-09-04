@@ -1,30 +1,59 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { submitContactRequest, submitQuoteRequest } from '../lib/submitForms'
+import { submitCareersApplication, submitContactRequest, submitQuoteRequest } from '../lib/submitForms'
 
-describe('form submission adapter', () => {
-  afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); vi.restoreAllMocks() })
+describe('form submission adapters', () => {
+  afterEach(() => vi.unstubAllGlobals())
 
-  it('uses the supplied Formspree endpoint for quote requests', async () => {
+  it('posts the quick quote to /api/enquiry with kind "quick-quote"', async () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true })
     vi.stubGlobal('fetch', fetchMock)
-    await expect(submitQuoteRequest({ firstName: 'Alex', email: 'alex@example.com' })).resolves.toMatchObject({ ok: true })
-    expect(fetchMock).toHaveBeenCalledWith('https://formspree.io/f/mdenjrnl', expect.objectContaining({
-      method: 'POST',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-    }))
-    const request = fetchMock.mock.calls[0][1] as RequestInit
-    expect(JSON.parse(request.body as string)).toMatchObject({ formType: 'quote', _subject: 'New freight quote request', email: 'alex@example.com' })
+
+    await expect(
+      submitQuoteRequest({ name: 'Alex', email: 'alex@example.com', pickup: 'Sydney', delivery: 'Melbourne' }),
+    ).resolves.toMatchObject({ ok: true, message: expect.stringContaining('quote request has been received') })
+
+    expect(fetchMock).toHaveBeenCalledWith('/api/enquiry', expect.objectContaining({ method: 'POST' }))
+    const [, init] = fetchMock.mock.calls[0]
+    expect(JSON.parse((init as RequestInit).body as string)).toMatchObject({
+      kind: 'quick-quote',
+      email: 'alex@example.com',
+    })
   })
 
-  it('uses the supplied Formspree endpoint for contact enquiries', async () => {
+  it('posts the contact form to /api/enquiry with kind "contact"', async () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true })
     vi.stubGlobal('fetch', fetchMock)
-    await expect(submitContactRequest({ name: 'Alex' })).resolves.toMatchObject({ ok: true, message: expect.stringContaining('enquiry has been received') })
-    expect(fetchMock).toHaveBeenCalledWith('https://formspree.io/f/mdenjrnl', expect.any(Object))
+
+    await expect(submitContactRequest({ name: 'Alex' })).resolves.toMatchObject({
+      ok: true,
+      message: expect.stringContaining('enquiry has been received'),
+    })
+    const [url, init] = fetchMock.mock.calls[0]
+    expect(url).toBe('/api/enquiry')
+    expect(JSON.parse((init as RequestInit).body as string)).toMatchObject({ kind: 'contact' })
   })
 
-  it('throws a customer-safe error when the endpoint rejects the request', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false }))
-    await expect(submitContactRequest({ name: 'Alex' })).rejects.toThrow(/could not be sent/i)
+  it('posts the careers application to /api/careers', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true })
+    vi.stubGlobal('fetch', fetchMock)
+
+    await expect(submitCareersApplication({ firstName: 'Alex' })).resolves.toMatchObject({ ok: true })
+    expect(fetchMock).toHaveBeenCalledWith('/api/careers', expect.objectContaining({ method: 'POST' }))
+  })
+
+  it('surfaces the server error message', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: false, json: async () => ({ message: 'Some details need attention.' }) }),
+    )
+    await expect(submitContactRequest({ name: 'Alex' })).rejects.toThrow('Some details need attention.')
+  })
+
+  it('throws a customer-safe error when the network fails', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockRejectedValue(new Error('network down')),
+    )
+    await expect(submitQuoteRequest({ name: 'Alex' })).rejects.toThrow(/could not be sent/i)
   })
 })

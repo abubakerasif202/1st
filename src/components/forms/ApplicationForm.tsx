@@ -5,11 +5,12 @@ import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 import { driverRoles } from '../../data/roles'
-import { submitCareersApplication } from '../../lib/submitForms'
+import { CAREERS_MAX_FILE_BYTES } from '../../features/enquiry/schema'
+import { fileToBase64, submitCareersApplication } from '../../lib/submitForms'
 import { FormField } from './FormField'
 
 const ACCEPTED_FILE_TYPES = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
-const MAX_FILE_BYTES = 5 * 1024 * 1024
+const MAX_FILE_BYTES = CAREERS_MAX_FILE_BYTES
 const acceptedFileList = (list: FileList) => list.length === 0 || (list.length === 1 && ACCEPTED_FILE_TYPES.includes(list[0].type))
 const withinSizeLimit = (list: FileList) => list.length === 0 || (list.length === 1 && list[0].size <= MAX_FILE_BYTES)
 
@@ -36,7 +37,7 @@ const schema = z.object({
   notes: z.string().optional(),
   resume: z.custom<FileList>(v => v instanceof FileList, 'Attach your résumé')
     .refine(list => list.length === 1, 'Attach your résumé (PDF, DOC or DOCX)')
-    .refine(withinSizeLimit, 'File must be 5MB or smaller')
+    .refine(withinSizeLimit, 'File must be 3MB or smaller')
     .refine(acceptedFileList, 'Accepted formats: PDF, DOC or DOCX'),
   privacyAcknowledgement: z.literal(true, { error: 'Privacy acknowledgement is required' }),
   website: z.string().max(0),
@@ -76,15 +77,18 @@ export function ApplicationForm() {
   }, [searchParams, setValue])
 
   const onSubmit = async (values: Values) => {
-    const { resume, website, ...rest } = values
-    const formData = new FormData()
-    Object.entries(rest).forEach(([key, value]) => formData.append(key, String(value ?? '')))
-    formData.append('website', website)
-    formData.append('formType', 'careers')
-    formData.append('_subject', `New driver application — ${values.role}`)
-    if (resume[0]) formData.append('resume', resume[0], safeFileName(resume[0].name))
+    const { resume, ...rest } = values
+    const file = resume[0]
     try {
-      const result = await submitCareersApplication(formData)
+      const payload = {
+        ...rest,
+        resume: {
+          filename: safeFileName(file.name),
+          contentType: file.type,
+          content: await fileToBase64(file),
+        },
+      }
+      const result = await submitCareersApplication(payload)
       setStatus(result.message)
       setIsError(false)
       setSubmitted(true)
@@ -118,7 +122,7 @@ export function ApplicationForm() {
     <label className="form-field full" htmlFor="resume">
       <span>Résumé / CV<em className="required-mark" aria-hidden="true"> *</em></span>
       <input id="resume" type="file" required aria-required="true" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" {...register('resume')} aria-invalid={!!errors.resume} aria-describedby={errors.resume ? 'resume-error' : 'resume-hint'}/>
-      <small id="resume-hint" className="field-hint">PDF, DOC or DOCX, up to 5MB.</small>
+      <small id="resume-hint" className="field-hint">PDF, DOC or DOCX, up to 3MB.</small>
       {errors.resume && <small id="resume-error" role="alert">{errors.resume.message as string}</small>}
     </label>
     <label className="check-field full"><input type="checkbox" required aria-required="true" aria-invalid={!!errors.privacyAcknowledgement} aria-describedby={errors.privacyAcknowledgement ? 'privacyAcknowledgement-error' : undefined} {...register('privacyAcknowledgement')}/><span>I acknowledge the privacy notice and consent to 1st Class Express contacting me about this application.<em className="required-mark" aria-hidden="true"> *</em></span></label>

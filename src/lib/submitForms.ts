@@ -1,26 +1,21 @@
+// Browser adapters for the lightweight lead forms. All three post to our own
+// serverless endpoints, which validate and email via Resend. (The full
+// structured freight quote uses src/features/freightQuote/api.ts instead.)
+
 export type FormResult = { ok: boolean; message: string }
 
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mdenjrnl'
-const REQUEST_TIMEOUT_MS = 15_000
+const REQUEST_TIMEOUT_MS = 20_000
 const submissionError = 'The request could not be sent. Please use the phone or email option below.'
 
-function resolveEndpoint(kind: 'quote' | 'contact' | 'careers'): string {
-  if (kind === 'careers') {
-    return (import.meta.env.VITE_CAREERS_FORM_ENDPOINT as string | undefined) || FORMSPREE_ENDPOINT
-  }
-  return FORMSPREE_ENDPOINT
-}
-
-async function postForm(kind: 'quote' | 'contact' | 'careers', body: BodyInit, extraHeaders: Record<string, string> = {}): Promise<Response> {
-  const endpoint = resolveEndpoint(kind)
+async function postJson(endpoint: string, payload: unknown): Promise<Response> {
   const controller = new AbortController()
   const timeout = globalThis.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
   try {
     return await fetch(endpoint, {
       method: 'POST',
-      headers: { Accept: 'application/json', ...extraHeaders },
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
       signal: controller.signal,
-      body,
+      body: JSON.stringify(payload),
     })
   } catch {
     throw new Error(submissionError)
@@ -29,24 +24,46 @@ async function postForm(kind: 'quote' | 'contact' | 'careers', body: BodyInit, e
   }
 }
 
-async function submitForm(kind: 'quote' | 'contact', payload: Record<string, unknown>): Promise<FormResult> {
-  const response = await postForm(kind, JSON.stringify({
-    ...payload,
-    formType: kind,
-    _subject: kind === 'quote' ? 'New freight quote request' : 'New website enquiry',
-  }), { 'Content-Type': 'application/json' })
-  if (!response.ok) throw new Error(submissionError)
-  return { ok: true, message: kind === 'quote' ? 'Thanks — your quote request has been received. We’ll be in touch.' : 'Thanks — your enquiry has been received. We’ll be in touch.' }
+async function readError(response: Response): Promise<string> {
+  try {
+    const body = (await response.json()) as { message?: string; error?: string }
+    return body.message || body.error || submissionError
+  } catch {
+    return submissionError
+  }
 }
 
-export const submitQuoteRequest = (payload: Record<string, unknown>) => submitForm('quote', payload)
-export const submitContactRequest = (payload: Record<string, unknown>) => submitForm('contact', payload)
+export async function submitQuoteRequest(payload: Record<string, unknown>): Promise<FormResult> {
+  const response = await postJson('/api/enquiry', { ...payload, kind: 'quick-quote' })
+  if (!response.ok) throw new Error(await readError(response))
+  return { ok: true, message: 'Thanks — your quote request has been received. We’ll be in touch.' }
+}
 
-// Careers applications are posted as multipart/form-data (not JSON) so the résumé
-// and optional cover letter travel as real file attachments. The browser sets the
-// multipart boundary automatically — never set Content-Type manually for FormData.
-export async function submitCareersApplication(formData: FormData): Promise<FormResult> {
-  const response = await postForm('careers', formData)
-  if (!response.ok) throw new Error(submissionError)
-  return { ok: true, message: 'Thanks — your application has been received. Our team will review it and contact shortlisted applicants.' }
+export async function submitContactRequest(payload: Record<string, unknown>): Promise<FormResult> {
+  const response = await postJson('/api/enquiry', { ...payload, kind: 'contact' })
+  if (!response.ok) throw new Error(await readError(response))
+  return { ok: true, message: 'Thanks — your enquiry has been received. We’ll be in touch.' }
+}
+
+export async function submitCareersApplication(payload: Record<string, unknown>): Promise<FormResult> {
+  const response = await postJson('/api/careers', payload)
+  if (!response.ok) throw new Error(await readError(response))
+  return {
+    ok: true,
+    message: 'Thanks — your application has been received. Our team will review it and contact shortlisted applicants.',
+  }
+}
+
+/** Read a File as a base64 string (no data: prefix) for JSON upload. */
+export function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onerror = () => reject(new Error('Could not read the selected file.'))
+    reader.onload = () => {
+      const result = String(reader.result)
+      const comma = result.indexOf(',')
+      resolve(comma >= 0 ? result.slice(comma + 1) : result)
+    }
+    reader.readAsDataURL(file)
+  })
 }

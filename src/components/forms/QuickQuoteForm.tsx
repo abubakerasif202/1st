@@ -1,29 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { quickQuoteSchema, type QuickQuoteValues } from '../../features/enquiry/schema'
 import { submitQuoteRequest } from '../../lib/submitForms'
 import { FormField } from './FormField'
 
-const schema = z.object({
-  name: z.string().min(2, 'Enter your name'),
-  companyName: z.string().optional(),
-  email: z.string().email('Enter a valid email'),
-  phone: z.string().min(8, 'Enter a valid phone number'),
-  pickup: z.string().min(3, 'Enter pickup suburb or postcode'),
-  delivery: z.string().min(3, 'Enter delivery suburb or postcode'),
-  freight: z.string().min(10, 'Describe the freight'),
-  consent: z.literal(true, { error: 'Consent is required to submit' }),
-  website: z.string().max(0),
-})
-
-type Values = z.infer<typeof schema>
+type Values = QuickQuoteValues
 
 export function QuickQuoteForm() {
   const [status, setStatus] = useState('')
   const [isError, setIsError] = useState(false)
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<Values>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(quickQuoteSchema),
     defaultValues: {
       name: '',
       companyName: '',
