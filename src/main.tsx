@@ -8,6 +8,7 @@ import './styles/index.css'
 import './styles/lovable-refresh.css'
 import './styles/motion.css'
 import './styles/driver-handbook.css'
+import './styles/freight-quote.css'
 
 const container = document.getElementById('root')!
 const tree = <React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>

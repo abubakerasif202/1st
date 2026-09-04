@@ -1,0 +1,65 @@
+import type { QuoteDetail } from '../../features/freightQuote/types'
+
+export function makeQuoteDetail(overrides: Partial<QuoteDetail> = {}): QuoteDetail {
+  return {
+    referenceNumber: '1STCE-000001',
+    status: 'new',
+    createdAt: '2026-09-04T02:00:00.000Z',
+    customerCompany: 'Acme Pty Ltd',
+    customerName: 'Alex Kim',
+    customerEmail: 'alex@example.com',
+    customerPhone: '0400 000 003',
+    customerReference: 'PO-5567',
+    pickup: {
+      addressLine1: '1 Test St',
+      suburb: 'Sydney',
+      state: 'NSW',
+      postcode: '2000',
+      contactName: 'Pat Lee',
+      contactPhone: '0400 000 001',
+      cutoffTime: '16:00',
+      pickupDate: '2026-09-10',
+      readyTime: '09:00',
+      handling: {
+        tailgateRequired: true,
+        forkliftAvailable: false,
+        loadingDockAvailable: true,
+        selfHandles: false,
+      },
+    },
+    delivery: {
+      addressLine1: '2 Test Ave',
+      suburb: 'Brisbane',
+      state: 'QLD',
+      postcode: '4000',
+      contactName: 'Sam Ray',
+      contactPhone: '0400 000 002',
+      cutoffTime: '17:00',
+      handling: {
+        tailgateRequired: false,
+        forkliftAvailable: true,
+        loadingDockAvailable: false,
+        selfHandles: true,
+      },
+    },
+    servicePriority: 'next_business_day',
+    deliveryAuthority: 'signature_required',
+    items: [
+      {
+        itemType: 'pallet',
+        quantity: 2,
+        lengthCm: 120,
+        widthCm: 100,
+        heightCm: 150,
+        weightEachKg: 100,
+        stackable: true,
+        dangerousGoods: false,
+        volumeM3: 3.6,
+      },
+    ],
+    totals: { totalItems: 2, totalWeightKg: 200, totalVolumeM3: 3.6 },
+    termsVersion: '2026-09-01',
+    termsAcceptedAt: '2026-09-04T02:00:00.000Z',
+    ...overrides,
+  }
+}

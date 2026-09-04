@@ -31,6 +31,9 @@
     { "source": "/service-areas/interstate/sydney-brisbane", "destination": "/service-areas/interstate/sydney-brisbane/index.html" },
     { "source": "/service-areas/interstate/sydney-canberra", "destination": "/service-areas/interstate/sydney-canberra/index.html" },
     { "source": "/quote", "destination": "/quote/index.html" },
+    { "source": "/quote/:reference/confirmation", "destination": "/app.html" },
+    { "source": "/quote/:reference/respond", "destination": "/app.html" },
+    { "source": "/freight-terms", "destination": "/freight-terms/index.html" },
     { "source": "/contact", "destination": "/contact/index.html" },
     { "source": "/careers", "destination": "/careers/index.html" },
     { "source": "/driver-handbook", "destination": "/driver-handbook/index.html" }

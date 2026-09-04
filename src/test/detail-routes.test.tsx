@@ -99,11 +99,21 @@ describe('prerender route contract', () => {
   })
 
   it('keeps vercel.json rewrites in step with routeSeo.json', () => {
-    const vercel = JSON.parse(vercelJson) as { rewrites: { source: string }[] }
+    const vercel = JSON.parse(vercelJson) as { rewrites: { source: string; destination: string }[] }
+    // SPA-only routes (confirmation, respond) are served the app shell and are
+    // deliberately absent from routeSeo.json / sitemap.xml. Mirror the allowlist
+    // in scripts/prerender-routes.mjs.
+    const appShellSources = ['/quote/:reference/confirmation', '/quote/:reference/respond']
+    const seoRewrites = vercel.rewrites.filter(({ source }) => !appShellSources.includes(source))
     const expected = publicRoutes.map(route => route.path).filter(path => path !== '/')
-    expect(vercel.rewrites.map(rewrite => rewrite.source).sort()).toEqual(expected.sort())
+    expect(seoRewrites.map(rewrite => rewrite.source).sort()).toEqual(expected.sort())
+    // Every app-shell rewrite must be present and point at the shell.
+    for (const source of appShellSources) {
+      const match = vercel.rewrites.find(rewrite => rewrite.source === source)
+      expect(match?.destination).toBe('/app.html')
+    }
     // A catch-all rewrite would turn every unknown URL into a soft 404.
-    expect(vercel.rewrites.some(({ source }) => source.includes('*'))).toBe(false)
+    expect(vercel.rewrites.some(({ source }) => source.includes('*') || source.includes('(.*)'))).toBe(false)
   })
 
   it('gives every service, vehicle, region and corridor a curated routeSeo entry', () => {
