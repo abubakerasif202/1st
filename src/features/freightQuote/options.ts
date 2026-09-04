@@ -4,13 +4,13 @@ import {
   DELIVERY_AUTHORITY_LABELS,
   FREIGHT_ITEM_TYPE_LABELS,
   SERVICE_PRIORITY_LABELS,
-} from './labels'
+} from './labels.js'
 import {
   AU_STATES,
   DELIVERY_AUTHORITIES,
   FREIGHT_ITEM_TYPES,
   SERVICE_PRIORITIES,
-} from './types'
+} from './types.js'
 
 export const STATE_OPTIONS = AU_STATES.map((value) => ({ value, label: value }))
 

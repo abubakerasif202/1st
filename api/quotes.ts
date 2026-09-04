@@ -11,14 +11,14 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { z } from 'zod'
-import { quoteRequestSchema } from '../src/features/freightQuote/schema'
-import { env } from './_lib/env'
-import { clientIp, HttpError, readJsonBody, requireMethod, sendError, sendJson } from './_lib/http'
-import { normaliseQuote } from './_lib/normalise'
-import { quoteRepository } from './_lib/quoteRepository'
-import { enforceRateLimit } from './_lib/rateLimit'
-import { toQuoteDetail } from './_lib/serialize'
-import { sendCustomerQuoteAcknowledgement, sendInternalQuoteNotification } from './_lib/resend'
+import { quoteRequestSchema } from '../src/features/freightQuote/schema.js'
+import { env } from './_lib/env.js'
+import { clientIp, HttpError, readJsonBody, requireMethod, sendError, sendJson } from './_lib/http.js'
+import { normaliseQuote } from './_lib/normalise.js'
+import { quoteRepository } from './_lib/quoteRepository.js'
+import { enforceRateLimit } from './_lib/rateLimit.js'
+import { toQuoteDetail } from './_lib/serialize.js'
+import { sendCustomerQuoteAcknowledgement, sendInternalQuoteNotification } from './_lib/resend.js'
 
 function fieldErrorMap(error: z.ZodError): Record<string, string[]> {
   const map: Record<string, string[]> = {}

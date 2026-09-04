@@ -6,9 +6,9 @@
 //    is already saved and must not be lost over an email problem
 //  * logs carry the reference and route only, never customer PII
 
-import { formatQuoteSummary } from '../../src/features/freightQuote/clipboard'
-import type { QuoteDetail } from '../../src/features/freightQuote/types'
-import { env } from './env'
+import { formatQuoteSummary } from '../../src/features/freightQuote/clipboard.js'
+import type { QuoteDetail } from '../../src/features/freightQuote/types.js'
+import { env } from './env.js'
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails'
 

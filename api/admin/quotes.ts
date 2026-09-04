@@ -1,10 +1,10 @@
 // GET /api/admin/quotes — list + search + filter + CSV export. Admin only.
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { requireAdmin } from '../_lib/adminAuth'
-import { listToCsv } from '../_lib/adminCsv'
-import { HttpError, requireMethod, sendError, sendJson } from '../_lib/http'
-import { quoteRepository, type AdminQuoteListRow } from '../_lib/quoteRepository'
+import { requireAdmin } from '../_lib/adminAuth.js'
+import { listToCsv } from '../_lib/adminCsv.js'
+import { HttpError, requireMethod, sendError, sendJson } from '../_lib/http.js'
+import { quoteRepository, type AdminQuoteListRow } from '../_lib/quoteRepository.js'
 
 const PAGE_SIZE = 25
 

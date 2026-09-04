@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import { useAdminAuth } from './adminAuthContext'
+import { useAdminAuth } from './adminAuthContext.js'
 
 /**
  * Gates the admin console. Shows the sign-in form until there is a session; the

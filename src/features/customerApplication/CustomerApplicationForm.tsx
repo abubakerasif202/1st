@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link } from 'react-router-dom'
-import { FREIGHT_TERMS_VERSION } from '../freightQuote/constants'
+import { FREIGHT_TERMS_VERSION } from '../freightQuote/constants.js'
 import {
   CheckboxField,
   CheckboxGroup,
@@ -10,18 +10,18 @@ import {
   SelectField,
   TextAreaField,
   TextField,
-} from '../freightQuote/fields'
-import { STATE_OPTIONS, PAYMENT_METHOD_OPTIONS, PAYMENT_TERMS_OPTIONS } from '../freightQuote/options'
+} from '../freightQuote/fields.js'
+import { STATE_OPTIONS, PAYMENT_METHOD_OPTIONS, PAYMENT_TERMS_OPTIONS } from '../freightQuote/options.js'
 import {
   APPLICATION_INFRA_MESSAGE,
   ApplicationApiError,
   submitCustomerApplication,
-} from './api'
+} from './api.js'
 import {
   customerApplicationSchema,
   emptyCustomerApplication,
   type CustomerApplicationValues,
-} from './schema'
+} from './schema.js'
 
 type Banner = { kind: 'error'; message: string } | null
 

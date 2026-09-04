@@ -2,8 +2,8 @@
 // plain text with aligned labels so it pastes cleanly into email, a spreadsheet
 // cell, or a carrier booking screen.
 
-import { SERVICE_PRIORITY_LABELS, DELIVERY_AUTHORITY_LABELS } from './labels'
-import type { QuoteDetail } from './types'
+import { SERVICE_PRIORITY_LABELS, DELIVERY_AUTHORITY_LABELS } from './labels.js'
+import type { QuoteDetail } from './types.js'
 
 function yesNo(value: boolean): string {
   return value ? 'Yes' : 'No'

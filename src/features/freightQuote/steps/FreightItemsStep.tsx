@@ -1,8 +1,8 @@
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
-import { lineVolumeM3, summariseTotals } from '../calculations'
-import { emptyFreightItem, MAX_FREIGHT_ITEMS, type QuoteFormValues } from '../schema'
-import type { FreightItemInput } from '../types'
-import { FreightItemCard } from './FreightItemCard'
+import { lineVolumeM3, summariseTotals } from '../calculations.js'
+import { emptyFreightItem, MAX_FREIGHT_ITEMS, type QuoteFormValues } from '../schema.js'
+import type { FreightItemInput } from '../types.js'
+import { FreightItemCard } from './FreightItemCard.js'
 
 /** A watched row is only counted once every numeric field is a positive finite number. */
 function isComplete(item: Partial<FreightItemInput>): item is FreightItemInput {

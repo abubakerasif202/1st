@@ -6,7 +6,7 @@
 //    `is_admin()` allowlist policy still apply. Used to authorise admin reads.
 
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
-import { env } from './env'
+import { env } from './env.js'
 
 let admin: SupabaseClient | null = null
 

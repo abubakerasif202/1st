@@ -3,10 +3,10 @@
 // one in production, and tests pass a fake.
 
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { adminClient } from './supabaseAdmin'
-import { HttpError } from './http'
-import type { NormalisedQuote } from './normalise'
-import type { QuoteDetailRpc } from './serialize'
+import { adminClient } from './supabaseAdmin.js'
+import { HttpError } from './http.js'
+import type { NormalisedQuote } from './normalise.js'
+import type { QuoteDetailRpc } from './serialize.js'
 
 export interface AdminQuoteListParams {
   search?: string

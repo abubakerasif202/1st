@@ -1,7 +1,7 @@
 import { useFormContext, useWatch } from 'react-hook-form'
-import { RadioGroup, TextAreaField, TextField } from '../fields'
-import { DELIVERY_AUTHORITY_OPTIONS, SERVICE_PRIORITY_OPTIONS } from '../options'
-import type { QuoteFormValues } from '../schema'
+import { RadioGroup, TextAreaField, TextField } from '../fields.js'
+import { DELIVERY_AUTHORITY_OPTIONS, SERVICE_PRIORITY_OPTIONS } from '../options.js'
+import type { QuoteFormValues } from '../schema.js'
 
 function HandlingSummary({
   title,

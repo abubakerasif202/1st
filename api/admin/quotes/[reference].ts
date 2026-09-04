@@ -4,13 +4,13 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { z } from 'zod'
-import { QUOTE_STATUSES } from '../../../src/features/freightQuote/types'
-import { canTransition } from '../../../src/features/freightQuote/statusFlow'
-import { requireAdmin } from '../../_lib/adminAuth'
-import { quoteToCsv } from '../../_lib/adminCsv'
-import { HttpError, readJsonBody, sendError, sendJson } from '../../_lib/http'
-import { quoteRepository, type AdminQuotePatch } from '../../_lib/quoteRepository'
-import { toQuoteDetail } from '../../_lib/serialize'
+import { QUOTE_STATUSES } from '../../../src/features/freightQuote/types.js'
+import { canTransition } from '../../../src/features/freightQuote/statusFlow.js'
+import { requireAdmin } from '../../_lib/adminAuth.js'
+import { quoteToCsv } from '../../_lib/adminCsv.js'
+import { HttpError, readJsonBody, sendError, sendJson } from '../../_lib/http.js'
+import { quoteRepository, type AdminQuotePatch } from '../../_lib/quoteRepository.js'
+import { toQuoteDetail } from '../../_lib/serialize.js'
 
 const patchSchema = z.object({
   status: z.enum(QUOTE_STATUSES).optional(),

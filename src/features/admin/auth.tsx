@@ -3,8 +3,8 @@
 
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { Session } from '@supabase/supabase-js'
-import { supabaseBrowser } from '../../lib/supabaseBrowser'
-import { AdminAuthContext, type AdminAuthValue } from './adminAuthContext'
+import { supabaseBrowser } from '../../lib/supabaseBrowser.js'
+import { AdminAuthContext, type AdminAuthValue } from './adminAuthContext.js'
 
 
 export function AdminAuthProvider({ children }: { children: ReactNode }) {

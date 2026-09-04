@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { QUOTE_STATUS_LABELS } from '../freightQuote/statusFlow'
-import { QUOTE_STATUSES } from '../freightQuote/types'
-import { useAdminAuth } from './adminAuthContext'
+import { QUOTE_STATUS_LABELS } from '../freightQuote/statusFlow.js'
+import { QUOTE_STATUSES } from '../freightQuote/types.js'
+import { useAdminAuth } from './adminAuthContext.js'
 import {
   AdminApiError,
   downloadCsv,
   listQuotes,
   type AdminQuoteListItem,
-} from './adminApi'
+} from './adminApi.js'
 
 export function AdminQuotesList() {
   const { accessToken } = useAdminAuth()

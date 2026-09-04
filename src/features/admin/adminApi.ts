@@ -1,7 +1,7 @@
 // Admin console API client. Every call carries the Supabase session's access
 // token; the server authorises against ADMIN_EMAILS.
 
-import type { QuoteDetail, QuoteStatus } from '../freightQuote/types'
+import type { QuoteDetail, QuoteStatus } from '../freightQuote/types.js'
 
 export interface AdminQuoteListItem {
   referenceNumber: string

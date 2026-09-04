@@ -1,4 +1,4 @@
-import type { CustomerApplicationValues } from './schema'
+import type { CustomerApplicationValues } from './schema.js'
 
 export const APPLICATION_INFRA_MESSAGE =
   'We’re temporarily unable to submit your application. Your information has not been lost from this form. Please try again shortly.'

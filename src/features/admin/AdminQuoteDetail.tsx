@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { formatQuoteSummary } from '../freightQuote/clipboard'
-import { QUOTE_STATUS_LABELS, nextStatuses } from '../freightQuote/statusFlow'
-import type { QuoteDetail, QuoteStatus } from '../freightQuote/types'
-import { useAdminAuth } from './adminAuthContext'
+import { formatQuoteSummary } from '../freightQuote/clipboard.js'
+import { QUOTE_STATUS_LABELS, nextStatuses } from '../freightQuote/statusFlow.js'
+import type { QuoteDetail, QuoteStatus } from '../freightQuote/types.js'
+import { useAdminAuth } from './adminAuthContext.js'
 import {
   AdminApiError,
   downloadCsv,
   getQuote,
   updateQuote,
   type AdminQuotePatch,
-} from './adminApi'
+} from './adminApi.js'
 
 export function AdminQuoteDetail() {
   const { reference = '' } = useParams()

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
-import { INFRASTRUCTURE_MESSAGE, loadQuoteConfirmation, QuoteApiError } from './api'
-import { formatQuoteSummary } from './clipboard'
-import { DELIVERY_AUTHORITY_LABELS, FREIGHT_ITEM_TYPE_LABELS, SERVICE_PRIORITY_LABELS } from './labels'
-import { recallQuoteToken } from './sessionStore'
-import type { QuoteDetail } from './types'
+import { INFRASTRUCTURE_MESSAGE, loadQuoteConfirmation, QuoteApiError } from './api.js'
+import { formatQuoteSummary } from './clipboard.js'
+import { DELIVERY_AUTHORITY_LABELS, FREIGHT_ITEM_TYPE_LABELS, SERVICE_PRIORITY_LABELS } from './labels.js'
+import { recallQuoteToken } from './sessionStore.js'
+import type { QuoteDetail } from './types.js'
 
 interface RouteState {
   quote?: QuoteDetail

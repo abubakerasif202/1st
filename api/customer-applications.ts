@@ -6,12 +6,12 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { z } from 'zod'
-import { customerApplicationRequestSchema } from '../src/features/customerApplication/schema'
-import { env } from './_lib/env'
-import { adminClient } from './_lib/supabaseAdmin'
-import { clientIp, HttpError, readJsonBody, requireMethod, sendError, sendJson } from './_lib/http'
-import { normaliseApplication } from './_lib/normaliseApplication'
-import { enforceRateLimit } from './_lib/rateLimit'
+import { customerApplicationRequestSchema } from '../src/features/customerApplication/schema.js'
+import { env } from './_lib/env.js'
+import { adminClient } from './_lib/supabaseAdmin.js'
+import { clientIp, HttpError, readJsonBody, requireMethod, sendError, sendJson } from './_lib/http.js'
+import { normaliseApplication } from './_lib/normaliseApplication.js'
+import { enforceRateLimit } from './_lib/rateLimit.js'
 
 function fieldErrorMap(error: z.ZodError): Record<string, string[]> {
   const map: Record<string, string[]> = {}

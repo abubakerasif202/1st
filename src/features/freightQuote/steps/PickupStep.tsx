@@ -1,5 +1,5 @@
-import { CheckboxField, CheckboxGroup, SelectField, TextAreaField, TextField } from '../fields'
-import { STATE_OPTIONS } from '../options'
+import { CheckboxField, CheckboxGroup, SelectField, TextAreaField, TextField } from '../fields.js'
+import { STATE_OPTIONS } from '../options.js'
 
 export function PickupStep() {
   return (

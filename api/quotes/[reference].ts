@@ -4,9 +4,9 @@
 // submission time must also match, so a guessed 1STCE-xxxxxx reveals nothing.
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { HttpError, requireMethod, sendError, sendJson } from '../_lib/http'
-import { quoteRepository } from '../_lib/quoteRepository'
-import { toQuoteDetail } from '../_lib/serialize'
+import { HttpError, requireMethod, sendError, sendJson } from '../_lib/http.js'
+import { quoteRepository } from '../_lib/quoteRepository.js'
+import { toQuoteDetail } from '../_lib/serialize.js'
 
 function firstValue(value: string | string[] | undefined): string {
   if (Array.isArray(value)) return value[0] ?? ''

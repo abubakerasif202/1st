@@ -15,7 +15,7 @@ import {
   DELIVERY_AUTHORITIES,
   FREIGHT_ITEM_TYPES,
   SERVICE_PRIORITIES,
-} from './types'
+} from './types.js'
 
 const AU_POSTCODE = /^\d{4}$/
 const TIME_24H = /^([01]\d|2[0-3]):[0-5]\d$/

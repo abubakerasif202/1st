@@ -1,7 +1,7 @@
 // Validated customer-application payload -> snake_case shape for the
 // create_customer_application RPC.
 
-import type { CustomerApplicationValues } from '../../src/features/customerApplication/schema'
+import type { CustomerApplicationValues } from '../../src/features/customerApplication/schema.js'
 
 const orNull = (value: string | undefined): string | null =>
   value && value.trim() !== '' ? value.trim() : null

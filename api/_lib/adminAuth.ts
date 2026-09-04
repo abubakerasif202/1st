@@ -8,9 +8,9 @@
 // token. The database also carries an is_admin() RLS policy as a second layer.
 
 import type { VercelRequest } from '@vercel/node'
-import { env } from './env'
-import { HttpError } from './http'
-import { userClient } from './supabaseAdmin'
+import { env } from './env.js'
+import { HttpError } from './http.js'
+import { userClient } from './supabaseAdmin.js'
 
 export interface AdminIdentity {
   userId: string

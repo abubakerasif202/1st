@@ -4,7 +4,7 @@
 //
 // Per the spec: line volume = (L/100) * (W/100) * (H/100) * quantity.
 
-import type { FreightItemInput, QuoteTotals, QuoteTotalsWithLines } from './types'
+import type { FreightItemInput, QuoteTotals, QuoteTotalsWithLines } from './types.js'
 
 const CM_PER_M = 100
 const VOLUME_DECIMALS = 4

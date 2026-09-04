@@ -5,7 +5,7 @@
 
 import type { DefaultValues } from 'react-hook-form'
 import { z } from 'zod'
-import { AU_STATES } from '../freightQuote/types'
+import { AU_STATES } from '../freightQuote/types.js'
 
 const trimmed = (max: number) => z.string().trim().max(max)
 const required = (label: string, min = 2, max = 200) =>

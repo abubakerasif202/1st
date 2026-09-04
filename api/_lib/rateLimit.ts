@@ -3,7 +3,7 @@
 // source without adding infrastructure. Pair it with the honeypot and the DB
 // idempotency key for real duplicate protection.
 
-import { HttpError } from './http'
+import { HttpError } from './http.js'
 
 interface Bucket {
   count: number

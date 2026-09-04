@@ -1,5 +1,5 @@
-import { CheckboxField, NumberField, SelectField, TextField } from '../fields'
-import { FREIGHT_ITEM_TYPE_OPTIONS } from '../options'
+import { CheckboxField, NumberField, SelectField, TextField } from '../fields.js'
+import { FREIGHT_ITEM_TYPE_OPTIONS } from '../options.js'
 
 interface FreightItemCardProps {
   index: number
